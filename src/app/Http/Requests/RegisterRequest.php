@@ -21,12 +21,25 @@ class RegisterRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'name'     => ['required', 'string', 'max:255'],
+            'email'    => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.required'     => 'お名前を入力してください',
+            'email.required'    => 'メールアドレスを入力してください',
+            'password.required' => 'パスワードを入力してください',
+            'password.min'      => 'パスワードは8文字以上で入力してください',
+            'password.confirmed' => 'パスワードと一致しません',
+        ];
+        // 一致確認の仕組み: Laravelのconfirmedルールを使用する場合、HTML側の入力フォーム（確認用パスワード）のname属性を password_confirmation にする必要があります。
+        // コントローラstore：バリデーション済みデータの取得 $validated = $request->validated();　この後に保存処理
     }
 }
