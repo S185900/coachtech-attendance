@@ -12,14 +12,11 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Fortify\Fortify;
-use Laravel\Fortify\Http\Responses\LogoutResponse;
+use Laravel\Fortify\Contracts\LogoutResponse;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Str;
-
-use App\Http\Requests\LoginRequest;
 use App\Http\Requests\AdminLoginRequest;
 use App\Http\Requests\RegisterRequest;
-
 
 
 class FortifyServiceProvider extends ServiceProvider
