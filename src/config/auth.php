@@ -40,6 +40,12 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        // 管理者用ガード
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'masters',
+        ],
     ],
 
     /*
@@ -63,6 +69,12 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+
+        // 管理者用プロバイダー
+        'masters' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Master::class,
         ],
 
         // 'users' => [
