@@ -10,12 +10,13 @@
     letter-spacing: 0%;
     text-align: center;
     color: #000000;
-    padding: 100px 0 0 0;
+    padding: 80px 0 0 0;
+    margin-bottom: 20px;
 }
 
 .register-section {
     max-width: 680px;
-    margin: 90px auto;
+    margin: 0 auto;
     border-radius: 8px;
     text-align: center;
 }
@@ -26,14 +27,14 @@
 }
 
 .register-item {
-    margin-top: 20px;
-    margin-bottom: 15px;
+    margin-top: 5px;
+    margin-bottom: 10px;
 }
 
 .register-label {
     display: block;
-    margin-bottom: 10px;
-    margin-top: 50px;
+    margin-bottom: 5px;
+    margin-top: 20px;
     font-family: "Inter", sans-serif;
     font-weight: 700;
     font-style: normal;
@@ -95,20 +96,22 @@
 }
 
 .form-error-message {
-    color: #FF5555;
-    font-size: 14px;
-    font-weight: bold;
-    margin-top: 5px;
     display: block;
+    color: #e3342f;
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: 5px;
+    line-height: 1.4;
     text-align: left;
 }
 
 .auth-error-message {
-    color: #FF5555;
-    font-size: 14px;
-    font-weight: bold;
-    margin-top: 5px;
     display: block;
+    color: #e3342f;
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: 5px;
+    line-height: 1.4;
     text-align: left;
 }
 
@@ -120,7 +123,7 @@
 
     .register-section {
         max-width: 640px;
-        padding: 40px 30px;
+        padding: 20px 30px;
         margin: 40px auto;
     }
 
@@ -194,5 +197,4 @@
     .auth-error-message {
         font-size: 13px;
     }
-
 }
