@@ -1,25 +1,35 @@
-@extends('layouts.guest')
+@extends('admin.layouts.header')
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/login.css')}}">
 @endsection
 
-<!-- 管理者ログイン画面 -->
+<!-- 管理者ログイン画面 http://localhost/admin/login-->
 @section('content')
-<h2 class="section-title">管理者ログイン</h2>
-<section class="login">
-    <!-- <form-->
+<h1 class="section-title">管理者ログイン</h1>
+<section class="login-section">
+    <form action="{{ route('admin.login') }}" method="POST" novalidate>
+        @csrf
 
         <div class="login-item">
             <label for="email" class="login-label">メールアドレス</label>
             <input id="email" type="email" class="input-form" name="email" value="{{ old('email') }}" required autocomplete="email">
-            <!-- <input id="email" type="email" class="login-input @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email"> -->
+
+            @error('email')
+                <span class="form-error-message">{{ $message }}</span>
+            @enderror
         </div>
 
         <div class="login-item">
             <label for="password" class="login-label">パスワード</label>
             <input id="password" type="password" class="input-form" name="password" required autocomplete="password">
-            <!-- <input id="password" type="password" class="login-input @error('password') is-invalid @enderror" name="password" required autocomplete="new-password"> -->
+
+            @error('password')
+                <span class="form-error-message">{{ $message }}</span>
+            @enderror
+            @error('auth_error')
+                <span class="auth-error-message">{{ $message }}</span>
+            @enderror
         </div>
 
         <div class="login-item">
@@ -27,11 +37,7 @@
                 管理者ログインする
             </button>
         </div>
-    <!-- </form> -->
+    </form>
 
-    <nav class="register-nav">
-        <a class="register-link" href="#">会員登録はこちら</a>
-        <!-- <a class="register-link" href="">会員登録はこちら</a> -->
-    </nav>
 </section>
 @endsection

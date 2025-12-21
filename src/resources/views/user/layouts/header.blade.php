@@ -10,7 +10,7 @@
 
     @yield('css')
 </head>
-<!-- ログイン前共通ヘッダー http://localhost/login -->
+<!-- ログイン前共通ヘッダー -->
 <body>
     <header class="header">
         <a href="/" class="header-logo">

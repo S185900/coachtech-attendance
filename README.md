@@ -126,8 +126,8 @@ php artisan db:seed --class=CustomProductSeeder
 ## ダミーユーザーのログイン情報
 | ユーザー種別     | メールアドレス         | パスワード     |
 |------------------|--------------------------|----------------|
-| 一般ユーザー | general1@gmail.com | password123    |
-| 管理者ユーザー | general2@gmail.com | password123    |
+| 一般ユーザー | user@gmail.com | password123    |
+| 管理者ユーザー | admin@gmail.com | password123    |
 | ダミーユーザー（10名） | Factoryで自動生成されたメールアドレス | password123    |
 
 

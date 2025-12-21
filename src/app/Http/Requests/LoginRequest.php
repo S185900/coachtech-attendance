@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use Laravel\Fortify\Http\Requests\LoginRequest as FortifyLoginRequest;
 
-class LoginRequest extends FormRequest
+class LoginRequest extends FortifyLoginRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -17,9 +17,8 @@ class LoginRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
+     * バリデーションルール
+     * Fortifyの標準ルールをオーバーライド
      */
     public function rules(): array
     {
@@ -37,28 +36,20 @@ class LoginRequest extends FormRequest
         ];
     }
 
-// 「ログイン情報が登録されていません」の処理方法
-// 「入力内容が正しい形式か」ではなく、「DBに登録があるか/一致するか」というチェックは、コントローラーでの認証処理（Auth::attempt）時に行います。
+    // 「ログイン情報が登録されていません」の処理方法：
+    // これは、FortifyServiceProvider.phpで処理されているため、ここでは不要
 
-// 以下のようにコントローラーを記述することで、ご要望通りのエラーメッセージを表示できます。
+    /**
+     * ログイン成功時の遷移先を強制的に指定する
+     */
+    public function redirectUrl()
+    {
+        // 送信先が管理者ログインURL、またはパスに admin が含まれる場合
+        if ($this->is('admin/*') || $this->is('admin/login')) {
+            return url('/admin/attendance/list');
+        }
 
-// LoginController.php（例）
-
-// public function login(LoginRequest $request)
-// {
-//     // 1. バリデーション（LoginRequestで自動実行）
-//     $credentials = $request->only('email', 'password');
-
-//     // 2. 認証処理
-//     if (Auth::attempt($credentials)) {
-//         // 成功時の処理
-//         $request->session()->regenerate();
-//         return redirect()->intended('dashboard');
-//     }
-
-//     // 3. 認証失敗時：エラーメッセージを返却
-//     return back()->withErrors([
-//         'login_error' => 'ログイン情報が登録されていません',
-//     ])->onlyInput('email'); // メールアドレスだけ入力値を残す
-// }
+        // それ以外（一般ユーザー）
+        return url('/attendance');
+    }
 }

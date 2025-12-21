@@ -1,0 +1,134 @@
+body {
+    margin: 0;
+    font-family: "Inter", sans-serif;
+}
+
+/* 中央配置のためのコンテナ */
+.attendance-container {
+    display: flex;
+    justify-content: center;
+    min-height: calc(100vh - 80px);
+    text-align: center;
+    /* 上からの位置を固定（例：上から150pxの位置に配置） */
+    padding-top: 100px;
+    box-sizing: border-box;
+}
+
+.attendance-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ステータスバッジ（グレーの楕円） */
+.status-badge {
+    display: inline-block;
+    background-color: #d9d9d9;
+    color: #666;
+    padding: 6px 20px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 25px;
+}
+
+/* 日付 */
+.attendance-date {
+    font-weight: 400;
+    font-size: 40px;
+    color: #000000;
+    margin: 0 0 30px 0;
+}
+
+/* 時刻（h1） */
+.attendance-time {
+    font-weight: 700;
+    font-size: 80px;
+    color: #000000;
+    margin: 0 0 80px 0;
+    line-height: 1;
+}
+
+/* 出勤ボタン */
+.attendance-button {
+    background-color: #000000;
+    border: none;
+    width: 221px;
+    /* 横幅を持たせる */
+    padding: 14px 0;
+    font-weight: 700;
+    font-size: 32px;
+    color: #FFFFFF;
+    letter-spacing: 0.15em;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.attendance-button:hover {
+    background-color: #626262;
+}
+
+/* --- レスポンシブ対応 --- */
+
+/* PCサイズ（1400〜1540px） */
+@media screen and (min-width: 1400px) and (max-width: 1540px) {
+    .attendance-container {
+        /* 大きな画面では少し下げて余裕を持たせる */
+        padding-top: 100px;
+        min-height: calc(100vh - 90px);
+    }
+
+    .attendance-date {
+        font-size: 48px;
+        /* 少し大きく */
+        margin-bottom: 40px;
+    }
+
+    .attendance-time {
+        font-size: 100px;
+        /* PC大画面でインパクトを出す */
+        margin-bottom: 100px;
+    }
+
+    .attendance-button {
+        width: 260px;
+        padding: 18px 0;
+        font-size: 36px;
+    }
+}
+
+/* タブレットサイズ（768〜850px） */
+@media screen and (min-width: 768px) and (max-width: 850px) {
+    .attendance-container {
+        /* タブレットはヘッダーが2段（ハンバーガー）になる想定なら、高さを調整 */
+        min-height: calc(100vh - 70px);
+        padding-top: 80px;
+        /* 方法1：下に大きなパディングを入れて、要素を押し上げる */
+        padding-bottom: 200px;
+        box-sizing: border-box;
+        /* パディングを含めた高さ計算にする */
+    }
+
+    .status-badge {
+        font-size: 16px;
+        padding: 4px 16px;
+    }
+
+    .attendance-date {
+        font-size: 32px;
+        margin-bottom: 20px;
+    }
+
+    .attendance-time {
+        font-size: 64px;
+        /* 画面幅に合わせて少し小さく */
+        margin-bottom: 60px;
+    }
+
+    .attendance-button {
+        width: 200px;
+        padding: 12px 0;
+        font-size: 28px;
+    }
+}

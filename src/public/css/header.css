@@ -4,60 +4,59 @@ body {
     padding: 0;
 }
 
-/* ヘッダー全体 */
 .header {
     background-color: #000000;
     width: 100%;
     height: 80px;
+    /* PC/基本の高さ */
     display: flex;
     align-items: center;
-    /* 上下中央 */
     padding: 0 25px;
     box-sizing: border-box;
 }
 
-/* ロゴのリンクエリア */
 .header-logo {
     display: flex;
     align-items: center;
+    flex-shrink: 0;
+    /* ロゴが潰されるのを防ぐ（以前のコードにもありましたね！） */
     text-decoration: none;
-    height: 100%;
-    /* 親の高さに合わせる */
 }
 
-/* ロゴ画像：ここがポイント */
 .header-logo-img {
-/* 幅を指定するのではなく、高さをヘッダーに合わせる */
-    height: 36px;
-    /* 元々のデザインの高さに固定 */
-    width: auto;
-    /* 横幅は比率を維持して自動計算 */
+    /* 比率を壊さないための絶対ルール */
+    width: 370px;
+    /* ★まず、PCで綺麗に見える「横幅」を数値で指定してください */
+    height: auto;
+    /* ★高さは「自動」に任せる */
     display: block;
-    object-fit: contain;
-    /* 念のための保険 */
 }
 
 /* --- レスポンシブ対応 --- */
 
 /* PCサイズ（1400〜1540px） */
 @media screen and (min-width: 1400px) and (max-width: 1540px) {
+    .header {
+        height: 90px;
+    }
+
     .header-logo-img {
-        height: 40px;
-        /* PCでは少し大きく */
-        width: auto;
+        width: 400px;
+        /* ★ここでも横幅を固定。これで横長になりません */
+        height: auto;
     }
 }
 
 /* タブレットサイズ（768〜850px） */
 @media screen and (min-width: 768px) and (max-width: 850px) {
     .header {
-        height: 60px;
+        height: 70px;
+        /* タブレットでヘッダーを低くする場合 */
     }
 
     .header-logo-img {
-        height: 30px;
-        /* ヘッダーが60pxなので、少し小さめの30pxに抑える */
-        width: auto;
-        /* これで縦長になるのを防げます */
+        width: 290px;
+        /* ★タブレット用の横幅を数値で指定。これで縦長になりません */
+        height: auto;
     }
 }

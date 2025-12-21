@@ -1,0 +1,198 @@
+.section-title {
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 36px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+    color: #000000;
+    padding: 100px 0 0 0;
+}
+
+.register-section {
+    max-width: 680px;
+    margin: 90px auto;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.register-section form {
+    display: flex;
+    flex-direction: column;
+}
+
+.register-item {
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+
+.register-label {
+    display: block;
+    margin-bottom: 10px;
+    margin-top: 50px;
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: left;
+    color: #000000;
+}
+
+.input-form {
+    width: 100%;
+    height: 60px;
+    padding: 10px;
+    border: 1px solid #000000;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.register-button {
+    width: 100%;
+    padding: 20px;
+    margin-top: 90px;
+    margin-bottom: 10px;
+    background-color: #000000;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 26px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.register-button:hover {
+    background-color: #626262;
+}
+
+.login-link {
+    display: block;
+    padding-top: 20px;
+    margin-bottom: 10px;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-style: regular;
+    font-size: 20px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+    color: #0073CC;
+}
+
+.login-link:hover {
+    color: #7dbeff;
+}
+
+.form-error-message {
+    color: #FF5555;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 5px;
+    display: block;
+    text-align: left;
+}
+
+.auth-error-message {
+    color: #FF5555;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 5px;
+    display: block;
+    text-align: left;
+}
+
+/* PCサイズ（1400〜1540px）対応 */
+@media screen and (min-width: 1400px) and (max-width: 1540px) {
+    .section-title {
+        font-size: 40px;
+    }
+
+    .register-section {
+        max-width: 640px;
+        padding: 40px 30px;
+        margin: 40px auto;
+    }
+
+    .register-label {
+        font-size: 26px;
+    }
+
+    .input-form {
+        height: 64px;
+        font-size: 18px;
+    }
+
+    .register-button {
+        font-size: 28px;
+        padding: 24px;
+        margin-top: 70px;
+    }
+
+    .login-link {
+        font-size: 22px;
+    }
+
+    .form-error-message,
+    .auth-error-message {
+        font-size: 15px;
+    }
+}
+
+/* タブレットサイズ（768〜850px）対応 */
+@media screen and (min-width: 768px) and (max-width: 850px) {
+    .section-title {
+        font-size: 30px;
+    }
+
+    .register-section {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+    }
+
+    .register-item {
+        margin-bottom: 15px;
+    }
+
+    .register-label {
+        font-size: 20px;
+    }
+
+    .input-form {
+        width: 100%;
+        height: 60px;
+        padding: 10px;
+        border-radius: 4px;
+    }
+
+    .register-button {
+        font-size: 20px;
+        line-height: 100%;
+        letter-spacing: 0%;
+        text-align: center;
+        color: #FFFFFF;
+    }
+
+    .login-link {
+        font-size: 18px;
+    }
+
+    .form-error-message,
+    .auth-error-message {
+        font-size: 13px;
+    }
+
+}
