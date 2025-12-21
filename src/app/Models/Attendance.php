@@ -29,8 +29,8 @@ class Attendance extends Model
     /**
      * 休憩時間とのリレーション（1対多）
      */
-    public function breaks()
+    public function restTimes()
     {
-        return $this->hasMany(BreakTime::class); // Breakは予約語のためBreakTime等にするのが一般的
+        return $this->hasMany(RestTime::class);
     }
 }

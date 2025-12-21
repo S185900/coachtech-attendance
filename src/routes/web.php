@@ -35,15 +35,20 @@ Route::middleware(['guest:web', 'guest:admin'])->group(function () {
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth:web'])->group(function () {
-    // 出勤登録画面（メイン）
-    Route::get('/attendance', function () {
-        return view('user.index');
-    })->name('index');
+    // 打刻画面表示
+    Route::get('/attendance', [AttendanceController::class, 'index'])->name('index');
 
-    // 修正申請一覧（一般）
-    Route::get('/stamp_correction_request/list', [StampCorrectionRequestController::class, 'index']);
+    // ★出勤打刻実行 (POST)
+    Route::post('/attendance/start', [AttendanceController::class, 'store'])->name('attendance.start');
 
-    // その他、一般ユーザー用のルートをここに追加
+    // ★退勤打刻実行 (POST)
+    Route::post('/attendance/end', [AttendanceController::class, 'update'])->name('attendance.end');
+
+    // 休憩開始打刻実行 (POST)
+    Route::post('/attendance/rest-start', [AttendanceController::class, 'restStart'])->name('attendance.rest-start');
+
+    // 休憩終了打刻実行 (POST)
+    Route::post('/attendance/rest-end', [AttendanceController::class, 'restEnd'])->name('attendance.rest-end');
 });
 
 /*

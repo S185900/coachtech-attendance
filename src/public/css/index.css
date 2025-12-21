@@ -1,6 +1,7 @@
 body {
     margin: 0;
     font-family: "Inter", sans-serif;
+    background-color: #F0EFF2;
 }
 
 /* 中央配置のためのコンテナ */
@@ -49,24 +50,53 @@ body {
     line-height: 1;
 }
 
-/* 出勤ボタン */
+/* ボタンの共通スタイル */
 .attendance-button {
-    background-color: #000000;
     border: none;
     width: 221px;
-    /* 横幅を持たせる */
     padding: 14px 0;
     font-weight: 700;
     font-size: 32px;
-    color: #FFFFFF;
-    letter-spacing: 0.15em;
     border-radius: 16px;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: opacity 0.2s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .attendance-button:hover {
-    background-color: #626262;
+    opacity: 0.8;
+}
+
+/* 黒ボタン（出勤・退勤） */
+.btn-black,
+.attendance-button:not(.btn-white) {
+    background-color: #000000;
+    color: #FFFFFF;
+}
+
+/* 白ボタン（休憩系） */
+.btn-white {
+    background-color: #FFFFFF;
+    color: #000000;
+    border: 1px solid #d9d9d9;
+}
+
+/* ボタンの横並び設定 */
+.button-group {
+    display: flex;
+    gap: 40px;
+    /* ボタン同士の間隔 */
+}
+
+/* 退勤後のメッセージ */
+.thanks-message {
+    font-size: 26px;
+    font-weight: 700;
+    margin-top: 20px;
+    letter-spacing: 0.15em;
+    text-align: center;
+    /* 追加：文字間隔による右側の余白を打ち消すために、同じ分だけ左にずらす */
+    text-indent: 0.70em;
 }
 
 /* --- レスポンシブ対応 --- */
