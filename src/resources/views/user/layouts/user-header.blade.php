@@ -27,9 +27,21 @@
 
         <nav class="header-nav">
             <ul class="header-nav-list">
-                <li class="header-nav-item"><a href="#" class="header-nav-link">勤怠</a></li>
-                <li class="header-nav-item"><a href="#" class="header-nav-link">勤怠一覧</a></li>
+                <li class="header-nav-item">
+                    <a href="{{ route('index') }}" class="header-nav-link">
+                        勤怠
+                    </a>
+                </li>
+
+                <li class="header-nav-item">
+                    <a href="{{ route('attendance.list') }}" class="header-nav-link">
+                        勤怠一覧
+                    </a>
+                </li>
+
                 <li class="header-nav-item"><a href="#" class="header-nav-link">申請</a></li>
+                <!-- <a href="{{ route('stamp_correction.list') }}" class="header-nav-link">申請</a> -->
+
                 <li class="header-nav-item">
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf

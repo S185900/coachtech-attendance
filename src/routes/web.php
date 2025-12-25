@@ -49,6 +49,25 @@ Route::middleware(['auth:web'])->group(function () {
 
     // 休憩終了打刻実行 (POST)
     Route::post('/attendance/rest-end', [AttendanceController::class, 'restEnd'])->name('attendance.rest-end');
+
+    // PG04: 勤怠一覧
+    Route::get('/attendance/list', [AttendanceController::class, 'list'])->name('attendance.list');
+
+    // PG05: 勤怠詳細
+    // URL例: /attendance/123
+    Route::get('/attendance/{attendance_id}', [AttendanceController::class, 'show'])->name('attendance.detail');
+
+    // 詳細画面の「修正」ボタンを押した時の送り先（保存用：POST）
+    Route::post('/attendance/update/{attendance_id}', [AttendanceController::class, 'update'])->name('attendance.update');
+
+
+
+
+
+    // auth:web,admin のように両方のガードを許可するように変更
+    Route::get('/stamp_correction_request/list', [StampCorrectionRequestController::class, 'index'])
+        ->middleware('auth:web,admin')
+        ->name('stamp_correction.list');
 });
 
 /*
@@ -59,11 +78,13 @@ Route::middleware(['auth:web'])->group(function () {
 Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
     // 勤怠一覧画面
     Route::get('/attendance/list', function () {
-        return view('admin.list');
+        return view('admin.attendance.list');
     })->name('admin.attendance.list');
 
     // 修正申請一覧（管理者）
-    Route::get('/stamp_correction_request/list', [StampCorrectionRequestController::class, 'adminIndex']);
+    // Route::get('/stamp_correction_request/list', [StampCorrectionRequestController::class, 'adminIndex']);
+
+    Route::get('/stamp_correction_request/approve/{id}', [StampCorrectionRequestController::class, 'showApprove']);
 
     // 管理者ログアウト
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('admin.logout');

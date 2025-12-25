@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Attendance;
 use App\Models\RestTime;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
+use Carbon\CarbonPeriod;
+
 
 class AttendanceController extends Controller
 {
@@ -23,7 +25,7 @@ class AttendanceController extends Controller
             ->where('date', $today)
             ->first();
 
-        return view('user.index', compact('attendance'));
+        return view('user.attendance.index', compact('attendance'));
     }
 
     /**
@@ -131,5 +133,50 @@ class AttendanceController extends Controller
         $attendance->update(['status' => 1]);
 
         return redirect()->back();
+    }
+
+    // PG04: 勤怠一覧画面
+    public function list(Request $request)
+    {
+        // ログイン中のユーザーの勤怠データを取得
+        // $attendances = Attendance::where('user_id', Auth::id())
+        //     ->orderBy('date', 'desc');
+
+        // 整理したディレクトリ構造に合わせて指定
+        // return view('user.attendance.list', compact('attendances'));
+
+        // 現在の表示月を取得（デフォルトは今月）
+        $month = $request->query('month', Carbon::now()->format('Y-m'));
+        $currentDate = Carbon::parse($month);
+
+        $startDate = $currentDate->copy()->startOfMonth();
+        $endDate = $currentDate->copy()->endOfMonth();
+
+        // 1ヶ月分のデータを一括取得（Eager LoadingでrestTimesも取得）
+        $attendances = Attendance::with('restTimes')
+            ->where('user_id', auth()->id())
+            ->whereBetween('date', [$startDate->format('Y-m-d'), $endDate->format('Y-m-d')])
+            ->get()
+            ->keyBy(function($item) {
+                return Carbon::parse($item->date)->format('Y-m-d');
+            });
+
+        return view('user.attendance.list', [
+            'attendances' => $attendances,
+            'displayMonth' => $currentDate->format('Y/m'),
+            'prevMonth' => $currentDate->copy()->subMonth()->format('Y-m'),
+            'nextMonth' => $currentDate->copy()->addMonth()->format('Y-m'),
+            'startDate' => $startDate,
+            'endDate' => $endDate,
+        ]);
+    }
+
+    public function show($attendance_id)
+    {
+        // Eager Loadingで休憩時間(restTimes)も一緒に取得
+        $attendance = Attendance::with('restTimes')->findOrFail($attendance_id);
+
+        // 整理したディレクトリ構造に合わせて user/attendance/detail.blade.php を表示
+        return view('user.attendance.detail', compact('attendance'));
     }
 }

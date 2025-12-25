@@ -23,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // Carbonのロケールを日本語に設定（Laravel 8で曜日の (木) などを出す）
+        \Carbon\Carbon::setLocale('ja');
     }
 }

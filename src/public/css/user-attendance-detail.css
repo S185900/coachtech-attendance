@@ -1,0 +1,278 @@
+body {
+    background-color: #f2f2f2;
+    margin: 0;
+    font-family: "Inter", sans-serif;
+}
+
+/* フォーム全体を中央に寄せるためのコンテナ余白（再確認） */
+.attendance-detail-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 20px;
+    /* 上下の余白を少し調整 */
+}
+
+/* ページタイトル（左側の黒いバー込み） */
+.page-title {
+    font-size: 30px;
+    font-weight: 700;
+    border-left: 8px solid #000;
+    padding-left: 25px;
+    margin-bottom: 40px;
+}
+
+/* テーブル全体のスタイル */
+.detail-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+}
+
+.detail-table tr {
+    border-bottom: 1px solid #E1E1E1;
+}
+
+.detail-table tr:last-child {
+    border-bottom: none;
+}
+
+/* ラベル列（名前、日付など） */
+/* テーブル全体の余白調整 */
+.detail-table th {
+    width: 25%;
+    /* 縦のパディングを 20px -> 30px に増やして行の高さを出す */
+    padding: 30px 40px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 16px;
+    color: #000000;
+}
+
+/* 入力・表示列 */
+.detail-table td {
+    /* 左右のパディングを調整して、項目名との距離を離す */
+    padding: 30px 40px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #000000;
+}
+
+/* テキスト表示（名前や承認待ち時の表示） */
+.user-name,
+.year-unit,
+.date-unit,
+.time-text,
+.note-text {
+    display: inline-block;
+}
+
+.user-name {
+ padding-left: 30px;
+}
+
+.year-unit,
+.date-unit {
+    margin-right: 15px;
+}
+
+/* 入力フォーム共通（時間・備考） */
+.input-time,
+.input-textarea {
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    border: 1px solid #D1D1D1;
+    border-radius: 4px;
+    padding: 8px 12px;
+}
+
+/* 1. 時間入力欄のコンテナにクラスを追加（または既存を利用） */
+.time-inputs {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: fit-content;
+    /* 中身の幅に合わせる */
+}
+
+/* 1. 入力ボックス同士の間隔を広げる */
+.time-inputs,
+.date-inputs-container {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    /* 15px から 30px に倍増 */
+}
+
+/* 日付行のコンテナ */
+.date-inputs-container {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    /* 出勤・退勤の gap と合わせる */
+}
+
+/* 「年」と「月日」の各幅を入力ボックス(120px)に合わせる */
+/* 3. 日付のボックス幅も念のため再確認（inputと同じ120pxを維持） */
+.date-year-wrapper,
+.date-day-wrapper {
+    width: 120px;
+    text-align: center;
+}
+
+/* 中央の「〜」と同じ幅を持つ不可視の要素 */
+.range-separator-hidden {
+    visibility: hidden;
+    font-weight: 700;
+}
+
+/* 既存のスタイルを微調整 */
+.year-unit,
+.date-unit {
+    margin-right: 0;
+    /* マージンをリセットして中央寄せに任せる */
+    font-weight: 700;
+}
+
+.input-time {
+    width: 120px;
+    text-align: center;
+    letter-spacing: 0.15rem;
+}
+
+.range-separator {
+    font-weight: 700;
+}
+
+/* Chrome, Edge などの時計アイコンを消す */
+input[type="time"]::-webkit-calendar-picker-indicator {
+    display: none;
+}
+
+/* ブラウザ標準のスタイルを極力リセット */
+input[type="time"] {
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+/* 2. 備考欄の textarea の幅を、計算式で指定する */
+/* 備考欄の幅を、上の入力欄の右端に合わせる最終調整 */
+/* 計算式: 
+   input(120px) + gap(30px) + separator(約15px) + gap(30px) + input(120px) 
+   = 約315px
+*/
+.input-textarea {
+    width: 315px;
+    /* ここを 275px から 315px 前後に増やす */
+    min-height: 140px;
+    padding: 15px;
+    border: 1px solid #D1D1D1;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 16px;
+    resize: none;
+    box-sizing: border-box;
+}
+
+/* フォーム下部のエリア */
+.form-actions {
+    margin-top: 30px;
+    text-align: right;
+}
+
+/* 修正ボタン */
+.submit-button {
+    background-color: #000000;
+    color: #ffffff;
+    border: none;
+    padding: 12px 40px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.submit-button:hover {
+    opacity: 0.8;
+}
+
+/* エラー・ステータスメッセージ */
+.status-message {
+    color: #ff4d4b;
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: 10px;
+}
+
+/* --- レスポンシブ対応 --- */
+
+/* PCサイズ（1400〜1540px） */
+@media screen and (min-width: 1400px) and (max-width: 1540px) {
+    .attendance-detail-container {
+        max-width: 1000px;
+        /* 少しゆとりを持たせる */
+        padding: 120px 20px;
+    }
+
+    .detail-table th,
+    .detail-table td {
+        padding: 25px 40px;
+        /* 余白を広げてゆったり見せる */
+    }
+}
+
+/* タブレットサイズ（768〜850px） */
+@media screen and (min-width: 768px) and (max-width: 850px) {
+    .attendance-detail-container {
+        max-width: 700px;
+        /* 画面幅に合わせて絞る */
+        padding: 60px 20px;
+    }
+
+    .page-title {
+        font-size: 24px;
+        padding-left: 15px;
+        border-left-width: 6px;
+    }
+
+    /* テーブルのラベル幅を調整 */
+    .detail-table th {
+        width: 30%;
+        /* ラベルを少し広めにする */
+        padding: 15px 20px;
+        font-size: 14px;
+    }
+
+    .detail-table td {
+        padding: 15px 20px;
+        font-size: 14px;
+    }
+
+    /* 時間入力欄（00:00 〜 00:00）が縦に潰れないように調整 */
+    .time-inputs {
+        gap: 8px;
+        /* 間隔を少し詰める */
+    }
+
+    .input-time {
+        width: 100px;
+        /* 入力欄を少し小さくして横並びを維持 */
+        padding: 6px 8px;
+        font-size: 14px;
+    }
+
+    .range-separator {
+        font-size: 12px;
+    }
+
+    /* 修正ボタンのサイズ調整 */
+    .submit-button {
+        padding: 10px 30px;
+        font-size: 14px;
+    }
+}
