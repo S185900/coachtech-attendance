@@ -33,15 +33,20 @@
             <tr>
                 <th>出勤・退勤</th>
                 <td class="time-inputs">
-                    @if($attendance->status == '承認待ち') {{-- 状態による分岐 --}}
+                    @if($isPending)
                         <span class="time-text">{{ $attendance->start_time->format('H:i') }}</span>
                         <span class="range-separator">〜</span>
-                        <span class="time-text">{{ $attendance->end_time->format('H:i') }}</span>
+                        <span class="time-text">{{ $attendance->end_time ? $attendance->end_time->format('H:i') : '' }}</span>
                     @else
                         <input type="time" name="start_time" value="{{ $attendance->start_time->format('H:i') }}" class="input-time">
                         <span class="range-separator">〜</span>
                         <input type="time" name="end_time" value="{{ $attendance->end_time ? $attendance->end_time->format('H:i') : '' }}" class="input-time">
                     @endif
+
+                    {{-- 出勤・退勤時間のエラーメッセージ --}}
+                    @error('start_time')
+                        <p class="status-message">{{ $message }}</p>
+                    @enderror
                 </td>
             </tr>
 
@@ -50,10 +55,10 @@
             <tr>
                 <th>休憩{{ $index > 0 ? $index + 1 : '' }}</th>
                 <td class="time-inputs">
-                    @if($attendance->status == '承認待ち')
+                    @if($isPending)
                         <span class="time-text">{{ $rest->start_time->format('H:i') }}</span>
                         <span class="range-separator">〜</span>
-                        <span class="time-text">{{ $rest->end_time->format('H:i') }}</span>
+                        <span class="time-text">{{ $rest->end_time ? $rest->end_time->format('H:i') : '' }}</span>
                     @else
                         <input type="time" name="rests[{{ $rest->id }}][start]" value="{{ $rest->start_time->format('H:i') }}" class="input-time">
                         <span class="range-separator">〜</span>
@@ -61,23 +66,39 @@
                     @endif
                 </td>
             </tr>
+
+            {{-- 休憩時間のエラーメッセージ --}}
+            @if($errors->has("rests.{$rest->id}.start") || $errors->has("rests.{$rest->id}.end"))
+                <tr>
+                    <th></th>
+                    <td><p class="status-message">休憩時間もしくは休憩終了時間が不適切な値です</p></td>
+                </tr>
+            @endif
+
             @endforeach
 
             {{-- 備考欄 --}}
             <tr>
                 <th>備考</th>
                 <td>
-                    @if($attendance->status == '承認待ち')
-                        <p class="note-text">{{ $attendance->reason }}</p>
+                    @if($isPending)
+                        {{-- 承認待ちの場合は申請テーブル（StampCorrectionRequest）に保存した理由を表示 --}}
+                        <p class="note-text">{{ $pendingRequest->reason }}</p>
                     @else
                         <textarea name="reason" class="input-textarea">{{ $attendance->reason }}</textarea>
+
+                        {{-- 備考欄のエラーメッセージ --}}
+                        @error('reason')
+                            <p class="status-message">{{ $message }}</p>
+                        @enderror
                     @endif
                 </td>
             </tr>
         </table>
 
         <div class="form-actions">
-            @if($attendance->status == '承認待ち')
+            {{-- 修正申請が「承認待ち」の場合 --}}
+            @if($isPending)
                 <p class="status-message">*承認待ちのため修正はできません。</p>
             @else
                 <button type="submit" class="submit-button">修正</button>

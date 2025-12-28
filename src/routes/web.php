@@ -58,7 +58,7 @@ Route::middleware(['auth:web'])->group(function () {
     Route::get('/attendance/{attendance_id}', [AttendanceController::class, 'show'])->name('attendance.detail');
 
     // 詳細画面の「修正」ボタンを押した時の送り先（保存用：POST）
-    Route::post('/attendance/update/{attendance_id}', [AttendanceController::class, 'update'])->name('attendance.update');
+    Route::post('/attendance/update/{attendance_id}', [AttendanceController::class, 'correctionRequest'])->name('attendance.update');
 
 
 

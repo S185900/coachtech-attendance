@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Models\Attendance;
 use App\Models\RestTime;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use App\Models\StampCorrectionRequest;
+use App\Http\Requests\AttendanceCorrectionRequest;
 
 
 class AttendanceController extends Controller
@@ -171,12 +174,57 @@ class AttendanceController extends Controller
         ]);
     }
 
+    // PG05: 勤怠詳細画面
     public function show($attendance_id)
     {
-        // Eager Loadingで休憩時間(restTimes)も一緒に取得
         $attendance = Attendance::with('restTimes')->findOrFail($attendance_id);
 
-        // 整理したディレクトリ構造に合わせて user/attendance/detail.blade.php を表示
-        return view('user.attendance.detail', compact('attendance'));
+        // 承認待ちの申請データを取得する
+        $pendingRequest = StampCorrectionRequest::where('attendance_id', $attendance_id)
+            ->where('status', 0)
+            ->first();
+
+        // 申請データが存在すれば isPending は true になる
+        $isPending = !is_null($pendingRequest);
+
+        return view('user.attendance.detail', compact('attendance', 'isPending', 'pendingRequest'));
+    }
+
+    /**
+     * 詳細画面からの修正申請処理
+     */
+    public function correctionRequest(AttendanceCorrectionRequest $request, $attendance_id)
+    {
+        $attendance = Attendance::findOrFail($attendance_id);
+        $dateStr = Carbon::parse($attendance->date)->format('Y-m-d');
+
+        DB::transaction(function () use ($attendance, $request, $dateStr) {
+            // 休憩時間の入力値をJSON用の配列に整形
+            $restTimesData = [];
+            if ($request->has('rests')) {
+                foreach ($request->rests as $restId => $times) {
+                    $restTimesData[] = [
+                        'rest_id' => $restId,
+                        'start'   => $times['start'],
+                        'end'     => $times['end'],
+                    ];
+                }
+            }
+
+            // 修正申請レコードの作成
+            StampCorrectionRequest::create([
+                'user_id'              => auth()->id(),
+                'attendance_id'        => $attendance->id,
+                'corrected_start_time' => Carbon::parse($dateStr . ' ' . $request->start_time),
+                'corrected_end_time'   => Carbon::parse($dateStr . ' ' . $request->end_time),
+                'corrected_rest_times' => $restTimesData, // 整形した配列をJSONとして保存
+                'reason'               => $request->reason,
+                'status'               => 0, // 承認待ち
+            ]);
+        });
+
+        // 勤怠一覧画面へリダイレクトし、成功メッセージを表示
+        return redirect()->route('attendance.list')
+            ->with('success', '修正申請を出しました。承認されるまで修正はできません。');
     }
 }

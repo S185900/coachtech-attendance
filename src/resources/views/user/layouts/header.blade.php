@@ -13,7 +13,7 @@
 <!-- ログイン前共通ヘッダー -->
 <body>
     <header class="header">
-        <a href="/" class="header-logo">
+        <a href="user/login" class="header-logo">
             <img class="header-logo-img" src="{{ asset('images/coachtech-logo.png') }}" alt="COACHTECH">
         </a>
     </header>
