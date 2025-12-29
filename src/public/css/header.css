@@ -37,7 +37,7 @@ body {
 /* PCサイズ（1400〜1540px） */
 @media screen and (min-width: 1400px) and (max-width: 1540px) {
     .header {
-        height: 90px;
+        height: 80px;
     }
 
     .header-logo-img {

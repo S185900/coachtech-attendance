@@ -5,7 +5,7 @@ body {
 }
 
 .attendance-list-container {
-    max-width: 900px;
+    max-width: 940px;
     margin: 0 auto;
     padding: 90px 20px;
 }
@@ -25,7 +25,7 @@ body {
     justify-content: space-between;
     align-items: center;
     background-color: #ffffff;
-    padding: 15px 30px;
+    padding: 17px 30px;
     border-radius: 10px;
     margin-bottom: 30px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
@@ -40,6 +40,7 @@ body {
     text-decoration: none;
     font-weight: 700;
     font-size: 16px;
+    letter-spacing: 0.15em;
     transition: opacity 0.2s ease;
         /* 変化を滑らかにする */
 }
@@ -109,6 +110,7 @@ body {
     font-weight: 700;
     font-size: 16px;
     color: #737373;
+    letter-spacing: 0.15em;
     border-bottom: 3px solid #E1E1E1;
 }
 
@@ -118,6 +120,7 @@ body {
     font-weight: 700;
     font-size: 16px;
     color: #737373;
+    letter-spacing: 0.15em;
     border-bottom: 2px solid #E1E1E1;
 }
 

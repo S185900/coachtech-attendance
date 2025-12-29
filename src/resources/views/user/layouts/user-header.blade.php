@@ -13,7 +13,7 @@
 <!-- ユーザーログイン後ヘッダー -->
 <body>
     <header class="header">
-        <a href="/" class="header-logo">
+        <a href="{{ route('attendance.list') }}" class="header-logo">
             <img class="header-logo-img" src="{{ asset('images/coachtech-logo.png') }}" alt="COACHTECH">
         </a>
 
@@ -39,8 +39,7 @@
                     </a>
                 </li>
 
-                <li class="header-nav-item"><a href="#" class="header-nav-link">申請</a></li>
-                <!-- <a href="{{ route('stamp_correction.list') }}" class="header-nav-link">申請</a> -->
+                <li class="header-nav-item"><a href="{{ route('stamp_correction_request.list') }}" class="header-nav-link">申請</a></li>
 
                 <li class="header-nav-item">
                     <form action="{{ route('logout') }}" method="POST">

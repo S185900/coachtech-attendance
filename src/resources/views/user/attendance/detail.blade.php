@@ -32,21 +32,24 @@
             </tr>
             <tr>
                 <th>出勤・退勤</th>
-                <td class="time-inputs">
-                    @if($isPending)
-                        <span class="time-text">{{ $attendance->start_time->format('H:i') }}</span>
-                        <span class="range-separator">〜</span>
-                        <span class="time-text">{{ $attendance->end_time ? $attendance->end_time->format('H:i') : '' }}</span>
-                    @else
-                        <input type="time" name="start_time" value="{{ $attendance->start_time->format('H:i') }}" class="input-time">
-                        <span class="range-separator">〜</span>
-                        <input type="time" name="end_time" value="{{ $attendance->end_time ? $attendance->end_time->format('H:i') : '' }}" class="input-time">
-                    @endif
+                <td>
+                    <div class="time-inputs">
+                        @if($isPending)
+                            <span class="time-text">{{ $attendance->start_time->format('H:i') }}</span>
+                            <span class="range-separator">〜</span>
+                            <span class="time-text">{{ $attendance->end_time ? $attendance->end_time->format('H:i') : '' }}</span>
+                        @else
+                            <input type="time" name="start_time" value="{{ $attendance->start_time->format('H:i') }}" class="input-time">
+                            <span class="range-separator">〜</span>
+                            <input type="time" name="end_time" value="{{ $attendance->end_time ? $attendance->end_time->format('H:i') : '' }}" class="input-time">
+                        @endif
+                    </div>
 
                     {{-- 出勤・退勤時間のエラーメッセージ --}}
                     @error('start_time')
                         <p class="status-message">{{ $message }}</p>
                     @enderror
+                    
                 </td>
             </tr>
 
@@ -54,27 +57,25 @@
             @foreach($attendance->restTimes as $index => $rest)
             <tr>
                 <th>休憩{{ $index > 0 ? $index + 1 : '' }}</th>
-                <td class="time-inputs">
-                    @if($isPending)
-                        <span class="time-text">{{ $rest->start_time->format('H:i') }}</span>
-                        <span class="range-separator">〜</span>
-                        <span class="time-text">{{ $rest->end_time ? $rest->end_time->format('H:i') : '' }}</span>
-                    @else
-                        <input type="time" name="rests[{{ $rest->id }}][start]" value="{{ $rest->start_time->format('H:i') }}" class="input-time">
-                        <span class="range-separator">〜</span>
-                        <input type="time" name="rests[{{ $rest->id }}][end]" value="{{ $rest->end_time ? $rest->end_time->format('H:i') : '' }}" class="input-time">
+                <td>
+                    <div class="time-inputs">
+                        @if($isPending)
+                            <span class="time-text">{{ $rest->start_time->format('H:i') }}</span>
+                            <span class="range-separator">〜</span>
+                            <span class="time-text">{{ $rest->end_time ? $rest->end_time->format('H:i') : '' }}</span>
+                        @else
+                            <input type="time" name="rests[{{ $rest->id }}][start]" value="{{ $rest->start_time->format('H:i') }}" class="input-time">
+                            <span class="range-separator">〜</span>
+                            <input type="time" name="rests[{{ $rest->id }}][end]" value="{{ $rest->end_time ? $rest->end_time->format('H:i') : '' }}" class="input-time">
+                        @endif
+                    </div>
+
+                    {{-- 休憩時間のエラーメッセージ --}}
+                    @if($errors->has("rests.{$rest->id}.start") || $errors->has("rests.{$rest->id}.end"))
+                        <p class="status-message">休憩時間もしくは休憩終了時間が不適切な値です</p>
                     @endif
                 </td>
             </tr>
-
-            {{-- 休憩時間のエラーメッセージ --}}
-            @if($errors->has("rests.{$rest->id}.start") || $errors->has("rests.{$rest->id}.end"))
-                <tr>
-                    <th></th>
-                    <td><p class="status-message">休憩時間もしくは休憩終了時間が不適切な値です</p></td>
-                </tr>
-            @endif
-
             @endforeach
 
             {{-- 備考欄 --}}

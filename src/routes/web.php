@@ -3,7 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\StampCorrectionRequestController;
+use App\Http\Controllers\AdminAttendanceController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -55,19 +58,19 @@ Route::middleware(['auth:web'])->group(function () {
 
     // PG05: 勤怠詳細
     // URL例: /attendance/123
-    Route::get('/attendance/{attendance_id}', [AttendanceController::class, 'show'])->name('attendance.detail');
+    Route::get('/attendance/detail/{attendance_id}', [AttendanceController::class, 'show'])->name('attendance.detail');
 
     // 詳細画面の「修正」ボタンを押した時の送り先（保存用：POST）
     Route::post('/attendance/update/{attendance_id}', [AttendanceController::class, 'correctionRequest'])->name('attendance.update');
 
-
-
-
+    // PG07: 申請一覧画面
+    Route::get('/stamp_correction_request/list', [StampCorrectionRequestController::class, 'index'])
+    ->name('stamp_correction_request.list');
 
     // auth:web,admin のように両方のガードを許可するように変更
-    Route::get('/stamp_correction_request/list', [StampCorrectionRequestController::class, 'index'])
-        ->middleware('auth:web,admin')
-        ->name('stamp_correction.list');
+    // Route::get('/stamp_correction/list', [StampCorrectionRequestController::class, 'index'])
+    //     ->middleware('auth:web,admin')
+    //     ->name('stamp_correction.list');
 });
 
 /*
@@ -77,9 +80,18 @@ Route::middleware(['auth:web'])->group(function () {
 */
 Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
     // 勤怠一覧画面
-    Route::get('/attendance/list', function () {
-        return view('admin.attendance.list');
-    })->name('admin.attendance.list');
+    // Route::get('/attendance/list', function () {
+    //     return view('admin.attendance.list');
+    // })->name('admin.attendance.list');
+
+    // PG08: 管理者勤怠一覧
+    Route::get('/attendance/list', [AdminAttendanceController::class, 'index'])
+        ->name('admin.attendance.list');
+
+    // 勤怠詳細（PG10）
+    // URLは /admin/attendance/detail/{id} になります
+    Route::get('/attendance/detail/{id}', [AdminAttendanceController::class, 'showDetail'])
+        ->name('admin.attendance.detail');
 
     // 修正申請一覧（管理者）
     // Route::get('/stamp_correction_request/list', [StampCorrectionRequestController::class, 'adminIndex']);

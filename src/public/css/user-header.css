@@ -70,7 +70,6 @@ body {
 /* PCサイズ（1400〜1540px） */
 @media screen and (min-width: 1400px) and (max-width: 1540px) {
     .header {
-        height: 90px;
         position: relative;
             /* メニューの基準点 */
             justify-content: space-between;
@@ -87,7 +86,7 @@ body {
 @media screen and (min-width: 768px) and (max-width: 850px) {
     /* ロゴサイズ調整 */
         .header-logo-img {
-            width: 250px;
+            width: 290px;
         }
     
         /* 三本線アイコンの表示 */

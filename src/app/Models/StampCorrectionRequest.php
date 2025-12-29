@@ -14,7 +14,7 @@ class StampCorrectionRequest extends Model
         'attendance_id',
         'corrected_start_time',
         'corrected_end_time',
-        'corrected_rest_times',
+        'corrected_rest_times' => 'array',
         'reason',
         'status',
         'master_id',

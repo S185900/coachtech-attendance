@@ -72,4 +72,16 @@ class Attendance extends Model
         $workMinutes = $totalDuration - $restMinutes;
         return sprintf('%d:%02d', floor($workMinutes / 60), $workMinutes % 60);
     }
+
+    // 休憩時間の合計（例：01:00）を返すアクセサ
+    public function getTotalRestDurationAttribute()
+    {
+        $totalMinutes = 0;
+        foreach ($this->restTimes as $rest) {
+            if ($rest->end_time) {
+                $totalMinutes += $rest->start_time->diffInMinutes($rest->end_time);
+            }
+        }
+        return sprintf('%d:%02d', floor($totalMinutes / 60), $totalMinutes % 60);
+    }
 }
