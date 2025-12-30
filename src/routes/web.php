@@ -79,10 +79,6 @@ Route::middleware(['auth:web'])->group(function () {
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
-    // 勤怠一覧画面
-    // Route::get('/attendance/list', function () {
-    //     return view('admin.attendance.list');
-    // })->name('admin.attendance.list');
 
     // PG08: 管理者勤怠一覧
     Route::get('/attendance/list', [AdminAttendanceController::class, 'index'])
@@ -97,6 +93,10 @@ Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
     // Route::get('/stamp_correction_request/list', [StampCorrectionRequestController::class, 'adminIndex']);
 
     Route::get('/stamp_correction_request/approve/{id}', [StampCorrectionRequestController::class, 'showApprove']);
+
+    // 勤怠詳細の更新・承認処理
+    Route::post('/attendance/approve/{id}', [AdminAttendanceController::class, 'approve'])
+        ->name('admin.attendance.approve');
 
     // 管理者ログアウト
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('admin.logout');

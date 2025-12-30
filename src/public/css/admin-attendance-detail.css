@@ -1,0 +1,308 @@
+body {
+    background-color: #f2f2f2;
+    margin: 0;
+    font-family: "Inter", sans-serif;
+}
+
+.attendance-detail-container {
+    max-width: 940px;
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+
+.page-title {
+    font-size: 30px;
+    font-weight: 700;
+    border-left: 8px solid #000;
+    padding-left: 25px;
+    margin-bottom: 40px;
+}
+
+.detail-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+}
+
+.detail-table tr {
+    border-bottom: 2px solid #E1E1E1;
+}
+
+.detail-table tr:last-child {
+    border-bottom: none;
+}
+
+.detail-table th {
+    width: 25%;
+    padding: 30px 40px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0.15em;
+    color: #000000;
+}
+
+.detail-table td {
+    padding: 30px 40px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #000000;
+}
+
+/* テキスト表示と入力欄の共通設定 */
+.user-name,
+.year-unit,
+.date-unit,
+.time-text,
+.note-text {
+    display: inline-block;
+    vertical-align: middle;
+    letter-spacing: 0.15em;
+}
+
+.time-text {
+    width: 120px;
+    text-align: center;
+}
+
+.note-text {
+    width: 315px;
+    margin: 0;
+    line-height: 1.6;
+    letter-spacing: 0.15em;
+    white-space: pre-wrap;
+    display: inline-block;
+}
+
+.user-name {
+    padding-left: 30px;
+    letter-spacing: 0.15em;
+}
+
+/* --- 入力フォーム設定：ここから重要 --- */
+.input-time,
+.input-textarea {
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0.15em;
+    border: 1px solid #E1E1E1;
+    border-radius: 4px;
+    padding: 8px 12px;
+    box-sizing: border-box;
+    /* 1. positionを relative にして z-index を効かせる */
+    position: relative;
+    z-index: 10;
+    /* 2. 背景色を明示（背後の要素を遮断するため） */
+    background-color: #ffffff;
+    /* 3. マウスイベントを確実に受け取る */
+    pointer-events: auto;
+}
+
+.input-textarea {
+    border: 1px solid #D9D9D9;
+}
+
+.input-time {
+    width: 120px;
+    text-align: center;
+    letter-spacing: 0.15rem;
+    background-color: #ffffff;
+    display: inline-block;
+}
+
+.time-inputs input[type="time"]::-webkit-calendar-picker-indicator {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    /* 見えなくする */
+    cursor: pointer;
+    z-index: 11;
+    /* 入力文字より上に透明なボタンがある状態 */
+}
+
+.time-inputs input[type="time"] {
+    appearance: none;
+    -moz-appearance: textfield;
+    /* Firefox用 */
+}
+
+.input-textarea {
+    width: 315px;
+    min-height: 90px;
+    resize: none;
+}
+
+/* 4. コンテナ自体の重なり順を低くする */
+.time-inputs,
+.date-inputs-container {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    width: fit-content;
+    position: relative;
+    z-index: 1;
+    /* input(z-index:10) より下に配置 */
+}
+
+.date-year-wrapper,
+.date-day-wrapper {
+    width: 120px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.range-separator,
+.range-separator-hidden {
+    font-weight: 700;
+    pointer-events: none;
+    /* 重なっても背後の入力を邪魔しない */
+}
+
+.range-separator-hidden {
+    visibility: hidden;
+}
+
+/* 5. 邪魔なテキスト類をクリック不可にして透過させる */
+.range-separator,
+.range-separator-hidden,
+.year-unit,
+.date-unit,
+.time-text {
+    pointer-events: none;
+    /* これにより、もし重なっていても下のinputをクリックできる */
+}
+
+.form-actions {
+    margin-top: 30px;
+    text-align: right;
+}
+
+.submit-button {
+    background-color: #000000;
+    color: #ffffff;
+    border: none;
+    padding: 13px 49px;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.status-message {
+    color: #ff0000;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    margin-top: 8px;
+}
+
+/* --- レスポンシブ対応 --- */
+
+/* PCサイズ（1400〜1540px） */
+@media screen and (min-width: 1400px) and (max-width: 1540px) {
+    .attendance-detail-container {
+        max-width: 1000px;
+        padding: 120px 20px;
+    }
+}
+
+/* タブレットサイズ（768〜850px） */
+@media screen and (min-width: 768px) and (max-width: 850px) {
+    .attendance-detail-container {
+        max-width: 700px;
+        padding: 60px 20px;
+    }
+
+    .page-title {
+        font-size: 24px;
+        padding-left: 15px;
+        border-left-width: 6px;
+    }
+
+    /* テーブルのラベル幅を調整 */
+    .detail-table th {
+        width: 30%;
+        /* ラベルを少し広めにする */
+        padding: 20px;
+        font-size: 14px;
+    }
+
+    .detail-table td {
+        padding: 20px;
+        font-size: 14px;
+    }
+
+    /* 日付と時間のコンテナ共通設定 */
+    .date-inputs-container,
+    .time-inputs {
+        gap: 0;
+        /* gapを0にして、セパレーターの幅で間隔を制御 */
+        justify-content: flex-start;
+        letter-spacing: 0.15em;
+    }
+
+    /* 各入力・表示ブロックの幅を110pxで統一（少し広げました） */
+    .date-year-wrapper,
+    .date-day-wrapper,
+    .input-time,
+    .time-text {
+        width: 110px !important;
+        flex-shrink: 0;
+        font-size: 14px;
+    }
+
+    /* 「〜」セパレーターの幅と位置を固定 */
+    .range-separator,
+    .range-separator-hidden {
+        width: 40px;
+        text-align: center;
+        /* これで中央に配置されます */
+        display: inline-block;
+        font-size: 14px;
+    }
+
+    .user-name {
+        padding-left: 20px;
+        font-size: 14px;
+    }
+
+    /* 年、月日の文字サイズを少し調整 */
+    .year-unit,
+    .date-unit {
+        font-size: 14px;
+        margin-right: 0;
+    }
+
+    /* 備考欄の幅調整 */
+    .input-textarea,
+    .note-text {
+        width: 260px;
+        /* 110 + 40 + 110 に合わせた幅 */
+        font-size: 14px;
+        display: block;
+    }
+
+    .input-time {
+        padding: 6px 0;
+        /* 横パディングを削って中央寄せを優先 */
+    }
+
+    .submit-button {
+        font-size: 14px;
+        padding: 10px 40px;
+    }
+
+    .status-message {
+        font-size: 13px;
+    }
+}

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\StampCorrectionRequest;
 use Carbon\Carbon;
 
 class Attendance extends Model
@@ -83,5 +84,13 @@ class Attendance extends Model
             }
         }
         return sprintf('%d:%02d', floor($totalMinutes / 60), $totalMinutes % 60);
+    }
+
+    /**
+     * 勤怠に紐づく修正申請を取得
+     */
+    public function stampCorrectionRequests()
+    {
+        return $this->hasMany(StampCorrectionRequest::class);
     }
 }

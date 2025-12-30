@@ -13,7 +13,7 @@
 <!-- 管理者ログイン後ヘッダー -->
 <body>
     <header class="header">
-        <a href="/" class="header-logo">
+        <a href="{{ route('admin.attendance.list') }}" class="header-logo">
             <img class="header-logo-img" src="{{ asset('images/coachtech-logo.png') }}" alt="COACHTECH">
         </a>
 
