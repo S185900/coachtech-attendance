@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\StampCorrectionRequestController;
 use App\Http\Controllers\AdminAttendanceController;
+use App\Http\Controllers\AdminStaffController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
+
 
 
 
@@ -67,6 +69,7 @@ Route::middleware(['auth:web'])->group(function () {
     Route::get('/stamp_correction_request/list', [StampCorrectionRequestController::class, 'index'])
     ->name('stamp_correction_request.list');
 
+
     // auth:web,admin のように両方のガードを許可するように変更
     // Route::get('/stamp_correction/list', [StampCorrectionRequestController::class, 'index'])
     //     ->middleware('auth:web,admin')
@@ -78,11 +81,11 @@ Route::middleware(['auth:web'])->group(function () {
 | 3. 管理者専用ルート (auth:admin)
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
+Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(function () {
 
     // PG08: 管理者勤怠一覧
     Route::get('/attendance/list', [AdminAttendanceController::class, 'index'])
-        ->name('admin.attendance.list');
+        ->name('attendance.list');
 
     // 勤怠詳細（PG10）
     // URLは /admin/attendance/detail/{id} になります
@@ -98,6 +101,17 @@ Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
     Route::post('/attendance/approve/{id}', [AdminAttendanceController::class, 'approve'])
         ->name('admin.attendance.approve');
 
+    // PG09: スタッフ一覧画面
+    Route::get('/staff/list', [AdminStaffController::class, 'index'])
+        ->name('staff.list');
+
+    // PG12: スタッフ別勤怠一覧
+    Route::get('/staff/attendance/{id}', [AdminStaffController::class, 'staffAttendance'])
+        ->name('attendance.staff');
+    
+    Route::get('/attendance/detail/{id}', [AdminAttendanceController::class, 'showDetail'])
+        ->name('attendance.detail');
+
     // 管理者ログアウト
-    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('admin.logout');
+    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 });
