@@ -66,14 +66,10 @@ Route::middleware(['auth:web'])->group(function () {
     Route::post('/attendance/update/{attendance_id}', [AttendanceController::class, 'correctionRequest'])->name('attendance.update');
 
     // PG07: 申請一覧画面
+    // ここで ->name('stamp_correction_request.list') となっているか確認！
     Route::get('/stamp_correction_request/list', [StampCorrectionRequestController::class, 'index'])
-    ->name('stamp_correction_request.list');
+        ->name('stamp_correction_request.list');
 
-
-    // auth:web,admin のように両方のガードを許可するように変更
-    // Route::get('/stamp_correction/list', [StampCorrectionRequestController::class, 'index'])
-    //     ->middleware('auth:web,admin')
-    //     ->name('stamp_correction.list');
 });
 
 /*
@@ -84,34 +80,43 @@ Route::middleware(['auth:web'])->group(function () {
 Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(function () {
 
     // PG08: 管理者勤怠一覧
-    Route::get('/attendance/list', [AdminAttendanceController::class, 'index'])
-        ->name('attendance.list');
+    Route::get('/attendance/list', [AdminAttendanceController::class, 'index'])->name('attendance.list');
 
-    // 勤怠詳細（PG10）
-    // URLは /admin/attendance/detail/{id} になります
-    Route::get('/attendance/detail/{id}', [AdminAttendanceController::class, 'showDetail'])
-        ->name('admin.attendance.detail');
+    // PG10: 勤怠詳細
+    Route::get('/attendance/detail/{id}', [AdminAttendanceController::class, 'showDetail'])->name('attendance.detail');
 
-    // 修正申請一覧（管理者）
-    // Route::get('/stamp_correction_request/list', [StampCorrectionRequestController::class, 'adminIndex']);
-
-    Route::get('/stamp_correction_request/approve/{id}', [StampCorrectionRequestController::class, 'showApprove']);
-
-    // 勤怠詳細の更新・承認処理
-    Route::post('/attendance/approve/{id}', [AdminAttendanceController::class, 'approve'])
-        ->name('admin.attendance.approve');
+    // 勤怠詳細からの更新・承認 (POST) 
+    // これにより route('admin.attendance.approve') が有効になります
+    Route::post('/attendance/detail/{id}', [AdminAttendanceController::class, 'approve'])->name('attendance.approve');
 
     // PG09: スタッフ一覧画面
-    Route::get('/staff/list', [AdminStaffController::class, 'index'])
-        ->name('staff.list');
+    Route::get('/staff/list', [AdminStaffController::class, 'index'])->name('staff.list');
 
     // PG12: スタッフ別勤怠一覧
-    Route::get('/staff/attendance/{id}', [AdminStaffController::class, 'staffAttendance'])
-        ->name('attendance.staff');
-    
-    Route::get('/attendance/detail/{id}', [AdminAttendanceController::class, 'showDetail'])
-        ->name('attendance.detail');
+    Route::get('/staff/attendance/{id}', [AdminStaffController::class, 'staffAttendance'])->name('attendance.staff');
 
     // 管理者ログアウト
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| 4. 特別なパスを持つ管理者ルート (admin prefixなし)
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth:admin'])->group(function () {
+
+    // PG12: 申請一覧画面（管理者）
+    // URLは /stamp_correction_request/list だが、名前は admin.stamp_correction.list
+    Route::get('/admin/stamp_correction_request/list', [StampCorrectionRequestController::class, 'adminIndex'])
+        ->name('admin.stamp_correction.list');
+
+    // PG13: 修正申請承認画面（管理者）
+    Route::get('/admin/stamp_correction_request/approve/{attendance_correct_request_id}', [StampCorrectionRequestController::class, 'showApprove'])
+        ->name('admin.stamp_correction.approve');
+
+    // 承認実行（POST）
+    Route::post('/admin/stamp_correction_request/approve/{id}', [StampCorrectionRequestController::class, 'approve'])
+        ->name('admin.stamp_correction.update');
 });

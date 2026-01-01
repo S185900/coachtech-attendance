@@ -13,7 +13,7 @@ body {
 .page-title {
     font-size: 30px;
     font-weight: 700;
-    border-left: 8px solid #000;
+    border-left: 8px solid #000000;
     padding-left: 25px;
     margin-bottom: 40px;
 }
@@ -43,7 +43,7 @@ body {
     font-weight: 700;
     font-size: 16px;
     letter-spacing: 0.15em;
-    color: #000000;
+    color: #737373;
 }
 
 .detail-table td {
@@ -103,10 +103,6 @@ body {
     pointer-events: auto;
 }
 
-.input-textarea {
-    border: 1px solid #D9D9D9;
-}
-
 .input-time {
     width: 120px;
     text-align: center;
@@ -135,9 +131,10 @@ body {
 }
 
 .input-textarea {
-    width: 315px;
+    width: 316px;
     min-height: 90px;
     resize: none;
+    border: 1px solid #D9D9D9;
 }
 
 /* 4. コンテナ自体の重なり順を低くする */
@@ -189,7 +186,7 @@ body {
     background-color: #000000;
     color: #ffffff;
     border: none;
-    padding: 13px 49px;
+    padding: 9px 40px;
     font-size: 22px;
     font-weight: 700;
     letter-spacing: 0.15em;

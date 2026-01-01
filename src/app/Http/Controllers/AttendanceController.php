@@ -205,8 +205,8 @@ class AttendanceController extends Controller
                 foreach ($request->rests as $restId => $times) {
                     $restTimesData[] = [
                         'rest_id' => $restId,
-                        'start'   => $times['start'],
-                        'end'     => $times['end'],
+                        'start'   => $times['start'], // キーは 'start'
+                        'end'     => $times['end'],   // キーは 'end'
                     ];
                 }
             }

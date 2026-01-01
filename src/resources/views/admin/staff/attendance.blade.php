@@ -47,7 +47,8 @@
             @foreach($attendances as $attendance)
             <tr>
                 {{-- $attendance->work_date を $attendance->date に修正 --}}
-                <td>{{ $attendance->date->format('Y/m/d') }}</td>
+                {{-- 修正後：06/01(木) 形式 --}}
+                <td>{{ \Carbon\Carbon::parse($attendance->date)->isoFormat('MM/DD(ddd)') }}</td>
 
                 <td>{{ $attendance->start_time->format('H:i') }}</td>
                 <td>{{ $attendance->end_time ? $attendance->end_time->format('H:i') : '' }}</td>

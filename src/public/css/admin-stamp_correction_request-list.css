@@ -1,0 +1,158 @@
+body {
+    background-color: #f2f2f2;
+    margin: 0;
+    font-family: "Inter", sans-serif;
+}
+
+.stamp_correction_request-list-container {
+    max-width: 940px;
+    margin: 0 auto;
+    padding: 90px 20px;
+}
+
+/* ページタイトル（左側の黒いバー込み） */
+.page-title {
+    font-size: 30px;
+    font-weight: 700;
+    border-left: 8px solid #000;
+    padding-left: 25px;
+    margin-bottom: 40px;
+}
+
+/* タブメニュー */
+.tabs {
+    display: flex;
+    gap: 90px;
+    border-bottom: 1px solid #000000;
+    /* 下の長い横線 */
+    margin-bottom: 40px;
+    padding-left: 50px;
+}
+
+.tab-item {
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 400;
+    color: #000000;
+    letter-spacing: 0.15em;
+    padding-bottom: 10px;
+    position: relative;
+}
+
+/* 選択中のタブの下だけに黒い線を重ねる場合（画像 PG07 の再現） */
+.tab-item.active {
+    position: relative;
+    font-weight: 700;
+    color: #000000;
+}
+
+.tab-item:hover {
+    opacity: 0.7;
+}
+
+/* テーブルスタイル */
+.stamp_correction_request-table {
+    width: 100%;
+    background-color: #ffffff;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+    /* 角丸を適用するため */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.stamp_correction_request-table th {
+    padding: 10px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 16px;
+    color: #737373;
+    letter-spacing: 0.15em;
+    border-bottom: 3px solid #E1E1E1;
+}
+
+.stamp_correction_request-table td {
+    padding: 12px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 16px;
+    color: #737373;
+    letter-spacing: 0.15em;
+    border-bottom: 2px solid #E1E1E1;
+}
+
+/* 状態や日付など中央寄せにしたい項目があれば個別に設定 */
+.stamp_correction_request-table th:nth-child(4),
+.stamp_correction_request-table td:nth-child(4) {
+    text-align: left;
+    padding-left: 30px;
+}
+
+.stamp_correction_request-table th:nth-child(4) {
+    padding-left: 40px;
+}
+
+/* 対象日時（3番目の列）と 申請日時（5番目の列） */
+.stamp_correction_request-table td:nth-child(3),
+.stamp_correction_request-table td:nth-child(5) {
+    letter-spacing: 0;
+}
+
+.detail-link {
+    color: #000000;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.detail-link:hover {
+    opacity: 0.6;
+}
+
+/* --- レスポンシブ対応 --- */
+
+/* PCサイズ（1400〜1540px） */
+@media screen and (min-width: 1400px) and (max-width: 1540px) {
+    .stamp_correction_request-list-container {
+        max-width: 1200px;
+        /* 画面幅に合わせて少し広げる */
+        padding: 120px 20px;
+    }
+}
+
+/* タブレットサイズ（768〜850px） */
+@media screen and (min-width: 768px) and (max-width: 850px) {
+    .stamp_correction_request-list-container {
+        max-width: 900px;
+        padding: 60px 30px;
+    }
+
+    .page-title {
+        font-size: 24px;
+        border-left-width: 6px;
+        padding-left: 15px;
+    }
+
+    .date-nav {
+        padding: 12px 20px;
+    }
+
+    .current-date-display {
+        font-size: 18px;
+    }
+
+    /* テーブルが画面外にはみ出さないように親要素でスクロールを許可 */
+    .stamp_correction_request-list-container {
+        overflow-x: auto;
+    }
+
+    .stamp_correction_request-table {
+        min-width: 700px;
+        /* テーブルが潰れすぎないように最小幅を確保 */
+    }
+
+    .stamp_correction_request-table th,
+    .stamp_correction_request-table td {
+        padding: 12px 8px;
+        font-size: 14px;
+    }
+}

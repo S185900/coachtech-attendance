@@ -12,15 +12,20 @@ class StampCorrectionRequest extends Model
     protected $fillable = [
         'user_id',
         'attendance_id',
+        'corrected_rest_times',
         'corrected_start_time',
         'corrected_end_time',
-        'start_time' => 'datetime',
-        'end_time' => 'datetime',
-        'corrected_rest_times' => 'array',
         'reason',
         'status',
         'master_id',
         'master_comment',
+    ];
+
+    // ここが重要：データの型を定義します
+    protected $casts = [
+        'corrected_rest_times' => 'array',    // JSONを配列として扱う
+        'corrected_start_time' => 'datetime',
+        'corrected_end_time'   => 'datetime',
     ];
 
     protected $dates = ['corrected_start_time', 'corrected_end_time'];

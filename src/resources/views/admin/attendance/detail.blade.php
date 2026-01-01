@@ -9,7 +9,7 @@
 <div class="attendance-detail-container">
     <h1 class="page-title">勤怠詳細</h1>
 
-    <form action="{{ route('admin.attendance.approve', ['id' => $attendance->id]) }}" method="POST">
+    <form action="{{ route('admin.attendance.detail', ['id' => $attendance->id]) }}" method="POST">
         @csrf
         <table class="detail-table">
             <tr>
@@ -60,23 +60,38 @@
                 </td>
             </tr>
 
-            {{-- 休憩時間のループ --}}
-            @foreach($attendance->restTimes as $index => $rest)
+            {{-- 休憩時間のループ部分の修正 --}}
+            {{-- 休憩時間の判定と表示 --}}
+            @php
+                $displayRestTimes = [];
+                if ($isPending && !empty($pendingRequest->corrected_rest_times)) {
+                    // モデルのキャスト(array)により、そのまま配列として使えます
+                    $displayRestTimes = $pendingRequest->corrected_rest_times;
+                } else {
+                    foreach($attendance->restTimes as $rest) {
+                        $displayRestTimes[] = [
+                            'rest_id' => $rest->id,
+                            'start'   => $rest->start_time->format('H:i'),
+                            'end'     => $rest->end_time ? $rest->end_time->format('H:i') : ''
+                        ];
+                    }
+                }
+            @endphp
+
+            @foreach($displayRestTimes as $index => $rest)
             <tr>
                 <th>休憩{{ $index > 0 ? $index + 1 : '' }}</th>
                 <td>
                     <div class="time-inputs">
-                        <input type="time" name="rests[{{ $rest->id }}][start]" value="{{ old("rests.{$rest->id}.start", $rest->start_time->format('H:i')) }}" class="input-time">
+                        {{-- キーが存在するかチェックしながら表示 --}}
+                        <input type="time" name="rests[{{ $rest['rest_id'] ?? $index }}][start]" 
+                            value="{{ old("rests." . ($rest['rest_id'] ?? $index) . ".start", $rest['start'] ?? '') }}" 
+                            class="input-time">
                         <span class="range-separator">〜</span>
-                        <input type="time" name="rests[{{ $rest->id }}][end]" value="{{ old("rests.{$rest->id}.end", $rest->end_time ? $rest->end_time->format('H:i') : '') }}" class="input-time">
+                        <input type="time" name="rests[{{ $rest['rest_id'] ?? $index }}][end]" 
+                            value="{{ old("rests." . ($rest['rest_id'] ?? $index) . ".end", $rest['end'] ?? '') }}" 
+                            class="input-time">
                     </div>
-                    {{-- 休憩個別のエラー表示 --}}
-                    @error("rests.{$rest->id}.start")
-                        <p class="status-message">{{ $message }}</p>
-                    @enderror
-                    @error("rests.{$rest->id}.end")
-                        <p class="status-message">{{ $message }}</p>
-                    @enderror
                 </td>
             </tr>
             @endforeach
