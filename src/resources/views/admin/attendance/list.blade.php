@@ -50,7 +50,7 @@
                 {{-- 合計休憩時間を計算（モデルにアクセサを作っておくと便利です） --}}
                 <td>{{ $attendance->total_rest_duration }}</td> 
                 {{-- 勤務合計時間を計算 --}}
-                <td>{{ $attendance->total_work_duration }}</td>
+                <td>{{ $attendance->work_time }}</td>
                 <td>
                     {{-- 管理者用の詳細画面（PG10）へのリンク --}}
                     <a href="{{ route('admin.attendance.detail', ['id' => $attendance->id]) }}" class="detail-link">詳細</a>

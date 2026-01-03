@@ -60,14 +60,16 @@
                 </td>
             </tr>
 
-            {{-- 休憩時間のループ部分の修正 --}}
-            {{-- 休憩時間の判定と表示 --}}
+            {{-- 休憩時間の判定と表示用データの準備 --}}
             @php
                 $displayRestTimes = [];
                 if ($isPending && !empty($pendingRequest->corrected_rest_times)) {
-                    // モデルのキャスト(array)により、そのまま配列として使えます
-                    $displayRestTimes = $pendingRequest->corrected_rest_times;
+                    // 修正申請（承認待ち）がある場合は、JSONデータを配列として取得
+                    $displayRestTimes = is_string($pendingRequest->corrected_rest_times) 
+                        ? json_decode($pendingRequest->corrected_rest_times, true) 
+                        : $pendingRequest->corrected_rest_times;
                 } else {
+                    // 申請がない場合は、現在のDBにある確定済みの休憩データをセット
                     foreach($attendance->restTimes as $rest) {
                         $displayRestTimes[] = [
                             'rest_id' => $rest->id,
@@ -78,18 +80,19 @@
                 }
             @endphp
 
+            {{-- 休憩時間の表示ループ --}}
             @foreach($displayRestTimes as $index => $rest)
             <tr>
                 <th>休憩{{ $index > 0 ? $index + 1 : '' }}</th>
                 <td>
                     <div class="time-inputs">
-                        {{-- キーが存在するかチェックしながら表示 --}}
+                        {{-- 修正申請中のデータ構造に合わせてキー名（'start', 'end'）を指定 --}}
                         <input type="time" name="rests[{{ $rest['rest_id'] ?? $index }}][start]" 
-                            value="{{ old("rests." . ($rest['rest_id'] ?? $index) . ".start", $rest['start'] ?? '') }}" 
+                            value="{{ old("rests." . ($rest['rest_id'] ?? $index) . ".start", $rest['start']) }}" 
                             class="input-time">
                         <span class="range-separator">〜</span>
                         <input type="time" name="rests[{{ $rest['rest_id'] ?? $index }}][end]" 
-                            value="{{ old("rests." . ($rest['rest_id'] ?? $index) . ".end", $rest['end'] ?? '') }}" 
+                            value="{{ old("rests." . ($rest['rest_id'] ?? $index) . ".end", $rest['end']) }}" 
                             class="input-time">
                     </div>
                 </td>

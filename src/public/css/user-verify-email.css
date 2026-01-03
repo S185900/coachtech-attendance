@@ -1,0 +1,164 @@
+.notice {
+    max-width: 900px;
+    margin: 180px auto 20px auto;
+    text-align: center;
+}
+
+.notice-text {
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
+    font-family: Inter, sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 130%;
+    letter-spacing: 0%;
+    text-align: center;
+    color: #000000;
+    padding: 0;
+}
+
+.break-tablet {
+    display: inline;
+}
+
+.verify-email {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.verify-email__nav {
+    align-items: center;
+    text-align: center;
+}
+
+.verify-email__link {
+    display: inline-block;
+    margin-top: 20px;
+    font-family: Inter, sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+    color: #000000;
+    background-color: #D9D9D9;
+    padding: 15px 30px;
+    border-radius: 4px;
+    text-decoration: none;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+}
+
+.verify-email__link:hover {
+    background-color: #c0c0c0;
+}
+
+.resend-verification__form {
+    text-align: center;
+}
+
+.resend-verification__link {
+    background: none;
+    border: none;
+    padding: 60px 0 0 0;
+    margin: 0;
+    font-family: Inter, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 20px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+    color: #0073CC;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-block;
+    margin: 0 auto;
+}
+
+.resend-verification__link:hover {
+    color: rgba(221, 96, 0, 0.72);
+}
+
+.send-message {
+    margin-top: 40px;
+    padding: 12px 24px;
+    background-color: #0073CC;
+    /* あえて黒背景 */
+    color: #fff;
+    border-radius: 4px;
+    font-size: 16px;
+    letter-spacing: 0.05em;
+    display: inline-block;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* アニメーションの定義 */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* PCサイズ（1400〜1540px）対応 */
+@media screen and (min-width: 1400px) and (max-width: 1540px) {
+    .notice {
+        margin-top: 200px;
+    }
+
+    .notice-text {
+        font-size: 26px;
+    }
+
+    .verify-email__link {
+        font-size: 26px;
+        padding: 18px 36px;
+    }
+
+    .resend-verification__link {
+        font-size: 22px;
+        padding-top: 70px;
+    }
+}
+
+/* タブレットサイズ（768〜850px）対応 */
+@media screen and (min-width: 768px) and (max-width: 850px) {
+    .notice {
+        margin-top: 120px;
+        padding: 0 20px;
+    }
+
+    .notice-text {
+        font-size: 20px;
+    }
+
+    .break-tablet {
+        display: block;
+    }
+
+    .verify-email {
+        padding: 15px;
+    }
+
+    .verify-email__link {
+        font-size: 20px;
+        padding: 12px 24px;
+    }
+
+    .resend-verification__link {
+        font-size: 18px;
+        padding-top: 50px;
+    }
+}

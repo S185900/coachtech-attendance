@@ -6,7 +6,8 @@ use App\Http\Controllers\StampCorrectionRequestController;
 use App\Http\Controllers\AdminAttendanceController;
 use App\Http\Controllers\AdminStaffController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
-
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 
 
 
@@ -39,7 +40,8 @@ Route::middleware(['guest:web', 'guest:admin'])->group(function () {
 | 2. 一般ユーザー専用ルート (auth:web)
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth:web'])->group(function () {
+// 【修正】middleware に 'verified' を追加。これでメール認証未完了ユーザーをガードします。
+Route::middleware(['auth:web', 'verified'])->group(function () {
     // 打刻画面表示
     Route::get('/attendance', [AttendanceController::class, 'index'])->name('index');
 
@@ -120,3 +122,27 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::post('/admin/stamp_correction_request/approve/{id}', [StampCorrectionRequestController::class, 'approve'])
         ->name('admin.stamp_correction.update');
 });
+
+
+/*
+|--------------------------------------------------------------------------
+| 5. メール認証に必要なルート群
+|--------------------------------------------------------------------------
+*/
+// 【修正】認証誘導画面の表示（名前を verification.notice にするのがFortifyの標準）
+Route::get('/email/verify', function () {
+    return view('user.auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+
+// 【修正】メール内のリンクをクリックした時の処理（verification.verify）
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+    // 認証完了後のリダイレクト先を打刻画面に設定
+    return redirect('/attendance');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+// 【修正】認証メールの再送処理（verification.send）
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');

@@ -41,6 +41,11 @@ class FortifyServiceProvider extends ServiceProvider
 
         Fortify::registerView(fn() => view('user.auth.register'));
 
+        // メール認証誘導画面のビューを指定
+        Fortify::verifyEmailView(function () {
+            return view('user.auth.verify-email');
+        });
+
         // 認証ロジック
         Fortify::authenticateUsing(function ($request) {
             $isAdmin = $request->is('admin/*') || $request->is('admin');
@@ -49,6 +54,7 @@ class FortifyServiceProvider extends ServiceProvider
 
             $user = $model::where('email', $request->email)->first();
 
+            // ↓ ここでパスワードの合致やユーザーの有無を判定
             if ($user && Hash::check($request->password, $user->password)) {
                 // セッションにどちらの種別か保存（リダイレクト判定用）
                 session(['login_type' => $isAdmin ? 'admin' : 'user']);

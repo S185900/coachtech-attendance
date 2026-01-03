@@ -10,11 +10,11 @@
 
     @yield('css')
 </head>
-<!-- ログイン前共通ヘッダー -->
+<!-- ログイン前共通ヘッダー(admin) -->
 <body>
     <div class="admin-layout">
         <header class="header" role="banner">
-            <a href="/" class="header-logo">
+            <a href="/admin/login" class="header-logo">
                 <img class="header-logo-img" src="{{ asset('images/coachtech-logo.png') }}" alt="COACHTECH">
             </a>
         </header>
