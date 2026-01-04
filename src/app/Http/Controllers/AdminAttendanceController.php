@@ -62,19 +62,35 @@ class AdminAttendanceController extends Controller
 
             // 2. 休憩時間の更新（※もし申請データ側にJSONで休憩があるならそちらを優先するロジックが必要ですが、
             // 現状のフォームから送られてくる rests を優先して更新します）
-            if ($request->has('rests')) {
-                foreach ($request->rests as $restId => $times) {
-                    if (!empty($times['start'])) {
-                        $restStartTime = $date . ' ' . $times['start'];
-                        $restEndTime   = !empty($times['end']) ? ($date . ' ' . $times['end']) : null;
 
-                        RestTime::where('id', $restId)->update([
-                            'start_time' => $restStartTime,
-                            'end_time'   => $restEndTime,
+            // 既存の休憩を一旦削除
+            $attendance->restTimes()->delete();
+
+            if ($request->has('rests')) {
+                foreach ($request->rests as $times) {
+                    // 開始時間が入力されている場合のみ保存
+                    if (!empty($times['start'])) {
+                        $attendance->restTimes()->create([
+                            'start_time' => $date . ' ' . $times['start'],
+                            'end_time'   => !empty($times['end']) ? ($date . ' ' . $times['end']) : null,
                         ]);
                     }
                 }
             }
+
+            // if ($request->has('rests')) {
+            //     foreach ($request->rests as $restId => $times) {
+            //         if (!empty($times['start'])) {
+            //             $restStartTime = $date . ' ' . $times['start'];
+            //             $restEndTime   = !empty($times['end']) ? ($date . ' ' . $times['end']) : null;
+
+            //             RestTime::where('id', $restId)->update([
+            //                 'start_time' => $restStartTime,
+            //                 'end_time'   => $restEndTime,
+            //             ]);
+            //         }
+            //     }
+            // }
 
             // 3. 修正申請を承認済みに
             StampCorrectionRequest::where('attendance_id', $id)

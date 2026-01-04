@@ -98,6 +98,20 @@
             </tr>
             @endforeach
 
+            @if(!$isPending)
+                <tr>
+                    <th>休憩{{ count($displayRestTimes) + 1 }}</th>
+                    <td>
+                        <div class="time-inputs">
+                            {{-- 新規追加用の空フィールド。IDがぶつからないよう 'new' などのキーを使う --}}
+                            <input type="time" name="rests[new][start]" value="" class="input-time">
+                            <span class="range-separator">〜</span>
+                            <input type="time" name="rests[new][end]" value="" class="input-time">
+                        </div>
+                    </td>
+                </tr>
+            @endif
+
             {{-- 備考欄 --}}
             <tr>
                 <th>備考</th>

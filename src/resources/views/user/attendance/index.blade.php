@@ -1,7 +1,7 @@
 @extends('user.layouts.user-header')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/index.css')}}">
+<link rel="stylesheet" href="{{ asset('css/user-index.css')}}">
 @endsection
 
 <!-- 出勤登録画面（一般ユーザー） http://localhost/attendance-->

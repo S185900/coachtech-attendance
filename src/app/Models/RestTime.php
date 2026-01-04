@@ -19,6 +19,9 @@ class RestTime extends Model
         'end_time' => 'datetime',
     ];
 
+    // これにより時刻が自動的にCarbonインスタンスになります
+    protected $dates = ['start_time', 'end_time'];
+
     public function attendance()
     {
         return $this->belongsTo(Attendance::class);

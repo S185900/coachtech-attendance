@@ -28,8 +28,8 @@ class AttendanceCorrectionRequest extends FormRequest
             'start_time' => 'required',
             'end_time'   => 'required',
             'reason'     => 'required|string|max:255',
-            'rests.*.start' => 'required',
-            'rests.*.end'   => 'required',
+            'rests.*.start' => 'nullable|required_with:rests.*.end',
+            'rests.*.end'   => 'nullable|required_with:rests.*.start',
         ];
     }
 

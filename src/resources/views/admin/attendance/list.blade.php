@@ -58,33 +58,6 @@
             </tr>
             @endforeach
         </tbody>
-
-        <!-- <tbody>
-            <tr>
-                <td>山田 太郎</td>
-                <td>09:00</td>
-                <td>18:00</td>
-                <td>1:00</td>
-                <td>8:00</td>
-                <td><a href="#" class="detail-link">詳細</a></td>
-            </tr>
-            <tr>
-                <td>西 怜奈</td>
-                <td>09:00</td>
-                <td>18:00</td>
-                <td>1:00</td>
-                <td>8:00</td>
-                <td><a href="#" class="detail-link">詳細</a></td>
-            </tr>
-            <tr>
-                <td>中西 敦夫</td>
-                <td>09:00</td>
-                <td>18:00</td>
-                <td>1:00</td>
-                <td>8:00</td>
-                <td><a href="#" class="detail-link">詳細</a></td>
-            </tr>
-        </tbody> -->
     </table>
 
 </div>

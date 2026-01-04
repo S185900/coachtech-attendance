@@ -97,6 +97,8 @@ Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(functi
     // PG12: スタッフ別勤怠一覧
     Route::get('/staff/attendance/{id}', [AdminStaffController::class, 'staffAttendance'])->name('attendance.staff');
 
+    Route::get('/staff/attendance/{id}/csv', [AdminStaffController::class, 'downloadCsv'])->name('attendance.staff.csv');
+
     // 管理者ログアウト
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 });

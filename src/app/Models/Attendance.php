@@ -34,24 +34,35 @@ class Attendance extends Model
         return $this->hasMany(RestTime::class);
     }
 
-    /**
-     * 合計休憩時間 (H:i形式)
-     */
-    public function getTotalRestTimeAttribute()
+    public function stampCorrectionRequests()
     {
-        $totalMinutes = 0;
-        foreach ($this->restTimes as $rest) {
-            // start_time, end_timeがCarbonインスタンスであることを前提にdiffを実行
-            if ($rest->start_time && $rest->end_time) {
-                // RestTimeモデル側でも$dates設定が必要です
-                $totalMinutes += Carbon::parse($rest->start_time)->diffInMinutes(Carbon::parse($rest->end_time));
-            }
-        }
-        return sprintf('%d:%02d', floor($totalMinutes / 60), $totalMinutes % 60);
+        return $this->hasMany(StampCorrectionRequest::class);
     }
 
     /**
-     * 合計勤務時間 (H:i形式)
+     * アクセサ：合計休憩時間（HH:mm 形式）
+     * 画面で $attendance->total_rest_duration として呼び出す
+     */
+    public function getTotalRestDurationAttribute()
+    {
+        $totalMinutes = 0;
+        foreach ($this->restTimes as $rest) {
+            // 開始と終了が両方揃っている場合のみ計算
+            if ($rest->start_time && $rest->end_time) {
+                $start = Carbon::parse($rest->start_time);
+                $end = Carbon::parse($rest->end_time);
+                $totalMinutes += $start->diffInMinutes($end);
+            }
+        }
+
+        // 時間と分に分解して、0埋めした文字列（01:05など）を返す
+        return sprintf('%02d:%02d', floor($totalMinutes / 60), $totalMinutes % 60);
+    }
+
+    /**
+     * アクセサ：合計勤務時間（HH:mm 形式）
+     * 拘束時間（出勤〜退勤）から、休憩時間の合計を引いて算出
+     * 画面で $attendance->work_time として呼び出す
      */
     public function getWorkTimeAttribute()
     {
@@ -59,10 +70,10 @@ class Attendance extends Model
             return '';
         }
 
-        // 拘束時間（分）
-        $totalDuration = $this->start_time->diffInMinutes($this->end_time);
-        
-        // 休憩時間（分）を取得（上記アクセサのロジックを再利用）
+        // 1. 拘束時間（分）を計算
+        $totalDurationMinutes = $this->start_time->diffInMinutes($this->end_time);
+
+        // 2. 休憩時間（分）を計算
         $restMinutes = 0;
         foreach ($this->restTimes as $rest) {
             if ($rest->start_time && $rest->end_time) {
@@ -70,27 +81,12 @@ class Attendance extends Model
             }
         }
 
-        $workMinutes = $totalDuration - $restMinutes;
-        return sprintf('%d:%02d', floor($workMinutes / 60), $workMinutes % 60);
-    }
+        // 3. 勤務時間 = 拘束時間 - 休憩時間
+        $workMinutes = $totalDurationMinutes - $restMinutes;
 
-    // 休憩時間の合計（例：01:00）を返すアクセサ
-    public function getTotalRestDurationAttribute()
-    {
-        $totalMinutes = 0;
-        foreach ($this->restTimes as $rest) {
-            if ($rest->end_time) {
-                $totalMinutes += $rest->start_time->diffInMinutes($rest->end_time);
-            }
-        }
-        return sprintf('%d:%02d', floor($totalMinutes / 60), $totalMinutes % 60);
-    }
+        // マイナスにならないように調整（念のため）
+        if ($workMinutes < 0) $workMinutes = 0;
 
-    /**
-     * 勤怠に紐づく修正申請を取得
-     */
-    public function stampCorrectionRequests()
-    {
-        return $this->hasMany(StampCorrectionRequest::class);
+        return sprintf('%02d:%02d', floor($workMinutes / 60), $workMinutes % 60);
     }
 }

@@ -51,33 +51,6 @@
             @endforeach
         </tbody>
 
-        <!-- <tbody>
-            <tr>
-                <td>承認待ち</td>
-                <td>テスト太郎</td>
-                <td>2023/06/01</td>
-                <td>遅延のため</td>
-                <td>2023/06/02</td>
-                <td><a href="#" class="detail-link">詳細</a></td>
-            </tr>
-            <tr>
-                <td>承認待ち</td>
-                <td>テスト太郎</td>
-                <td>2023/06/01</td>
-                <td>遅延のため</td>
-                <td>2023/06/02</td>
-                <td><a href="#" class="detail-link">詳細</a></td>
-            </tr>
-            <tr>
-                <td>承認待ち</td>
-                <td>テスト太郎</td>
-                <td>2023/06/01</td>
-                <td>遅延のため</td>
-                <td>2023/06/02</td>
-                <td><a href="#" class="detail-link">詳細</a></td>
-            </tr>
-        </tbody> -->
-
     </table>
 
 </div>

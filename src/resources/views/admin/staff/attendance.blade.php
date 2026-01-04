@@ -54,10 +54,12 @@
                 <td>{{ $attendance->end_time ? $attendance->end_time->format('H:i') : '' }}</td>
 
                 {{-- 合計休憩時間 (アクセサ getTotalRestDurationAttribute) --}}
-                <td>{{ $attendance->total_rest_duration }}</td> 
+                {{-- 休憩時間が 00:00 なら空白にする場合（任意） --}}
+                <td>{{ $attendance->total_rest_duration !== '00:00' ? $attendance->total_rest_duration : '' }}</td>
 
                 {{-- 合計勤務時間 (アクセサ getWorkTimeAttribute かな？) --}}
-                <td>{{ $attendance->work_time }}</td>
+                {{-- 合計勤務時間が 00:00 なら空白にする場合 --}}
+                <td>{{ $attendance->work_time !== '00:00' ? $attendance->work_time : '' }}</td>
 
                 <td>
                     <a href="{{ route('admin.attendance.detail', ['id' => $attendance->id]) }}" class="detail-link">詳細</a>
@@ -65,35 +67,13 @@
             </tr>
             @endforeach
         </tbody>
-
-        <!-- <tbody>
-            <tr>
-                <td>06/01(木)</td>
-                <td>09:00</td>
-                <td>18:00</td>
-                <td>1:00</td>
-                <td>8:00</td>
-                <td><a href="#" class="detail-link">詳細</a></td>
-            </tr>
-            <tr>
-                <td>06/01(木)</td>
-                <td>09:00</td>
-                <td>18:00</td>
-                <td>1:00</td>
-                <td>8:00</td>
-                <td><a href="#" class="detail-link">詳細</a></td>
-            </tr>
-            <tr>
-                <td>06/01(木)</td>
-                <td>09:00</td>
-                <td>18:00</td>
-                <td>1:00</td>
-                <td>8:00</td>
-                <td><a href="#" class="detail-link">詳細</a></td>
-            </tr>
-        </tbody> -->
-
     </table>
+
+    <div class="csv-export-container">
+        <a href="{{ route('admin.attendance.staff.csv', ['id' => $user->id, 'month' => $currentMonth->format('Y-m')]) }}" class="csv-button">
+            CSV出力
+        </a>
+    </div>
 
 </div>
 @endsection

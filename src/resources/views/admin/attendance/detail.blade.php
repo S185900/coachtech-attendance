@@ -86,15 +86,30 @@
                 <th>休憩{{ $index > 0 ? $index + 1 : '' }}</th>
                 <td>
                     <div class="time-inputs">
+
+                        {{-- 開始時間 --}}
                         {{-- 修正申請中のデータ構造に合わせてキー名（'start', 'end'）を指定 --}}
                         <input type="time" name="rests[{{ $rest['rest_id'] ?? $index }}][start]" 
                             value="{{ old("rests." . ($rest['rest_id'] ?? $index) . ".start", $rest['start']) }}" 
                             class="input-time">
+
                         <span class="range-separator">〜</span>
+
+                        {{-- 終了時間 --}}
                         <input type="time" name="rests[{{ $rest['rest_id'] ?? $index }}][end]" 
                             value="{{ old("rests." . ($rest['rest_id'] ?? $index) . ".end", $rest['end']) }}" 
                             class="input-time">
+
                     </div>
+
+                    {{-- ★ここに追加！ 休憩時間のバリデーションエラー表示 --}}
+                    @error("rests." . ($rest['rest_id'] ?? $index) . ".start")
+                        <p class="status-message">{{ $message }}</p>
+                    @enderror
+                    @error("rests." . ($rest['rest_id'] ?? $index) . ".end")
+                        <p class="status-message">{{ $message }}</p>
+                    @enderror
+
                 </td>
             </tr>
             @endforeach

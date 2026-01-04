@@ -132,6 +132,40 @@ body {
     opacity: 0.6;
 }
 
+/* CSVボタンを囲むコンテナの調整 */
+.csv-export-container {
+    display: flex;
+    justify-content: flex-end;
+    /* 右寄せにする */
+    margin-top: 30px;
+    /* テーブルとの間隔を空ける */
+}
+
+/* CSVボタン自体の調整 */
+.csv-button {
+    display: inline-block;
+    /* aタグの場合、幅や余白を正しく適用するために必要 */
+    background-color: #000000;
+    color: #ffffff;
+    text-decoration: none;
+    /* aタグ特有の下線を消す */
+    border: none;
+    padding: 10px 43px;
+    /* 上下を少し広げてバランス調整 */
+    font-size: 20px;
+    /* 22pxから微調整 */
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.csv-button:hover {
+    opacity: 0.7;
+    /* ホバー時に少し薄くする */
+}
+
 /* --- レスポンシブ対応 --- */
 
 /* PCサイズ（1400〜1540px） */
@@ -178,5 +212,12 @@ body {
     .attendance-table td {
         padding: 12px 8px;
         font-size: 14px;
+    }
+
+    .csv-button {
+        padding: 7px 30px;
+        /* 上下を少し広げてバランス調整 */
+        font-size: 16px;
+        /* 22pxから微調整 */
     }
 }
