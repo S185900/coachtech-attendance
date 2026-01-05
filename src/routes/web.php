@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoginMasterController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\StampCorrectionRequestController;
 use App\Http\Controllers\AdminAttendanceController;
@@ -8,8 +9,6 @@ use App\Http\Controllers\AdminStaffController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
-
-
 
 /*
 |--------------------------------------------------------------------------
@@ -24,15 +23,11 @@ Route::middleware(['guest:web', 'guest:admin'])->group(function () {
         return view('user.auth.register');
     })->name('register');
 
-    // 管理者ログイン画面の表示
-    Route::get('/admin/login', function () {
-        return view('admin.auth.login');
-    })->name('admin.login');
+    // 管理者ログイン画面の表示 (LoginMasterControllerを使う)
+    Route::get('/admin/login', [LoginMasterController::class, 'create'])->name('admin.login');
 
-    // 【追加！】管理者ログインの実行（POST送信）を受け付ける設定
-    // これにより、MethodNotAllowedHttpException が解消されます
-    // 結論から言うと、一般ユーザー用の POST 設定は Fortifyが裏側で自動的に登録してくれているので、web.php に書かなくても動くようになっている。
-    Route::post('/admin/login', [AuthenticatedSessionController::class, 'store']);
+    // 管理者ログインの実行
+    Route::post('/admin/login', [LoginMasterController::class, 'store']);
 });
 
 /*
@@ -110,18 +105,15 @@ Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(functi
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth:admin'])->group(function () {
-
-    // PG12: 申請一覧画面（管理者）
-    // URLは /stamp_correction_request/list だが、名前は admin.stamp_correction.list
-    Route::get('/admin/stamp_correction_request/list', [StampCorrectionRequestController::class, 'adminIndex'])
+    // PG12: /stamp_correction_request/list
+    Route::get('/stamp_correction_request/list', [StampCorrectionRequestController::class, 'adminIndex'])
         ->name('admin.stamp_correction.list');
 
-    // PG13: 修正申請承認画面（管理者）
-    Route::get('/admin/stamp_correction_request/approve/{attendance_correct_request_id}', [StampCorrectionRequestController::class, 'showApprove'])
+    // PG13: /stamp_correction_request/approve/{id}
+    Route::get('/stamp_correction_request/approve/{attendance_correct_request_id}', [StampCorrectionRequestController::class, 'showApprove'])
         ->name('admin.stamp_correction.approve');
 
-    // 承認実行（POST）
-    Route::post('/admin/stamp_correction_request/approve/{id}', [StampCorrectionRequestController::class, 'approve'])
+    Route::post('/stamp_correction_request/approve/{id}', [StampCorrectionRequestController::class, 'approve'])
         ->name('admin.stamp_correction.update');
 });
 
