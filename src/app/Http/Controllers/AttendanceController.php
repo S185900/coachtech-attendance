@@ -24,7 +24,7 @@ class AttendanceController extends Controller
 
         // 今日の最新の勤怠レコードを取得
         $attendance = Attendance::where('user_id', $user->id)
-            ->where('date', $today)
+            ->whereDate('date', $today)
             ->first();
 
         return view('user.attendance.index', compact('attendance'));
@@ -39,7 +39,7 @@ class AttendanceController extends Controller
         $today = Carbon::today()->toDateString();
 
         $exists = Attendance::where('user_id', $user->id)
-            ->where('date', $today)
+            ->whereDate('date', $today)
             ->exists();
 
         if ($exists) return redirect()->back();
@@ -63,7 +63,7 @@ class AttendanceController extends Controller
         $today = Carbon::today()->toDateString();
 
         $attendance = Attendance::where('user_id', $user->id)
-            ->where('date', $today)
+            ->whereDate('date', $today)
             ->where('status', 1) // 出勤中のみ退勤可能
             ->first();
 

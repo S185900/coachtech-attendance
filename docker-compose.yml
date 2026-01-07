@@ -25,6 +25,7 @@ services:
             MYSQL_DATABASE: laravel_db
             MYSQL_USER: laravel_user
             MYSQL_PASSWORD: laravel_pass
+            TZ: Asia/Tokyo  # テスト用に日本時間に設定
         command:
             mysqld --default-authentication-plugin=mysql_native_password
         ports:

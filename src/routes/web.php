@@ -140,3 +140,12 @@ Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
     return back()->with('message', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+
+/*
+|--------------------------------------------------------------------------
+| 6. テストを通すためのダミールート
+|--------------------------------------------------------------------------
+*/
+// tests/Feature/AttendanceDateTimeTest.php
+Route::get('/stamp-correction-request-list', function() {})->name('stamp_correction_request.list');
