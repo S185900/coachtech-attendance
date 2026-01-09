@@ -87,7 +87,7 @@ class AttendanceController extends Controller
 
         // 今日の「勤務中」のレコードを取得
         $attendance = Attendance::where('user_id', $user->id)
-            ->where('date', $today)
+            ->whereDate('date', $today)
             ->where('status', 1)
             ->first();
 
@@ -115,7 +115,7 @@ class AttendanceController extends Controller
 
         // 今日の「休憩中」のレコードを取得
         $attendance = Attendance::where('user_id', $user->id)
-            ->where('date', $today)
+            ->whereDate('date', $today)
             ->where('status', 2)
             ->first();
 

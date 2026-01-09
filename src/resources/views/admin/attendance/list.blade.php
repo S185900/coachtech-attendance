@@ -48,7 +48,7 @@
                 <td>{{ $attendance->start_time->format('H:i') }}</td>
                 <td>{{ $attendance->end_time ? $attendance->end_time->format('H:i') : '' }}</td>
                 {{-- 合計休憩時間を計算（モデルにアクセサを作っておくと便利です） --}}
-                <td>{{ $attendance->total_rest_duration }}</td> 
+                <td>{{ $attendance->total_rest_time }}</td> 
                 {{-- 勤務合計時間を計算 --}}
                 <td>{{ $attendance->work_time }}</td>
                 <td>

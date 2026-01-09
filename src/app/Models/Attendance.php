@@ -41,9 +41,9 @@ class Attendance extends Model
 
     /**
      * アクセサ：合計休憩時間（HH:mm 形式）
-     * 画面で $attendance->total_rest_duration として呼び出す
+     * 画面で $attendance->total_rest_time として呼び出す
      */
-    public function getTotalRestDurationAttribute()
+    public function getTotalRestTimeAttribute()
     {
         $totalMinutes = 0;
         foreach ($this->restTimes as $rest) {
