@@ -35,8 +35,8 @@ Route::middleware(['guest:web', 'guest:admin'])->group(function () {
 | 2. 一般ユーザー専用ルート (auth:web)
 |--------------------------------------------------------------------------
 */
-// 【修正】middleware に 'verified' を追加。これでメール認証未完了ユーザーをガードします。
-Route::middleware(['auth:web', 'verified'])->group(function () {
+    // 【修正】middleware に 'verified' を追加。これでメール認証未完了ユーザーをガードします。
+    Route::middleware(['auth:web', 'verified'])->group(function () {
     // 打刻画面表示
     Route::get('/attendance', [AttendanceController::class, 'index'])->name('index');
 
@@ -62,8 +62,8 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     // 詳細画面の「修正」ボタンを押した時の送り先（保存用：POST）
     Route::post('/attendance/update/{attendance_id}', [AttendanceController::class, 'correctionRequest'])->name('attendance.update');
 
-    // PG07: 申請一覧画面
-    // ここで ->name('stamp_correction_request.list') となっているか確認！
+    // PG07: 一般ユーザー用申請一覧
+    // 要件のパスが /stamp_correction_request/list の場合はこちらを使用
     Route::get('/stamp_correction_request/list', [StampCorrectionRequestController::class, 'index'])
         ->name('stamp_correction_request.list');
 
@@ -105,8 +105,8 @@ Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(functi
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth:admin'])->group(function () {
-    // PG12: /stamp_correction_request/list
-    Route::get('/stamp_correction_request/list', [StampCorrectionRequestController::class, 'adminIndex'])
+    // PG12: 管理者用申請一覧（URLが被らないように /admin/ を付与）
+    Route::get('/admin/stamp_correction_request/list', [StampCorrectionRequestController::class, 'adminIndex'])
         ->name('admin.stamp_correction.list');
 
     // PG13: /stamp_correction_request/approve/{id}
@@ -148,4 +148,4 @@ Route::post('/email/verification-notification', function (Request $request) {
 |--------------------------------------------------------------------------
 */
 // tests/Feature/AttendanceDateTimeTest.php
-Route::get('/stamp-correction-request-list', function() {})->name('stamp_correction_request.list');
+// Route::get('/stamp-correction-request-list', function() {})->name('stamp_correction_request.list');

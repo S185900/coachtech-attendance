@@ -14,7 +14,7 @@ class AttendanceFactory extends Factory
      *
      * @var string
      */
-    protected $model = Attendance.class;
+    protected $model = Attendance::class;
 
     /**
      * Define the model's default state.
