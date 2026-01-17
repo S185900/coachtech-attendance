@@ -6,6 +6,9 @@
     (本プロジェクトは、Laravelを用いたWebアプリケーション開発の模擬案件として取り組んでおり、一人で設計から実装、テストまでを行い、実務に近い開発プロセスの体験を目的としています。)
 
 ## 環境構築手順
+
+
+ (メモ：makefileでショートカット作ってみる！)
 **Dockerビルド**
 1. GitHubからプロジェクトをクローン ※SSH接続でクローンする場合は、事前にGitHubにSSH鍵を登録しておいてください。
 ```bash
@@ -192,51 +195,38 @@ php artisan db:seed --class=CustomProductSeeder
 **✅ PHPUnitによるテストについて**
 - テスト実行コード一覧
 ``` bash
-#1 会員登録機能
-vendor/bin/phpunit tests/Feature/RegisterTest.php
+#1 認証機能（一般ユーザー）
+php artisan test tests/Feature/UserRegistrationTest.php
 
-#2 ログイン機能
-vendor/bin/phpunit tests/Feature/LoginTest.php
+#2 ログイン認証機能（一般ユーザー）
+php artisan test tests/Feature/UserLoginTest.php
 
-#3 ログアウト機能
-vendor/bin/phpunit tests/Feature/LogoutTest.php
+#3 ログイン認証機能（管理者）
+php artisan test tests/Feature/AdminLoginTest.php
 
-#4 商品一覧取得
-vendor/bin/phpunit tests/Feature/ItemsIndexTest.php
+#4 日時取得機能
+php artisan test tests/Feature/AttendanceDateTimeTest.php
 
-#5 マイリスト一覧取得
-vendor/bin/phpunit tests/Feature/MyListTest.php
+#5 ステータス確認機能
+php artisan test tests/Feature/AttendanceStatusTest.php
 
-#6 商品検索機能
-vendor/bin/phpunit tests/Feature/HeaderSearchTest.php
+php artisan test tests/Feature/AttendancePostTest.php
 
-#7 商品詳細情報取得
-vendor/bin/phpunit tests/Feature/ItemShowTest.php
+php artisan test tests/Feature/RestTest.php
 
-#8 いいね機能
-vendor/bin/phpunit tests/Feature/LikeTest.php
+php artisan test tests/Feature/ClockOutTest.php
 
-#9 コメント送信機能
-vendor/bin/phpunit tests/Feature/CommentTest.php
+php artisan test tests/Feature/AttendanceListTest.php
 
-#10 商品購入機能
-vendor/bin/phpunit tests/Feature/PurchaseTest.php
+php artisan test tests/Feature/AttendanceDetailTest.php
 
-#11 支払い方法選択機能
-vendor/bin/phpunit tests/Feature/PaymentMethodSelectorTest.php
+php artisan test tests/Feature/AttendanceCorrectionTest.php
 
-#12 配送先変更機能
-vendor/bin/phpunit tests/Feature/AddressEditTest.php
+php artisan test tests/Feature/AdminAttendanceListTest.php
 
-#13 ユーザー情報取得
-vendor/bin/phpunit tests/Feature/GetUserProfileTest.php
+php artisan test tests/Feature/AdminAttendanceDetailTest.php
 
-#14 ユーザー情報変更
-vendor/bin/phpunit tests/Feature/UpdateUserProfileTest.php
+php artisan test tests/Feature/AdminStampCorrectionTest.php
 
-#15 出品商品情報登録
-vendor/bin/phpunit tests/Feature/SellTest.php
-
-#16 メール認証機能
-vendor/bin/phpunit tests/Feature/EmailVerificationFlowTest.php
+php artisan test tests/Feature/EmailVerificationTest.php
 ```
