@@ -96,4 +96,4 @@ class AdminStampCorrectionTest extends TestCase
         $response->assertSee('18:15');
         $response->assertSee('打刻忘れ修正');
     }
-}php artisan make:test EmailVerificationTest
+}
