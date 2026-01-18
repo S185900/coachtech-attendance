@@ -8,23 +8,26 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
+// ステータス確認機能のテスト
 class AttendanceStatusTest extends TestCase
 {
     use RefreshDatabase;
 
     /**
-     * 1. 勤務外
+     * 勤務外の場合、勤怠ステータスが正しく表示される
      */
     public function test_status_is_out_of_work_when_not_clocked_in()
     {
         $user = User::factory()->create();
+
         $response = $this->actingAs($user)->get('/attendance');
+
         $response->assertStatus(200);
         $response->assertSee('勤務外');
     }
 
     /**
-     * 2. 出勤中 (status = 1)
+     * 出勤中の場合、勤怠ステータスが正しく表示される
      */
     public function test_status_is_working_when_clocked_in()
     {
@@ -35,18 +38,19 @@ class AttendanceStatusTest extends TestCase
             'user_id' => $user->id,
             'date' => $today,
             'start_time' => '09:00',
-            'status' => 1, // ここが重要：出勤中
+            'status' => 1,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
 
         $response = $this->actingAs($user)->get('/attendance');
+
         $response->assertStatus(200);
         $response->assertSee('出勤中');
     }
 
     /**
-     * 3. 休憩中 (status = 2)
+     * 休憩中の場合、勤怠ステータスが正しく表示される
      */
     public function test_status_is_resting_when_taking_a_break()
     {
@@ -57,7 +61,7 @@ class AttendanceStatusTest extends TestCase
             'user_id' => $user->id,
             'date' => $today,
             'start_time' => '09:00',
-            'status' => 2, // ここが重要：休憩中
+            'status' => 2,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -70,12 +74,13 @@ class AttendanceStatusTest extends TestCase
         ]);
 
         $response = $this->actingAs($user)->get('/attendance');
+
         $response->assertStatus(200);
         $response->assertSee('休憩中');
     }
 
     /**
-     * 4. 退勤済 (status = 0)
+     * 退勤済の場合、勤怠ステータスが正しく表示される
      */
     public function test_status_is_finished_after_clocking_out()
     {
@@ -87,12 +92,13 @@ class AttendanceStatusTest extends TestCase
             'date' => $today,
             'start_time' => '09:00',
             'end_time' => '18:00',
-            'status' => 0, // ここが重要：退勤済
+            'status' => 0,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
 
         $response = $this->actingAs($user)->get('/attendance');
+
         $response->assertStatus(200);
         $response->assertSee('退勤済');
     }

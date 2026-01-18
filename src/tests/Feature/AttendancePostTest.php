@@ -21,44 +21,52 @@ class AttendancePostTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        // 1. 出勤
-        $this->post(route('attendance.start'));
+        $response = $this->get('/attendance');
+        $response->assertStatus(200);
+        $response->assertSee('出勤');
 
-        // 2. 日付をあえて「今日」に固定せず、最新のレコードを無理やり「今日」に書き換えてしまう（テスト用）
-        $attendance = Attendance::where('user_id', $user->id)->first();
-        $attendance->update([
-            'date' => Carbon::today()->toDateString(),
-            'status' => 1
-        ]);
+        $response = $this->post('/attendance/start');
 
-        // 3. 画面表示の確認
         $response = $this->get('/attendance');
         $response->assertSee('出勤中');
+
+        $this->assertDatabaseHas('attendances', [
+            'user_id' => $user->id,
+            'status' => 1,
+        ]);
     }
 
     /**
-     * 退勤済みの表示を確認
+     * 出勤は一日一回のみできる
      */
     public function test_cannot_clock_in_twice_a_day()
     {
         $user = User::factory()->create();
-        
-        // 1. コントローラーが「今日」と認識する日付でデータを作る
-        Attendance::create([
+
+        \App\Models\Attendance::create([
             'user_id' => $user->id,
-            'date' => Carbon::today()->toDateString(), // 確実に合わせる
-            'start_time' => Carbon::now()->subHour(),
-            'end_time' => Carbon::now(),
+            'date' => \Carbon\Carbon::today()->toDateString(),
+            'start_time' => '09:00:00',
+            'end_time' => '18:00:00',
             'status' => 0, // 退勤済
         ]);
 
         $this->actingAs($user);
-        $response = $this->get('/attendance');
-        
-        // 取得できているかデバッグが必要な場合は以下をコメント解除
-        // dd($response->original->getData()['attendance']);
 
+        $response = $this->get('/attendance');
+        $response->assertStatus(200);
+
+        /**
+         * 画面上に「出勤」ボタンが表示されない
+         */
+        // 【検証1】退勤済メッセージが表示されていること
         $response->assertSee('お疲れ様でした。');
+
+        // 【検証2】出勤ボタンのテキストが表示されていないこと
+        $response->assertDontSee('class="attendance-button">出勤</button>', false);
+
+        // 【検証3】ステータスバッジが「退勤済」になっていること
+        $response->assertSee('status-done">退勤済</span>', false);
     }
 
     /**
@@ -67,18 +75,18 @@ class AttendancePostTest extends TestCase
     public function test_clock_in_time_is_visible_on_list_page()
     {
         $user = User::factory()->create();
-        $date = '2026-01-07';
-
-        Attendance::create([
-            'user_id' => $user->id,
-            'date' => $date,
-            'start_time' => $date . ' 09:30:00',
-            'status' => 1,
-        ]);
-        
         $this->actingAs($user);
-        $response = $this->get('/attendance/list?month=2026-01');
-        
+
+        $knownTime = \Carbon\Carbon::create(2026, 1, 13, 9, 30, 0);
+        \Carbon\Carbon::setTestNow($knownTime);
+
+        $this->post('/attendance/start');
+
+        $response = $this->get('/attendance/list');
+
+        $response->assertStatus(200);
         $response->assertSee('09:30');
+
+        \Carbon\Carbon::setTestNow();
     }
 }
