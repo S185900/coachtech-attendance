@@ -45,28 +45,21 @@ class ClockOutTest extends TestCase
      */
     public function test_clock_out_time_is_visible_on_attendance_list()
     {
-        // 1. ステータスが勤務外のユーザーにログインする
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        // 現在時刻を固定（テストの正確性を保つため）
         $now = Carbon::create(2026, 1, 11, 18, 0, 0);
         Carbon::setTestNow($now);
 
-        // 2. 出勤と退勤の処理を行う
-        // 出勤POST
         $this->post('/attendance/work-start');
-        // 退勤POST
+
         $this->post('/attendance/leave');
 
-        // 3. 勤怠一覧画面から退勤の日付を確認する
         $listResponse = $this->get('/attendance/list');
         $listResponse->assertStatus(200);
 
-        // 勤怠一覧画面に退勤時刻(18:00)が正確に記録されていることを確認
         $listResponse->assertSee('18:00');
-        
-        // テスト終了後は時刻固定を解除
+
         Carbon::setTestNow();
     }
 }
