@@ -48,7 +48,7 @@ class AttendancePostTest extends TestCase
             'date' => \Carbon\Carbon::today()->toDateString(),
             'start_time' => '09:00:00',
             'end_time' => '18:00:00',
-            'status' => 0, // 退勤済
+            'status' => 0,
         ]);
 
         $this->actingAs($user);
@@ -56,16 +56,8 @@ class AttendancePostTest extends TestCase
         $response = $this->get('/attendance');
         $response->assertStatus(200);
 
-        /**
-         * 画面上に「出勤」ボタンが表示されない
-         */
-        // 【検証1】退勤済メッセージが表示されていること
         $response->assertSee('お疲れ様でした。');
-
-        // 【検証2】出勤ボタンのテキストが表示されていないこと
         $response->assertDontSee('class="attendance-button">出勤</button>', false);
-
-        // 【検証3】ステータスバッジが「退勤済」になっていること
         $response->assertSee('status-done">退勤済</span>', false);
     }
 

@@ -17,30 +17,24 @@ class ClockOutTest extends TestCase
      */
     public function test_clock_out_button_functions_correctly()
     {
-        // 1. ユーザー作成
         $user = User::factory()->create();
-        
-        // 2. 「出勤中」の状態を作る (Viewの条件に合わせて status を 1 にする)
+
         Attendance::factory()->create([
             'user_id' => $user->id,
             'date' => now()->toDateString(),
             'start_time' => now()->subHours(2),
             'end_time' => null,
-            'status' => 1, // ★ Viewの @elseif($attendance->status == 1) に合わせる
+            'status' => 1,
         ]);
 
         $this->actingAs($user);
 
-        // 3. 画面に「退勤」ボタンが表示されていることを確認する
         $response = $this->get('/attendance');
         $response->assertStatus(200);
         $response->assertSee('退勤');
 
-        // 4. 退勤の処理を行う
-        // Viewの form action="{{ route('attendance.end') }}" に合わせる
-        $postResponse = $this->post(route('attendance.end')); 
+        $postResponse = $this->post(route('attendance.end'));
 
-        // 5. 処理後にステータスが「退勤済」のバッジになり、「お疲れ様でした。」が表示される
         $finalResponse = $this->get('/attendance');
         $finalResponse->assertSee('退勤済');
         $finalResponse->assertSee('お疲れ様でした。');
