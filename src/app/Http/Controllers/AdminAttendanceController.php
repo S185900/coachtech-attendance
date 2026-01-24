@@ -33,17 +33,41 @@ class AdminAttendanceController extends Controller
     public function showDetail($id)
     {
         $attendance = Attendance::with(['user', 'restTimes'])->findOrFail($id);
-        
 
         // 承認待ち(status: 0)の申請を1件取得
         $pendingRequest = $attendance->stampCorrectionRequests()
-            ->where('status', 0)
-            ->first();
+        // ->where('status', 0) を書き換え
+        ->where('status', StampCorrectionRequest::STATUS_PENDING) 
+        ->first();
 
-        // 承認待ちが存在するかどうかのフラグ
         $isPending = !is_null($pendingRequest);
 
-        return view('admin.attendance.detail', compact('attendance', 'isPending', 'pendingRequest'));
+        // --- 規約対応：Bladeからロジックをこちらへ移動 ---
+        $displayRestTimes = [];
+        if ($isPending && !empty($pendingRequest->corrected_rest_times)) {
+            $displayRestTimes = is_string($pendingRequest->corrected_rest_times) 
+                ? json_decode($pendingRequest->corrected_rest_times, true) 
+                : $pendingRequest->corrected_rest_times;
+        } else {
+            foreach($attendance->restTimes as $rest) {
+                $displayRestTimes[] = [
+                    'rest_id' => $rest->id,
+                    'start'   => $rest->start_time->format('H:i'),
+                    'end'     => $rest->end_time ? $rest->end_time->format('H:i') : ''
+                ];
+            }
+        }
+
+        // 備考の表示内容も変数化
+        $displayReason = $isPending ? $pendingRequest->reason : $attendance->reason;
+
+        return view('admin.attendance.detail', compact(
+            'attendance', 
+            'isPending', 
+            'pendingRequest', 
+            'displayRestTimes', 
+            'displayReason'
+        ));
     }
 
     public function approve(AdminApproveRequest $request, $id)
@@ -78,26 +102,14 @@ class AdminAttendanceController extends Controller
                 }
             }
 
-            // if ($request->has('rests')) {
-            //     foreach ($request->rests as $restId => $times) {
-            //         if (!empty($times['start'])) {
-            //             $restStartTime = $date . ' ' . $times['start'];
-            //             $restEndTime   = !empty($times['end']) ? ($date . ' ' . $times['end']) : null;
-
-            //             RestTime::where('id', $restId)->update([
-            //                 'start_time' => $restStartTime,
-            //                 'end_time'   => $restEndTime,
-            //             ]);
-            //         }
-            //     }
-            // }
-
-            // 3. 修正申請を承認済みに
+            // approve メソッド内（最後の更新処理）
             StampCorrectionRequest::where('attendance_id', $id)
-                ->where('status', 0)
+                // ->where('status', 0) を書き換え
+                ->where('status', StampCorrectionRequest::STATUS_PENDING) 
                 ->update([
-                    'status' => 1,
-                    'master_id' => auth('admin')->id(), // 管理者IDをセット
+                    // 'status' => 1 を書き換え
+                    'status' => StampCorrectionRequest::STATUS_APPROVED, 
+                    'master_id' => auth('admin')->id(),
                 ]);
         });
 

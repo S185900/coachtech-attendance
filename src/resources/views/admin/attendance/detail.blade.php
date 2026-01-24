@@ -24,18 +24,19 @@
                     <div class="date-year-wrapper">
                         <span class="year-unit">{{ $attendance->date->format('Y') }}年</span>
                     </div>
-                    <span class="range-separator-hidden">〜</span> {{-- 中央を揃えるための見えないスペーサー --}}
+                    <span class="range-separator-hidden">〜</span>
                     <div class="date-day-wrapper">
                         <span class="date-unit">{{ $attendance->date->format('n月j日') }}</span>
                     </div>
                 </td>
             </tr>
+
             {{-- 出勤・退勤部分 --}}
             <tr>
                 <th>出勤・退勤</th>
                 <td>
                     <div class="time-inputs">
-                        {{-- $isPendingに関わらず、管理者は編集できる必要があるのでinputにします --}}
+
                         {{-- 出勤時間 --}}
                         <input type="time" name="start_time" 
                             value="{{ old('start_time', $isPending ? \Carbon\Carbon::parse($pendingRequest->corrected_start_time)->format('H:i') : $attendance->start_time->format('H:i')) }}" 
@@ -50,7 +51,6 @@
 
                     </div>
 
-                    {{-- 出勤・退勤時間のエラーメッセージ --}}
                     @error('start_time')
                         <p class="status-message">{{ $message }}</p>
                     @enderror
@@ -60,35 +60,15 @@
                 </td>
             </tr>
 
-            {{-- 休憩時間の判定と表示用データの準備 --}}
-            @php
-                $displayRestTimes = [];
-                if ($isPending && !empty($pendingRequest->corrected_rest_times)) {
-                    // 修正申請（承認待ち）がある場合は、JSONデータを配列として取得
-                    $displayRestTimes = is_string($pendingRequest->corrected_rest_times) 
-                        ? json_decode($pendingRequest->corrected_rest_times, true) 
-                        : $pendingRequest->corrected_rest_times;
-                } else {
-                    // 申請がない場合は、現在のDBにある確定済みの休憩データをセット
-                    foreach($attendance->restTimes as $rest) {
-                        $displayRestTimes[] = [
-                            'rest_id' => $rest->id,
-                            'start'   => $rest->start_time->format('H:i'),
-                            'end'     => $rest->end_time ? $rest->end_time->format('H:i') : ''
-                        ];
-                    }
-                }
-            @endphp
-
-            {{-- 休憩時間の表示ループ --}}
+            {{-- 休憩時間の表示（コントローラーで作成済みの配列を使用） --}}
             @foreach($displayRestTimes as $index => $rest)
+
             <tr>
                 <th>休憩{{ $index > 0 ? $index + 1 : '' }}</th>
                 <td>
                     <div class="time-inputs">
 
                         {{-- 開始時間 --}}
-                        {{-- 修正申請中のデータ構造に合わせてキー名（'start', 'end'）を指定 --}}
                         <input type="time" name="rests[{{ $rest['rest_id'] ?? $index }}][start]" 
                             value="{{ old("rests." . ($rest['rest_id'] ?? $index) . ".start", $rest['start']) }}" 
                             class="input-time">
@@ -102,10 +82,10 @@
 
                     </div>
 
-                    {{-- ★ここに追加！ 休憩時間のバリデーションエラー表示 --}}
                     @error("rests." . ($rest['rest_id'] ?? $index) . ".start")
                         <p class="status-message">{{ $message }}</p>
                     @enderror
+
                     @error("rests." . ($rest['rest_id'] ?? $index) . ".end")
                         <p class="status-message">{{ $message }}</p>
                     @enderror
@@ -118,7 +98,6 @@
             <tr>
                 <th>備考</th>
                 <td>
-                    {{-- ここも old() を追加し、承認待ちの場合は申請理由をデフォルト値にします --}}
                     <textarea name="reason" class="input-textarea">{{ old('reason', $isPending ? $pendingRequest->reason : $attendance->reason) }}</textarea>
 
                     @error('reason')
@@ -130,11 +109,9 @@
 
         <div class="form-actions">
             @if($isPending)
-                {{-- 修正申請中の場合は「承認」ボタン --}}
-                <button type="submit" class="submit-button">承認</button>
+                <button type="submit" class="submit-button approve">承認</button>
             @else
-                {{-- 通常時は「修正」ボタン --}}
-                <button type="submit" class="submit-button">修正</button>
+                <button type="submit" class="submit-button update">修正</button>
             @endif
         </div>
     </form>

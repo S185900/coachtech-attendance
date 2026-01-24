@@ -12,10 +12,11 @@ class StampCorrectionRequestController extends Controller
     {
         $user = Auth::user();
 
-        // クエリパラメータ 'tab' で表示を切り替え（デフォルトは承認待ち）
-        $status = $request->query('tab') === 'approved' ? 1 : 0;
+        // 三項演算子の数字を書き換え
+        $status = $request->query('tab') === 'approved' 
+            ? StampCorrectionRequest::STATUS_APPROVED 
+            : StampCorrectionRequest::STATUS_PENDING;
 
-        // ログインユーザーの申請一覧を、勤怠データ(attendance)と一緒に取得
         $requests = StampCorrectionRequest::with('attendance')
             ->where('user_id', $user->id)
             ->where('status', $status)
@@ -30,16 +31,16 @@ class StampCorrectionRequestController extends Controller
 
     public function adminIndex(Request $request)
     {
-        // クエリパラメータ 'tab' で表示を切り替え
-        $status = $request->query('tab') === 'approved' ? 1 : 0;
+        // 同様に数字を書き換え
+        $status = $request->query('tab') === 'approved' 
+            ? StampCorrectionRequest::STATUS_APPROVED 
+            : StampCorrectionRequest::STATUS_PENDING;
 
-        // 全ユーザーの申請を、勤怠データ・ユーザーデータと一緒に取得
-        $requests = StampCorrectionRequest::with(['attendance', 'user']) // userも一緒に取ると名前が出せる
+        $requests = StampCorrectionRequest::with(['attendance', 'user'])
             ->where('status', $status)
             ->orderBy('created_at', 'desc')
             ->get();
 
-        // 管理者用のビュー（admin/stamp_correction/list.blade.php）を返す
         return view('admin.stamp_correction.list', [
             'requests' => $requests,
             'tab' => $request->query('tab', 'pending')
@@ -86,8 +87,10 @@ class StampCorrectionRequestController extends Controller
             }
 
             // 3. 申請ステータスを承認済み(1)に変更
+            // ...トランザクション内
             $correctionRequest->update([
-                'status' => 1
+                // 'status' => 1 を書き換え
+                'status' => StampCorrectionRequest::STATUS_APPROVED 
             ]);
         });
 

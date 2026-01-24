@@ -218,7 +218,7 @@ class AttendanceController extends Controller
                 'corrected_end_time'   => Carbon::parse($dateStr . ' ' . $request->end_time),
                 'corrected_rest_times' => $restTimesData, // 整形した配列をJSONとして保存
                 'reason'               => $request->reason,
-                'status'               => 0, // 承認待ち
+                'status' => StampCorrectionRequest::STATUS_PENDING,
             ]);
         });
 

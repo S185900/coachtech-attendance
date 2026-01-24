@@ -80,11 +80,11 @@ Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(functi
     Route::get('/attendance/list', [AdminAttendanceController::class, 'index'])->name('attendance.list');
 
     // PG10: 勤怠詳細
-    Route::get('/attendance/detail/{id}', [AdminAttendanceController::class, 'showDetail'])->name('attendance.detail');
+    Route::get('/attendance/{id}', [AdminAttendanceController::class, 'showDetail'])->name('attendance.detail');
 
     // 勤怠詳細からの更新・承認 (POST) 
     // これにより route('admin.attendance.approve') が有効になります
-    Route::post('/attendance/detail/{id}', [AdminAttendanceController::class, 'approve'])->name('attendance.approve');
+    Route::post('/attendance/{id}', [AdminAttendanceController::class, 'approve'])->name('attendance.approve');
 
     // PG09: スタッフ一覧画面
     Route::get('/staff/list', [AdminStaffController::class, 'index'])->name('staff.list');

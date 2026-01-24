@@ -9,6 +9,11 @@ class StampCorrectionRequest extends Model
 {
     use HasFactory;
 
+    // --- ここに追加！ ---
+    const STATUS_PENDING = 0;
+    const STATUS_APPROVED = 1;
+    // ------------------
+
     protected $fillable = [
         'user_id',
         'attendance_id',
