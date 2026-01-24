@@ -14,7 +14,7 @@
 <body>
     <div class="admin-layout">
         <header class="header" role="banner">
-            <a href="/admin/login" class="header-logo">
+            <a href="{{ route('admin.login') }}" class="header-logo">
                 <img class="header-logo-img" src="{{ asset('images/coachtech-logo.png') }}" alt="COACHTECH">
             </a>
         </header>
