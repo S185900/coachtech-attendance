@@ -21,34 +21,19 @@
         <tbody>
             @foreach($users as $user)
             <tr>
-                <td class="user-name">{{ $user->name }}</td>
-                <td class="user-email">{{ $user->email }}</td>
+                <td class="user-name">
+                    {{ $user->name }}
+                </td>
+                <td class="user-email">
+                    {{ $user->email }}
+                </td>
                 <td>
-                    {{-- リンク先は各スタッフの勤怠一覧画面 --}}
                     <a href="{{ route('admin.attendance.staff', ['id' => $user->id]) }}" class="detail-link">詳細</a>
                 </td>
             </tr>
             @endforeach
         </tbody>
 
-
-        <!-- <tbody>
-            <tr>
-                <td>山田 太郎</td>
-                <td>test@mail.com</td>
-                <td><a href="#" class="detail-link">詳細</a></td>
-            </tr>
-            <tr>
-                <td>山田 太郎</td>
-                <td>test@mail.com</td>
-                <td><a href="#" class="detail-link">詳細</a></td>
-            </tr>
-            <tr>
-                <td>山田 太郎</td>
-                <td>test@mail.com</td>
-                <td><a href="#" class="detail-link">詳細</a></td>
-            </tr>
-        </tbody> -->
     </table>
 
 </div>

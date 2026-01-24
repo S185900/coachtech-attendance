@@ -10,6 +10,7 @@
 
     @yield('css')
 </head>
+
 <!-- ログイン前共通ヘッダー(admin) -->
 <body>
     <div class="admin-layout">

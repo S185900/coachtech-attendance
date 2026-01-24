@@ -10,26 +10,27 @@
     <h1 class="page-title">{{ $user->name }}さんの勤怠</h1>
 
     {{-- 日付表示と前月・翌月リンク --}}
-    <div class="date-nav">
+    <nav class="date-nav">
+
         {{-- 前月ボタン --}}
         <a href="{{ route('admin.attendance.staff', ['id' => $user->id, 'month' => $prevMonth]) }}" class="date-nav-link">
-            <img src="{{ asset('images/arrow-image.png') }}" alt="前月" class="arrow-icon prev">
+            <img src="{{ asset('images/arrow-image.png') }}" alt="" class="arrow-icon prev">
             前月
         </a>
 
         {{-- 中央の日付表示 --}}
-        <div class="current-date-display">
+        <span class="current-date-display">
             <img src="{{ asset('images/calender-image.png') }}" alt="" class="calendar-icon">
-            {{-- コントローラーで $currentMonth を Carbon インスタンスとして渡している場合 --}}
             <span>{{ $currentMonth->format('Y/m') }}</span>
-        </div>
+        </span>
 
         {{-- 翌月ボタン --}}
         <a href="{{ route('admin.attendance.staff', ['id' => $user->id, 'month' => $nextMonth]) }}" class="date-nav-link">
             翌月
-            <img src="{{ asset('images/arrow-image.png') }}" alt="翌月" class="arrow-icon next">
+            <img src="{{ asset('images/arrow-image.png') }}" alt="" class="arrow-icon next">
         </a>
-    </div>
+
+    </nav>
 
     <table class="attendance-table">
         <thead>
@@ -46,21 +47,21 @@
         <tbody>
             @foreach($attendances as $attendance)
             <tr>
-                {{-- $attendance->work_date を $attendance->date に修正 --}}
-                {{-- 修正後：06/01(木) 形式 --}}
-                <td>{{ \Carbon\Carbon::parse($attendance->date)->isoFormat('MM/DD(ddd)') }}</td>
-
-                <td>{{ $attendance->start_time->format('H:i') }}</td>
-                <td>{{ $attendance->end_time ? $attendance->end_time->format('H:i') : '' }}</td>
-
-                {{-- 合計休憩時間 (アクセサ getTotalRestDurationAttribute) --}}
-                {{-- 休憩時間が 00:00 なら空白にする場合（任意） --}}
-                <td>{{ $attendance->total_rest_duration !== '00:00' ? $attendance->total_rest_duration : '' }}</td>
-
-                {{-- 合計勤務時間 (アクセサ getWorkTimeAttribute かな？) --}}
-                {{-- 合計勤務時間が 00:00 なら空白にする場合 --}}
-                <td>{{ $attendance->work_time !== '00:00' ? $attendance->work_time : '' }}</td>
-
+                <td>
+                    {{ $attendance->date->isoFormat('MM/DD(ddd)') }}
+                </td>
+                <td>
+                    {{ $attendance->start_time->format('H:i') }}
+                </td>
+                <td>
+                    {{ $attendance->end_time ? $attendance->end_time->format('H:i') : '' }}
+                </td>
+                <td>
+                    {{ $attendance->total_rest_time !== '00:00' ? $attendance->total_rest_time : '' }}
+                </td>
+                <td>
+                    {{ $attendance->work_time !== '00:00' ? $attendance->work_time : '' }}
+                </td>
                 <td>
                     <a href="{{ route('admin.attendance.detail', ['id' => $attendance->id]) }}" class="detail-link">詳細</a>
                 </td>
