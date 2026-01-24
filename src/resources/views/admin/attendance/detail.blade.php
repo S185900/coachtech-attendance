@@ -60,7 +60,7 @@
                 </td>
             </tr>
 
-            {{-- 休憩時間の表示（コントローラーで作成済みの配列を使用） --}}
+            {{-- 休憩時間の表示 --}}
             @foreach($displayRestTimes as $index => $rest)
 
             <tr>
