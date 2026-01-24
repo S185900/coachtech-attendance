@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Attendance;
 use App\Models\RestTime;
 
+// ID:10_勤怠詳細情報取得機能（一般ユーザー）のテスト
 class AttendanceDetailTest extends TestCase
 {
     use RefreshDatabase;
@@ -31,7 +32,7 @@ class AttendanceDetailTest extends TestCase
     }
 
     /**
-     * 1. 勤怠詳細画面の「名前」がログインユーザーの氏名になっている
+     * 勤怠詳細画面の「名前」がログインユーザーの氏名になっている
      */
     public function test_attendance_detail_displays_user_name()
     {
@@ -43,7 +44,7 @@ class AttendanceDetailTest extends TestCase
     }
 
     /**
-     * 2. 勤怠詳細画面の「日付」が選択した日付になっている
+     * 勤怠詳細画面の「日付」が選択した日付になっている
      */
     public function test_attendance_detail_displays_correct_date()
     {
@@ -55,7 +56,7 @@ class AttendanceDetailTest extends TestCase
     }
 
     /**
-     * 3. 「出勤・退勤」にて記されている時間がログインユーザーの打刻と一致している
+     * 「出勤・退勤」にて記されている時間がログインユーザーの打刻と一致している
      */
     public function test_attendance_detail_displays_correct_work_times()
     {
@@ -67,7 +68,7 @@ class AttendanceDetailTest extends TestCase
     }
 
     /**
-     * 4. 「休憩」にて記されている時間がログインユーザーの打刻と一致している
+     * 「休憩」にて記されている時間がログインユーザーの打刻と一致している
      */
     public function test_attendance_detail_displays_correct_rest_times()
     {

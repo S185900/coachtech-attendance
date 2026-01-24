@@ -175,7 +175,7 @@ php artisan test tests/Feature/AdminAttendanceListTest.php
 php artisan test tests/Feature/AdminAttendanceDetailTest.php
 
 #14 ユーザー情報取得機能（管理者）
-php artisan test tests/Feature/AdminStaffListTest.php
+php artisan test tests/Feature/AdminStaffTest.php
 
 #15 勤怠情報修正機能（管理者）
 php artisan test tests/Feature/AdminStampCorrectionTest.php

@@ -9,6 +9,7 @@ use App\Models\Attendance;
 use App\Models\StampCorrectionRequest;
 use Carbon\Carbon;
 
+// ID:15_勤怠情報修正機能（管理者）のテスト
 class AdminStampCorrectionTest extends TestCase
 {
     use RefreshDatabase;
@@ -28,7 +29,7 @@ class AdminStampCorrectionTest extends TestCase
     }
 
     /**
-     * 1. 承認待ちの修正申請が全て表示されている
+     * 承認待ちの修正申請が全て表示されている
      */
     public function test_admin_can_see_pending_requests()
     {
@@ -46,13 +47,12 @@ class AdminStampCorrectionTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee('テストスタッフ');
-        // 表示が 2026/01/11 なので修正
         $response->assertSee('2026/01/11');
         $response->assertSee('電車遅延のため');
     }
 
     /**
-     * 2. 承認済みの修正申請が全て表示されている
+     * 承認済みの修正申請が全て表示されている
      */
     public function test_admin_can_see_approved_requests()
     {
@@ -74,7 +74,7 @@ class AdminStampCorrectionTest extends TestCase
     }
 
     /**
-     * 3. 修正申請の詳細内容が正しく表示されている
+     * 修正申請の詳細内容が正しく表示されている
      */
     public function test_admin_can_see_request_detail()
     {
@@ -95,5 +95,33 @@ class AdminStampCorrectionTest extends TestCase
         $response->assertSee('08:45');
         $response->assertSee('18:15');
         $response->assertSee('打刻忘れ修正');
+    }
+
+    /**
+     * 修正申請の承認処理が正しく行われる
+     */
+    public function test_admin_approval_process_updates_attendance()
+    {
+        $request = StampCorrectionRequest::create([
+            'attendance_id' => $this->attendance->id,
+            'user_id' => $this->staff->id,
+            'corrected_start_time' => '08:00:00',
+            'corrected_end_time' => '17:00:00',
+            'reason' => '承認テスト',
+            'status' => 0,
+        ]);
+
+        $this->actingAs($this->admin, 'admin');
+
+        $response = $this->post(route('admin.stamp_correction.update', ['id' => $request->id]));
+
+        $response->assertStatus(302);
+
+        $this->assertEquals(1, $request->fresh()->status);
+
+        $attendance = $this->attendance->fresh();
+
+        $this->assertEquals('08:00:00', Carbon::parse($attendance->start_time)->format('H:i:s'));
+        $this->assertEquals('17:00:00', Carbon::parse($attendance->end_time)->format('H:i:s'));
     }
 }

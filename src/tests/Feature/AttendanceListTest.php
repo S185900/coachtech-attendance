@@ -8,12 +8,13 @@ use App\Models\User;
 use App\Models\Attendance;
 use Carbon\Carbon;
 
+// ID:9_勤怠一覧情報取得機能（一般ユーザー）のテスト
 class AttendanceListTest extends TestCase
 {
     use RefreshDatabase;
 
     /**
-     * 1. 自分が行った勤怠情報が全て表示されている
+     * 自分が行った勤怠情報が全て表示されている
      */
     public function test_user_can_see_their_own_attendance_data()
     {
@@ -39,7 +40,7 @@ class AttendanceListTest extends TestCase
     }
 
     /**
-     * 2. 勤怠一覧画面に遷移した際に現在の月が表示される
+     * 勤怠一覧画面に遷移した際に現在の月が表示される
      */
     public function test_current_month_is_displayed_initially()
     {
@@ -57,7 +58,7 @@ class AttendanceListTest extends TestCase
     }
 
     /**
-     * 3. 「前月」を押下した時に表示月の前月の情報が表示される
+     * 「前月」を押下した時に表示月の前月の情報が表示される
      */
     public function test_previous_month_button_works()
     {
@@ -81,7 +82,7 @@ class AttendanceListTest extends TestCase
     }
 
     /**
-     * 4. 「翌月」を押下した時に表示月の翌月の情報が表示される
+     * 「翌月」を押下した時に表示月の翌月の情報が表示される
      */
     public function test_next_month_button_works()
     {
@@ -105,7 +106,7 @@ class AttendanceListTest extends TestCase
     }
 
     /**
-     * 5. 「詳細」を押下すると、その日の勤怠詳細画面に遷移する
+     * 「詳細」を押下すると、その日の勤怠詳細画面に遷移する
      */
     public function test_detail_button_redirects_to_correct_page()
     {

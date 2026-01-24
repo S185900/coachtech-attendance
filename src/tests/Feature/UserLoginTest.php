@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use App\Models\User;
 
-// ログイン認証機能（一般ユーザー）のテスト
+// ID:2_ログイン認証機能（一般ユーザー）のテスト
 class UserLoginTest extends TestCase
 {
     use RefreshDatabase;

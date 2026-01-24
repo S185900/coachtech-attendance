@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
-// ステータス確認機能のテスト
+// ID:5_ステータス確認機能のテスト
 class AttendanceStatusTest extends TestCase
 {
     use RefreshDatabase;

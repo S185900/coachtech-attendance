@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use App\Models\Master;
 
-// ログイン認証機能（管理者）のテスト
+// ID:3_ログイン認証機能（管理者）のテスト
 class AdminLoginTest extends TestCase
 {
     use RefreshDatabase;

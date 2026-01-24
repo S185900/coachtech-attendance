@@ -6,9 +6,9 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Attendance;
-use App\Models\RestTime;
 use Carbon\Carbon;
 
+// ID:7_休憩機能のテスト
 class RestTest extends TestCase
 {
     use DatabaseMigrations;

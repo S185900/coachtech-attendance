@@ -7,6 +7,7 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Attendance;
 
+// ID:13_勤怠詳細情報取得・修正機能（管理者）のテスト
 class AdminAttendanceDetailTest extends TestCase
 {
     use RefreshDatabase;

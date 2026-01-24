@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Attendance;
 use Carbon\Carbon;
 
+// ID:8_退勤機能のテスト
 class ClockOutTest extends TestCase
 {
     use RefreshDatabase;

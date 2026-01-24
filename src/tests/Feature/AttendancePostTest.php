@@ -8,7 +8,7 @@ use App\Models\User;
 use App\Models\Attendance;
 use Carbon\Carbon;
 
-// 出勤機能のテスト
+// ID:6_出勤機能のテスト
 class AttendancePostTest extends TestCase
 {
     use DatabaseMigrations;

@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Attendance;
 use Carbon\Carbon;
 
+// ID:12_勤怠一覧情報取得機能（管理者）のテスト
 class AdminAttendanceListTest extends TestCase
 {
     use RefreshDatabase;
@@ -29,8 +30,8 @@ class AdminAttendanceListTest extends TestCase
     }
 
     /**
-     * 1. 全ユーザーの勤怠情報が正確に確認できる
-     * 2. 遷移した際に現在の日付が表示される
+     * 全ユーザーの勤怠情報が正確に確認できる
+     * 遷移した際に現在の日付が表示される
      */
     public function test_admin_can_see_attendance_list_with_current_date()
     {
@@ -55,7 +56,7 @@ class AdminAttendanceListTest extends TestCase
     }
 
     /**
-     * 3.「前日」を押下した時に前の日の勤怠情報が表示される
+     * 「前日」を押下した時に前の日の勤怠情報が表示される
      */
     public function test_admin_can_navigate_to_previous_day()
     {
