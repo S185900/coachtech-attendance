@@ -180,13 +180,40 @@ class AttendanceController extends Controller
 
         // 承認待ちの申請データを取得する
         $pendingRequest = StampCorrectionRequest::where('attendance_id', $attendance_id)
-            ->where('status', 0)
+            ->where('status', StampCorrectionRequest::STATUS_PENDING) // 定数を使うのがベター
             ->first();
 
-        // 申請データが存在すれば isPending は true になる
         $isPending = !is_null($pendingRequest);
 
-        return view('user.attendance.detail', compact('attendance', 'isPending', 'pendingRequest'));
+        // --- ここを追加：Bladeに渡す休憩データを作成 ---
+        $displayRestTimes = [];
+        if ($isPending && !empty($pendingRequest->corrected_rest_times)) {
+            // 承認待ちなら申請データを使用
+            $displayRestTimes = is_string($pendingRequest->corrected_rest_times) 
+                ? json_decode($pendingRequest->corrected_rest_times, true) 
+                : $pendingRequest->corrected_rest_times;
+        } else {
+            // 通常時は現在の休憩データを整形
+            foreach($attendance->restTimes as $rest) {
+                $displayRestTimes[] = [
+                    'rest_id' => $rest->id,
+                    'start'   => $rest->start_time->format('H:i'),
+                    'end'     => $rest->end_time ? $rest->end_time->format('H:i') : ''
+                ];
+            }
+        }
+
+        // 備考の表示内容も変数化しておくとBladeが楽になります
+        $displayReason = $isPending ? $pendingRequest->reason : $attendance->reason;
+
+        // displayRestTimes と displayReason を追加で渡す
+        return view('user.attendance.detail', compact(
+            'attendance', 
+            'isPending', 
+            'pendingRequest', 
+            'displayRestTimes',
+            'displayReason'
+        ));
     }
 
     /**

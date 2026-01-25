@@ -1,54 +1,56 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>coachtech-attendance</title>
-    <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css" />
-    <link rel="stylesheet" href="{{ asset('css/admin-header.css')}}">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
 
-    @yield('css')
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>coachtech-attendance</title>
+        <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css" />
+        <link rel="stylesheet" href="{{ asset('css/admin-header.css')}}">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
 
-<!-- 管理者ログイン後ヘッダー -->
-<body>
-    <header class="header">
-        <a href="{{ route('admin.attendance.list') }}" class="header-logo">
-            <img class="header-logo-img" src="{{ asset('images/coachtech-logo.png') }}" alt="COACHTECH">
-        </a>
+        @yield('css')
+    </head>
 
-        <input type="checkbox" id="menu-toggle" class="menu-checkbox">
+    <!-- 管理者ログイン後ヘッダー -->
+    <body>
+        <header class="header">
+            <a href="{{ route('admin.attendance.list') }}" class="header-logo">
+                <img class="header-logo-img" src="{{ asset('images/coachtech-logo.png') }}" alt="COACHTECH">
+            </a>
 
-        <label for="menu-toggle" class="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
-        </label>
+            <input type="checkbox" id="menu-toggle" class="menu-checkbox">
 
-        <nav class="header-nav">
+            <label for="menu-toggle" class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
 
-            <ul class="header-nav-list">
-                <li class="header-nav-item"><a href="{{ route('admin.attendance.list') }}" class="header-nav-link">勤怠一覧</a></li>
+            <nav class="header-nav">
 
-                <li class="header-nav-item"><a href="{{ route('admin.staff.list') }}" class="header-nav-link">スタッフ一覧</a></li>
+                <ul class="header-nav-list">
+                    <li class="header-nav-item"><a href="{{ route('admin.attendance.list') }}" class="header-nav-link">勤怠一覧</a></li>
 
-                <li class="header-nav-item"><a href="{{ route('admin.stamp_correction.list') }}" class="header-nav-link">申請一覧</a></li>
+                    <li class="header-nav-item"><a href="{{ route('admin.staff.list') }}" class="header-nav-link">スタッフ一覧</a></li>
 
-                <li class="header-nav-item">
-                    <form action="{{ route('admin.logout') }}" method="POST">
-                        @csrf
-                        <button type="submit" class="header-nav-link logout-button">ログアウト</button>
-                    </form>
-                </li>
-            </ul>
+                    <li class="header-nav-item"><a href="{{ route('admin.stamp_correction.list') }}" class="header-nav-link">申請一覧</a></li>
 
-        </nav>
-    </header>
+                    <li class="header-nav-item">
+                        <form action="{{ route('admin.logout') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="header-nav-link logout-button">ログアウト</button>
+                        </form>
+                    </li>
+                </ul>
 
-    <main class="main-content">
-        @yield('content')
-    </main>
+            </nav>
+        </header>
 
-</body>
+        <main class="main-content">
+            @yield('content')
+        </main>
+
+    </body>
+
 </html>
