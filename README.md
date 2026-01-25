@@ -131,7 +131,11 @@ https://docs.google.com/spreadsheets/d/1vpKz6K7swjZcZIrj2miOFVXzOABBeqwKwvqgHdIG
 https://docs.google.com/spreadsheets/d/1vpKz6K7swjZcZIrj2miOFVXzOABBeqwKwvqgHdIGdcY/edit?gid=1188247583#gid=1188247583&range=A1
 
 ## 補足
-** PHPUnitによるテストについて**
+
+** 勤怠登録画面（一般ユーザー）について **
+> *ページをリロードしなくても時刻が勝手に進む仕様にしております。*
+
+** PHPUnitによるテストについて **
 - テスト実行コード一覧
 ``` bash
 #1 認証機能（一般ユーザー）

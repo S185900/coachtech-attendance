@@ -1,63 +1,87 @@
 @extends('user.layouts.user-header')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/user-index.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/user-index.css')}}">
 @endsection
 
 <!-- 出勤登録画面（一般ユーザー） http://localhost/attendance-->
 @section('content')
-<div class="attendance-container">
-    <div class="attendance-card">
-        <div class="attendance-status">
-            {{-- 状態に応じたバッジの表示 --}}
-            @if(!$attendance)
-                <span class="status-badge status-out">勤務外</span>
-            @elseif($attendance->status == 1)
-                <span class="status-badge status-working">出勤中</span>
-            @elseif($attendance->status == 2)
-                <span class="status-badge status-break">休憩中</span>
-            @elseif($attendance->status == 0)
-                <span class="status-badge status-done">退勤済</span>
-            @endif
-        </div>
+    <div class="attendance-container">
+        <div class="attendance-card">
+            <div class="attendance-status">
+                @if(!$attendance)
+                    <span class="status-badge status-out">勤務外</span>
+                @elseif($attendance->status == \App\Models\Attendance::STATUS_WORKING) {{-- 1から変更 --}}
+                    <span class="status-badge status-working">出勤中</span>
+                @elseif($attendance->status == \App\Models\Attendance::STATUS_RESTING) {{-- 2から変更 --}}
+                    <span class="status-badge status-break">休憩中</span>
+                @elseif($attendance->status == \App\Models\Attendance::STATUS_RETIRED) {{-- 0から変更 --}}
+                    <span class="status-badge status-done">退勤済</span>
+                @endif
+            </div>
 
-        <p class="attendance-date">{{ date('Y年m月d日') }} ({{ ['日', '月', '火', '水', '木', '金', '土'][date('w')] }})</p>
+            <p class="attendance-date">
+                {{ \Carbon\Carbon::now()->isoFormat('YYYY年MM月DD日(ddd)') }}
+            </p>
 
-        <h1 class="attendance-time" id="realtime">{{ date('H:i') }}</h1>
+            <h1 class="attendance-time" id="realtime">
+                {{ date('H:i') }}
+            </h1>
 
-        <div class="attendance-controls">
-            @if(!$attendance)
-                {{-- 勤務外：出勤ボタンのみ表示 --}}
-                <form action="{{ route('attendance.start') }}" method="POST">
-                    @csrf
-                    <button type="submit" class="attendance-button">出勤</button>
-                </form>
+            <div class="attendance-controls">
 
-            @elseif($attendance->status == 1)
-                {{-- 出勤中：退勤と休憩入を横並びで表示 --}}
-                <div class="button-group">
-                    <form action="{{ route('attendance.end') }}" method="POST">
+                @if(!$attendance)
+                    {{-- 未出勤（勤務外） --}}
+                    <form action="{{ route('attendance.start') }}" method="POST">
                         @csrf
-                        <button type="submit" class="attendance-button btn-black">退勤</button>
+                        <button type="submit" class="attendance-button">出勤</button>
                     </form>
-                    <form action="{{ route('attendance.rest-start') }}" method="POST">
+
+                @elseif($attendance->status == \App\Models\Attendance::STATUS_WORKING)
+                    {{-- 出勤中 --}}
+                    <div class="button-group">
+                        <form action="{{ route('attendance.end') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="attendance-button btn-black">退勤</button>
+                        </form>
+                        <form action="{{ route('attendance.rest-start') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="attendance-button btn-white">休憩入</button>
+                        </form>
+                    </div>
+
+                @elseif($attendance->status == \App\Models\Attendance::STATUS_RESTING)
+                    {{-- 休憩中 --}}
+                    <form action="{{ route('attendance.rest-end') }}" method="POST">
                         @csrf
-                        <button type="submit" class="attendance-button btn-white">休憩入</button>
+                        <button type="submit" class="attendance-button btn-white">休憩戻</button>
                     </form>
-                </div>
 
-            @elseif($attendance->status == 2)
-                {{-- 休憩中：休憩戻のみ表示 --}}
-                <form action="{{ route('attendance.rest-end') }}" method="POST">
-                    @csrf
-                    <button type="submit" class="attendance-button btn-white">休憩戻</button>
-                </form>
+                @elseif($attendance->status == \App\Models\Attendance::STATUS_RETIRED)
+                    {{-- 退勤済 --}}
+                    <p class="thanks-message">お疲れ様でした。</p>
 
-            @elseif($attendance->status == 0)
-                {{-- 退勤後：メッセージ表示 --}}
-                <p class="thanks-message">お疲れ様でした。</p>
-            @endif
+                @endif
+
+            </div>
         </div>
     </div>
-</div>
+
+    {{-- リアルタイム時計用 --}}
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const target = document.getElementById('realtime');
+            if (target) {
+                target.textContent = `${hours}:${minutes}`;
+            }
+        }
+
+        setInterval(updateTime, 1000);
+        updateTime();
+
+    </script>
+
 @endsection

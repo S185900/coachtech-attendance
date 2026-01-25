@@ -48,7 +48,7 @@ class AttendanceController extends Controller
             'user_id' => $user->id,
             'date' => $today,
             'start_time' => Carbon::now(),
-            'status' => 1, // 出勤中
+            'status' => Attendance::STATUS_WORKING, // 出勤中
         ]);
 
         return redirect()->back();
@@ -64,14 +64,14 @@ class AttendanceController extends Controller
 
         $attendance = Attendance::where('user_id', $user->id)
             ->whereDate('date', $today)
-            ->where('status', 1) // 出勤中のみ退勤可能
+            ->where('status', Attendance::STATUS_WORKING) // 出勤中のみ退勤可能
             ->first();
 
         if (!$attendance) return redirect()->back();
 
         $attendance->update([
             'end_time' => Carbon::now(),
-            'status' => 0, // 退勤済
+            'status' => Attendance::STATUS_RETIRED, // 退勤済
         ]);
 
         return redirect()->back();
@@ -88,7 +88,7 @@ class AttendanceController extends Controller
         // 今日の「勤務中」のレコードを取得
         $attendance = Attendance::where('user_id', $user->id)
             ->whereDate('date', $today)
-            ->where('status', 1)
+            ->where('status', Attendance::STATUS_WORKING) // 出勤中
             ->first();
 
         if (!$attendance) return redirect()->back();
@@ -100,7 +100,7 @@ class AttendanceController extends Controller
         ]);
 
         // 2. 勤務状態を「休憩中(2)」に更新
-        $attendance->update(['status' => 2]);
+        $attendance->update(['status' => Attendance::STATUS_RESTING]);
 
         return redirect()->back();
     }
@@ -116,7 +116,7 @@ class AttendanceController extends Controller
         // 今日の「休憩中」のレコードを取得
         $attendance = Attendance::where('user_id', $user->id)
             ->whereDate('date', $today)
-            ->where('status', 2)
+            ->where('status', Attendance::STATUS_RESTING) // 休憩中
             ->first();
 
         if (!$attendance) return redirect()->back();
@@ -132,7 +132,7 @@ class AttendanceController extends Controller
         }
 
         // 2. 勤務状態を「勤務中(1)」に戻す
-        $attendance->update(['status' => 1]);
+        $attendance->update(['status' => Attendance::STATUS_WORKING]);
 
         return redirect()->back();
     }
