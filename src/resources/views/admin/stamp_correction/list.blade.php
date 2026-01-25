@@ -32,11 +32,15 @@
         </thead>
 
         <tbody>
-            @foreach($requests as $request)
+            @forelse($requests as $request)
             <tr>
                 <td>
-                    <span class="status-badge {{ $request->status === 1 ? 'approved' : 'pending' }}">
-                        {{ $request->status === 1 ? '承認済み' : '承認待ち' }}
+                    {{-- 定数を使用して比較 --}}
+                    @php 
+                        $isApproved = ($request->status === \App\Models\StampCorrectionRequest::STATUS_APPROVED);
+                    @endphp
+                    <span class="status-badge {{ $isApproved ? 'approved' : 'pending' }}">
+                        {{ $isApproved ? '承認済み' : '承認待ち' }}
                     </span>
                 </td>
                 <td>{{ $request->user->name }}</td>
@@ -44,11 +48,16 @@
                 <td class="reason-cell">{{ Str::limit($request->reason, 20) }}</td>
                 <td>{{ $request->created_at->format('Y/m/d') }}</td>
                 <td>
-                    {{-- PG13: 承認画面へのリンク --}}
                     <a href="{{ route('admin.stamp_correction.approve', ['attendance_correct_request_id' => $request->id]) }}" class="detail-link">詳細</a>
                 </td>
             </tr>
-            @endforeach
+            @empty
+            <tr>
+                <td colspan="6" style="text-align: center; padding: 20px;">
+                    現在、{{ $tab === 'pending' ? '承認待ち' : '承認済み' }}の申請はありません。
+                </td>
+            </tr>
+            @endforelse
         </tbody>
 
     </table>
