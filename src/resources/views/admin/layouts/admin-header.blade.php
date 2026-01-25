@@ -10,6 +10,7 @@
 
     @yield('css')
 </head>
+
 <!-- 管理者ログイン後ヘッダー -->
 <body>
     <header class="header">
@@ -26,6 +27,7 @@
         </label>
 
         <nav class="header-nav">
+
             <ul class="header-nav-list">
                 <li class="header-nav-item"><a href="{{ route('admin.attendance.list') }}" class="header-nav-link">勤怠一覧</a></li>
 
@@ -40,10 +42,13 @@
                     </form>
                 </li>
             </ul>
+
         </nav>
     </header>
+
     <main class="main-content">
         @yield('content')
     </main>
+
 </body>
 </html>

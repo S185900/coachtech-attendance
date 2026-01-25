@@ -1,120 +1,121 @@
 @extends('admin.layouts.admin-header')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/admin-attendance-detail.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/admin-attendance-detail.css')}}">
 @endsection
 
 <!-- 勤怠詳細画面（管理者） http://localhost/admin/attendance/{id} -->
 @section('content')
-<div class="attendance-detail-container">
-    <h1 class="page-title">勤怠詳細</h1>
+    <div class="attendance-detail-container">
+        <h1 class="page-title">勤怠詳細</h1>
 
-    <form action="{{ route('admin.attendance.detail', ['id' => $attendance->id]) }}" method="POST">
-        @csrf
-        <table class="detail-table">
-            <tr>
-                <th>名前</th>
-                <td>
-                    <span class="user-name">{{ $attendance->user->name }}</span>
-                </td>
-            </tr>
-            <tr>
-                <th>日付</th>
-                <td class="date-inputs-container">
-                    <div class="date-year-wrapper">
-                        <span class="year-unit">{{ $attendance->date->format('Y') }}年</span>
-                    </div>
-                    <span class="range-separator-hidden">〜</span>
-                    <div class="date-day-wrapper">
-                        <span class="date-unit">{{ $attendance->date->format('n月j日') }}</span>
-                    </div>
-                </td>
-            </tr>
+        <form action="{{ route('admin.attendance.detail', ['id' => $attendance->id]) }}" method="POST">
+            @csrf
+            <table class="detail-table">
+                <tr>
+                    <th>名前</th>
+                    <td>
+                        <span class="user-name">{{ $attendance->user->name }}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>日付</th>
+                    <td class="date-inputs-container">
+                        <div class="date-year-wrapper">
+                            <span class="year-unit">{{ $attendance->date->format('Y') }}年</span>
+                        </div>
+                        <span class="range-separator-hidden">〜</span>
+                        <div class="date-day-wrapper">
+                            <span class="date-unit">{{ $attendance->date->format('n月j日') }}</span>
+                        </div>
+                    </td>
+                </tr>
 
-            {{-- 出勤・退勤部分 --}}
-            <tr>
-                <th>出勤・退勤</th>
-                <td>
-                    <div class="time-inputs">
+                {{-- 出勤・退勤部分 --}}
+                <tr>
+                    <th>出勤・退勤</th>
+                    <td>
+                        <div class="time-inputs">
 
-                        {{-- 出勤時間 --}}
-                        <input type="time" name="start_time" 
-                            value="{{ old('start_time', $isPending ? \Carbon\Carbon::parse($pendingRequest->corrected_start_time)->format('H:i') : $attendance->start_time->format('H:i')) }}" 
-                            class="input-time">
+                            {{-- 出勤時間 --}}
+                            <input type="time" name="start_time" 
+                                value="{{ old('start_time', $isPending ? \Carbon\Carbon::parse($pendingRequest->corrected_start_time)->format('H:i') : $attendance->start_time->format('H:i')) }}" 
+                                class="input-time">
 
-                        <span class="range-separator">〜</span>
+                            <span class="range-separator">〜</span>
 
-                        {{-- 退勤時間 --}}
-                        <input type="time" name="end_time" 
-                            value="{{ old('end_time', $isPending ? ($pendingRequest->corrected_end_time ? \Carbon\Carbon::parse($pendingRequest->corrected_end_time)->format('H:i') : '') : ($attendance->end_time ? $attendance->end_time->format('H:i') : '')) }}" 
-                            class="input-time">
+                            {{-- 退勤時間 --}}
+                            <input type="time" name="end_time" 
+                                value="{{ old('end_time', $isPending ? ($pendingRequest->corrected_end_time ? \Carbon\Carbon::parse($pendingRequest->corrected_end_time)->format('H:i') : '') : ($attendance->end_time ? $attendance->end_time->format('H:i') : '')) }}" 
+                                class="input-time">
 
-                    </div>
+                        </div>
 
-                    @error('start_time')
-                        <p class="status-message">{{ $message }}</p>
-                    @enderror
-                    @error('end_time')
-                        <p class="status-message">{{ $message }}</p>
-                    @enderror
-                </td>
-            </tr>
+                        @error('start_time')
+                            <p class="status-message">{{ $message }}</p>
+                        @enderror
+                        @error('end_time')
+                            <p class="status-message">{{ $message }}</p>
+                        @enderror
+                    </td>
+                </tr>
 
-            {{-- 休憩時間の表示 --}}
-            @foreach($displayRestTimes as $index => $rest)
+                {{-- 休憩時間の表示 --}}
+                @foreach($displayRestTimes as $index => $rest)
 
-            <tr>
-                <th>休憩{{ $index > 0 ? $index + 1 : '' }}</th>
-                <td>
-                    <div class="time-inputs">
+                    <tr>
+                        <th>休憩{{ $index > 0 ? $index + 1 : '' }}</th>
+                        <td>
+                            <div class="time-inputs">
 
-                        {{-- 開始時間 --}}
-                        <input type="time" name="rests[{{ $rest['rest_id'] ?? $index }}][start]" 
-                            value="{{ old("rests." . ($rest['rest_id'] ?? $index) . ".start", $rest['start']) }}" 
-                            class="input-time">
+                                {{-- 開始時間 --}}
+                                <input type="time" name="rests[{{ $rest['rest_id'] ?? $index }}][start]" 
+                                    value="{{ old("rests." . ($rest['rest_id'] ?? $index) . ".start", $rest['start']) }}" 
+                                    class="input-time">
 
-                        <span class="range-separator">〜</span>
+                                <span class="range-separator">〜</span>
 
-                        {{-- 終了時間 --}}
-                        <input type="time" name="rests[{{ $rest['rest_id'] ?? $index }}][end]" 
-                            value="{{ old("rests." . ($rest['rest_id'] ?? $index) . ".end", $rest['end']) }}" 
-                            class="input-time">
+                                {{-- 終了時間 --}}
+                                <input type="time" name="rests[{{ $rest['rest_id'] ?? $index }}][end]" 
+                                    value="{{ old("rests." . ($rest['rest_id'] ?? $index) . ".end", $rest['end']) }}" 
+                                    class="input-time">
 
-                    </div>
+                            </div>
 
-                    @error("rests." . ($rest['rest_id'] ?? $index) . ".start")
-                        <p class="status-message">{{ $message }}</p>
-                    @enderror
+                            @error("rests." . ($rest['rest_id'] ?? $index) . ".start")
+                                <p class="status-message">{{ $message }}</p>
+                            @enderror
 
-                    @error("rests." . ($rest['rest_id'] ?? $index) . ".end")
-                        <p class="status-message">{{ $message }}</p>
-                    @enderror
+                            @error("rests." . ($rest['rest_id'] ?? $index) . ".end")
+                                <p class="status-message">{{ $message }}</p>
+                            @enderror
 
-                </td>
-            </tr>
-            @endforeach
+                        </td>
+                    </tr>
 
-            {{-- 備考欄部分 --}}
-            <tr>
-                <th>備考</th>
-                <td>
-                    <textarea name="reason" class="input-textarea">{{ old('reason', $isPending ? $pendingRequest->reason : $attendance->reason) }}</textarea>
+                @endforeach
 
-                    @error('reason')
-                        <p class="status-message">{{ $message }}</p>
-                    @enderror
-                </td>
-            </tr>
-        </table>
+                {{-- 備考欄部分 --}}
+                <tr>
+                    <th>備考</th>
+                    <td>
+                        <textarea name="reason" class="input-textarea">{{ old('reason', $isPending ? $pendingRequest->reason : $attendance->reason) }}</textarea>
 
-        <div class="form-actions">
-            @if($isPending)
-                <button type="submit" class="submit-button approve">承認</button>
-            @else
-                <button type="submit" class="submit-button update">修正</button>
-            @endif
-        </div>
-    </form>
+                        @error('reason')
+                            <p class="status-message">{{ $message }}</p>
+                        @enderror
+                    </td>
+                </tr>
+            </table>
 
-</div>
+            <div class="form-actions">
+                @if($isPending)
+                    <button type="submit" class="submit-button approve">承認</button>
+                @else
+                    <button type="submit" class="submit-button update">修正</button>
+                @endif
+            </div>
+
+        </form>
+    </div>
 @endsection
