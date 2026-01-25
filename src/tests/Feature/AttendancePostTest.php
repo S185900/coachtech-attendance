@@ -32,7 +32,7 @@ class AttendancePostTest extends TestCase
 
         $this->assertDatabaseHas('attendances', [
             'user_id' => $user->id,
-            'status' => 1,
+            'status'  => Attendance::STATUS_WORKING,
         ]);
     }
 
@@ -48,7 +48,7 @@ class AttendancePostTest extends TestCase
             'date' => \Carbon\Carbon::today()->toDateString(),
             'start_time' => '09:00:00',
             'end_time' => '18:00:00',
-            'status' => 0,
+            'status' => Attendance::STATUS_RETIRED,
         ]);
 
         $this->actingAs($user);

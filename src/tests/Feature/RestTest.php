@@ -25,7 +25,7 @@ class RestTest extends TestCase
             'user_id' => $user->id,
             'date' => Carbon::today()->toDateString(),
             'start_time' => Carbon::now()->subHour(),
-            'status' => 1,
+            'status' => Attendance::STATUS_WORKING,
         ]);
 
         $response = $this->get('/attendance');
@@ -49,7 +49,7 @@ class RestTest extends TestCase
             'user_id' => $user->id,
             'date' => Carbon::today()->toDateString(),
             'start_time' => Carbon::now()->subHours(2),
-            'status' => 1,
+            'status' => Attendance::STATUS_WORKING,
         ]);
 
         $this->post('/attendance/rest-start');
@@ -71,7 +71,7 @@ class RestTest extends TestCase
             'user_id' => $user->id,
             'date' => Carbon::today()->toDateString(),
             'start_time' => Carbon::now()->subHour(),
-            'status' => 1,
+            'status' => Attendance::STATUS_WORKING,
         ]);
 
         $this->post('/attendance/rest-start');
@@ -97,7 +97,7 @@ class RestTest extends TestCase
             'user_id' => $user->id,
             'date' => Carbon::today()->toDateString(),
             'start_time' => Carbon::now()->subHours(3),
-            'status' => 1,
+            'status' => Attendance::STATUS_WORKING,
         ]);
 
         $this->post('/attendance/rest-start'); // 1回目入
@@ -121,7 +121,7 @@ class RestTest extends TestCase
             'user_id' => $user->id,
             'date' => $today->toDateString(),
             'start_time' => '09:00:00',
-            'status' => 1, // 出勤中
+            'status' => Attendance::STATUS_WORKING,
         ]);
 
         \Carbon\Carbon::setTestNow($today->copy()->setTime(12, 0, 0));

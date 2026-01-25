@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use App\Models\User;
+use App\Models\Attendance;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
@@ -38,7 +39,7 @@ class AttendanceStatusTest extends TestCase
             'user_id' => $user->id,
             'date' => $today,
             'start_time' => '09:00',
-            'status' => 1,
+            'status' => Attendance::STATUS_WORKING,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -61,7 +62,7 @@ class AttendanceStatusTest extends TestCase
             'user_id' => $user->id,
             'date' => $today,
             'start_time' => '09:00',
-            'status' => 2,
+            'status' => Attendance::STATUS_RESTING,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -92,7 +93,7 @@ class AttendanceStatusTest extends TestCase
             'date' => $today,
             'start_time' => '09:00',
             'end_time' => '18:00',
-            'status' => 0,
+            'status' => Attendance::STATUS_RETIRED,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);

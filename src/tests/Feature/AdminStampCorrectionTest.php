@@ -39,7 +39,7 @@ class AdminStampCorrectionTest extends TestCase
             'corrected_start_time' => '08:30:00',
             'corrected_end_time' => '18:30:00',
             'reason' => '電車遅延のため',
-            'status' => 0,
+            'status' => StampCorrectionRequest::STATUS_PENDING,
         ]);
 
         $this->actingAs($this->admin, 'admin');
@@ -62,7 +62,7 @@ class AdminStampCorrectionTest extends TestCase
             'corrected_start_time' => '08:00:00',
             'corrected_end_time' => '17:00:00',
             'reason' => '早退のため',
-            'status' => 1,
+            'status' => StampCorrectionRequest::STATUS_APPROVED,
         ]);
 
         $this->actingAs($this->admin, 'admin');
@@ -84,7 +84,7 @@ class AdminStampCorrectionTest extends TestCase
             'corrected_start_time' => '08:45:00',
             'corrected_end_time' => '18:15:00',
             'reason' => '打刻忘れ修正',
-            'status' => 0,
+            'status' => StampCorrectionRequest::STATUS_PENDING,
         ]);
 
         $this->actingAs($this->admin, 'admin');
@@ -108,7 +108,7 @@ class AdminStampCorrectionTest extends TestCase
             'corrected_start_time' => '08:00:00',
             'corrected_end_time' => '17:00:00',
             'reason' => '承認テスト',
-            'status' => 0,
+            'status' => StampCorrectionRequest::STATUS_PENDING,
         ]);
 
         $this->actingAs($this->admin, 'admin');
