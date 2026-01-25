@@ -62,7 +62,7 @@ class StampCorrectionRequestController extends Controller
 
         // トランザクション開始（すべての更新が成功するか、失敗したら全部戻す）
         \DB::transaction(function () use ($correctionRequest, $attendance) {
-            
+
             // 1. 勤怠レコード（出勤・退勤）を更新
             $attendance->update([
                 'start_time' => $correctionRequest->corrected_start_time, 
