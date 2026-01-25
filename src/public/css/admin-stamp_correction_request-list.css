@@ -108,6 +108,14 @@ body {
     opacity: 0.6;
 }
 
+.empty-message {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+    /* 少しグレーにすると「データがない感」が出て親切です */
+    font-size: 14px;
+}
+
 /* --- レスポンシブ対応 --- */
 
 /* PCサイズ（1400〜1540px） */

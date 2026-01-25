@@ -1,57 +1,58 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>coachtech-attendance</title>
-    <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css" />
-    <link rel="stylesheet" href="{{ asset('css/user-header.css')}}">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>coachtech-attendance</title>
+        <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css" />
+        <link rel="stylesheet" href="{{ asset('css/user-header.css')}}">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
 
-    @yield('css')
-</head>
-<!-- ユーザーログイン後ヘッダー -->
-<body>
-    <header class="header">
-        <a href="{{ route('attendance.list') }}" class="header-logo">
-            <img class="header-logo-img" src="{{ asset('images/coachtech-logo.png') }}" alt="COACHTECH">
-        </a>
+        @yield('css')
+    </head>
 
-        <input type="checkbox" id="menu-toggle" class="menu-checkbox">
+    <!-- ユーザーログイン後ヘッダー -->
+    <body>
+        <header class="header">
+            <a href="{{ route('attendance.list') }}" class="header-logo">
+                <img class="header-logo-img" src="{{ asset('images/coachtech-logo.png') }}" alt="COACHTECH">
+            </a>
 
-        <label for="menu-toggle" class="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
-        </label>
+            <input type="checkbox" id="menu-toggle" class="menu-checkbox">
 
-        <nav class="header-nav">
-            <ul class="header-nav-list">
-                <li class="header-nav-item">
-                    <a href="{{ route('index') }}" class="header-nav-link">
-                        勤怠
-                    </a>
-                </li>
+            <label for="menu-toggle" class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
 
-                <li class="header-nav-item">
-                    <a href="{{ route('attendance.list') }}" class="header-nav-link">
-                        勤怠一覧
-                    </a>
-                </li>
+            <nav class="header-nav">
+                <ul class="header-nav-list">
+                    <li class="header-nav-item">
+                        <a href="{{ route('index') }}" class="header-nav-link">
+                            勤怠
+                        </a>
+                    </li>
 
-                <li class="header-nav-item"><a href="{{ route('stamp_correction_request.list') }}" class="header-nav-link">申請</a></li>
+                    <li class="header-nav-item">
+                        <a href="{{ route('attendance.list') }}" class="header-nav-link">
+                            勤怠一覧
+                        </a>
+                    </li>
 
-                <li class="header-nav-item">
-                    <form action="{{ route('logout') }}" method="POST">
-                        @csrf
-                        <button type="submit" class="header-nav-link logout-button">ログアウト</button>
-                    </form>
-                </li>
-            </ul>
-        </nav>
-    </header>
-    <main class="main-content">
-        @yield('content')
-    </main>
-</body>
+                    <li class="header-nav-item"><a href="{{ route('stamp_correction_request.list') }}" class="header-nav-link">申請</a></li>
+
+                    <li class="header-nav-item">
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="header-nav-link logout-button">ログアウト</button>
+                        </form>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <main class="main-content">
+            @yield('content')
+        </main>
+    </body>
 </html>

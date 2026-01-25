@@ -60,7 +60,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" style="text-align: center; padding: 20px;">
+                        <td colspan="6" class="empty-message">
                             現在、{{ $tab === 'pending' ? '承認待ち' : '承認済み' }}の申請はありません。
                         </td>
                     </tr>
