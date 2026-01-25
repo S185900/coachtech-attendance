@@ -140,19 +140,14 @@ class AttendanceController extends Controller
     // PG04: 勤怠一覧画面
     public function list(Request $request)
     {
-        // ログイン中のユーザーの勤怠データを取得
-        // $attendances = Attendance::where('user_id', Auth::id())
-        //     ->orderBy('date', 'desc');
-
-        // 整理したディレクトリ構造に合わせて指定
-        // return view('user.attendance.list', compact('attendances'));
-
         // 現在の表示月を取得（デフォルトは今月）
         $month = $request->query('month', Carbon::now()->format('Y-m'));
         $currentDate = Carbon::parse($month);
 
         $startDate = $currentDate->copy()->startOfMonth();
         $endDate = $currentDate->copy()->endOfMonth();
+
+        $period = \Carbon\CarbonPeriod::create($startDate, $endDate);
 
         // 1ヶ月分のデータを一括取得（Eager LoadingでrestTimesも取得）
         $attendances = Attendance::with('restTimes')
@@ -168,6 +163,7 @@ class AttendanceController extends Controller
             'displayMonth' => $currentDate->format('Y/m'),
             'prevMonth' => $currentDate->copy()->subMonth()->format('Y-m'),
             'nextMonth' => $currentDate->copy()->addMonth()->format('Y-m'),
+            'period' => $period,
             'startDate' => $startDate,
             'endDate' => $endDate,
         ]);
