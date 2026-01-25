@@ -72,6 +72,7 @@ body {
 .note-text {
     width: 315px;
     margin: 0;
+    padding-left: 25px;
     line-height: 1.6;
     letter-spacing: 0.15em;
     white-space: pre-wrap;

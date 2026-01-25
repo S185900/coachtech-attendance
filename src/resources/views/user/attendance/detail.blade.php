@@ -57,24 +57,45 @@
                     </td>
                 </tr>
 
+                {{-- 休憩時間の表示 --}}
                 @foreach($displayRestTimes as $index => $rest)
                     <tr>
                         <th>休憩{{ $index > 0 ? $index + 1 : '' }}</th>
+
                         <td>
                             <div class="time-inputs">
+
                                 @if($isPending)
                                     <span class="time-text">{{ $rest['start'] }}</span>
                                     <span class="range-separator">〜</span>
                                     <span class="time-text">{{ $rest['end'] }}</span>
                                 @else
-                                    {{-- 休憩のIDまたはインデックスをキーにしてold値を保持 --}}
-                                    @php $restKey = $rest['rest_id'] ?? $index; @endphp
-                                    <input type="time" name="rests[{{ $restKey }}][start]" value="{{ old("rests.{$restKey}.start", $rest['start']) }}" class="input-time">
+
+                                    @php
+                                        $restKey = $rest['rest_id'] ?? $index;
+                                        $startTime = old("rests.{$restKey}.start", $rest['start']);
+                                        $endTime = old("rests.{$restKey}.end", $rest['end']);
+                                    @endphp
+
+                                    <input type="{{ $startTime ? 'time' : 'text' }}" 
+                                        name="rests[{{ $restKey }}][start]" 
+                                        value="{{ $startTime }}" 
+                                        class="input-time"
+                                        onfocus="(this.type='time')" 
+                                        onblur="if(!this.value)this.type='text'">
+
                                     <span class="range-separator">〜</span>
-                                    <input type="time" name="rests[{{ $restKey }}][end]" value="{{ old("rests.{$restKey}.end", $rest['end']) }}" class="input-time">
+
+                                    <input type="{{ $endTime ? 'time' : 'text' }}" 
+                                        name="rests[{{ $restKey }}][end]" 
+                                        value="{{ $endTime }}" 
+                                        class="input-time"
+                                        onfocus="(this.type='time')" 
+                                        onblur="if(!this.value)this.type='text'">
                                 @endif
                             </div>
                         </td>
+
                     </tr>
                 @endforeach
 
@@ -83,9 +104,15 @@
                         <th>休憩{{ count($displayRestTimes) + 1 }}</th>
                         <td>
                             <div class="time-inputs">
-                                <input type="time" name="rests[new][start]" value="{{ old('rests.new.start') }}" class="input-time">
+                                <input type="text" name="rests[new][start]" value="{{ old('rests.new.start') }}" 
+                                    class="input-time"
+                                    onfocus="(this.type='time')" onblur="if(!this.value)this.type='text'">
+
                                 <span class="range-separator">〜</span>
-                                <input type="time" name="rests[new][end]" value="{{ old('rests.new.end') }}" class="input-time">
+
+                                <input type="text" name="rests[new][end]" value="{{ old('rests.new.end') }}" 
+                                    class="input-time"
+                                    onfocus="(this.type='time')" onblur="if(!this.value)this.type='text'">
                             </div>
                         </td>
                     </tr>

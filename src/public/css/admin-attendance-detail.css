@@ -203,6 +203,15 @@ body {
     margin-top: 8px;
 }
 
+.input-time {
+    width: 120px;
+    /* 適切な幅に */
+    height: 35px;
+    /* 高さを統一 */
+    box-sizing: border-box;
+    /* 枠線を含めたサイズ計算にする */
+}
+
 /* --- レスポンシブ対応 --- */
 
 /* PCサイズ（1400〜1540px） */

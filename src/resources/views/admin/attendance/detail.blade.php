@@ -63,37 +63,70 @@
                 {{-- 休憩時間の表示 --}}
                 @foreach($displayRestTimes as $index => $rest)
 
+                    @php
+                        $restKey = $rest['rest_id'] ?? $index;
+                        $currentStart = old("rests.{$restKey}.start", $rest['start']);
+                        $currentEnd = old("rests.{$restKey}.end", $rest['end']);
+                    @endphp
+
                     <tr>
                         <th>休憩{{ $index > 0 ? $index + 1 : '' }}</th>
+
                         <td>
                             <div class="time-inputs">
 
-                                {{-- 開始時間 --}}
-                                <input type="time" name="rests[{{ $rest['rest_id'] ?? $index }}][start]" 
-                                    value="{{ old("rests." . ($rest['rest_id'] ?? $index) . ".start", $rest['start']) }}" 
-                                    class="input-time">
+                                <input type="{{ $currentStart ? 'time' : 'text' }}" 
+                                    name="rests[{{ $restKey }}][start]" 
+                                    value="{{ $currentStart }}" 
+                                    class="input-time"
+                                    onfocus="(this.type='time')" 
+                                    onblur="if(!this.value)this.type='text'">
 
                                 <span class="range-separator">〜</span>
 
-                                {{-- 終了時間 --}}
-                                <input type="time" name="rests[{{ $rest['rest_id'] ?? $index }}][end]" 
-                                    value="{{ old("rests." . ($rest['rest_id'] ?? $index) . ".end", $rest['end']) }}" 
-                                    class="input-time">
-
+                                <input type="{{ $currentEnd ? 'time' : 'text' }}" 
+                                    name="rests[{{ $restKey }}][end]" 
+                                    value="{{ $currentEnd }}" 
+                                    class="input-time"
+                                    onfocus="(this.type='time')" 
+                                    onblur="if(!this.value)this.type='text'">
                             </div>
 
-                            @error("rests." . ($rest['rest_id'] ?? $index) . ".start")
+                            @error("rests.{$restKey}.start")
                                 <p class="status-message">{{ $message }}</p>
                             @enderror
-
-                            @error("rests." . ($rest['rest_id'] ?? $index) . ".end")
+                            @error("rests.{$restKey}.end")
                                 <p class="status-message">{{ $message }}</p>
                             @enderror
-
                         </td>
-                    </tr>
 
+                    </tr>
                 @endforeach
+
+                @php $nextIndex = count($displayRestTimes); @endphp
+                <tr>
+                    <th>休憩{{ $nextIndex + 1 }}</th>
+                    <td>
+                        <div class="time-inputs">
+                            {{-- type="text" で開始し、フォーカス時のみ time に切り替える --}}
+                            <input type="text" 
+                                name="rests[new][start]" 
+                                value="" 
+                                class="input-time" 
+                                onfocus="(this.type='time')" 
+                                onblur="if(!this.value)this.type='text'">
+
+                            <span class="range-separator">〜</span>
+
+                            <input type="text" 
+                                name="rests[new][end]" 
+                                value="" 
+                                class="input-time" 
+                                onfocus="(this.type='time')" 
+                                onblur="if(!this.value)this.type='text'">
+                        </div>
+                    </td>
+                </tr>
 
                 {{-- 備考欄部分 --}}
                 <tr>
