@@ -9,7 +9,6 @@ class RestTime extends Model
 {
     use HasFactory;
 
-    // テーブル名がデフォルト（rest_times）と異なる場合は指定
     protected $table = 'rest_times';
 
     protected $fillable = ['attendance_id', 'start_time', 'end_time'];
@@ -19,7 +18,6 @@ class RestTime extends Model
         'end_time' => 'datetime',
     ];
 
-    // これにより時刻が自動的にCarbonインスタンスになります
     protected $dates = ['start_time', 'end_time'];
 
     public function attendance()

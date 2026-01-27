@@ -115,6 +115,8 @@
     text-align: left;
 }
 
+/* --- レスポンシブ対応 --- */
+
 /* PCサイズ（1400〜1540px）対応 */
 @media screen and (min-width: 1400px) and (max-width: 1540px) {
     .section-title {

@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ asset('css/admin-staff-list.css')}}">
 @endsection
 
-<!-- スタッフ一覧画面（管理者） http://localhost/admin/staff/list -->
+{{-- スタッフ一覧画面（管理者） http://localhost/admin/staff/list --}}
 @section('content')
     <div class="staff-list-container">
         <h1 class="page-title">スタッフ一覧</h1>

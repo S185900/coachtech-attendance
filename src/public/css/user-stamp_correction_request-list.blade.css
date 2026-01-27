@@ -10,7 +10,6 @@ body {
     padding: 90px 20px;
 }
 
-/* ページタイトル（左側の黒いバー込み） */
 .page-title {
     font-size: 30px;
     font-weight: 700;
@@ -19,12 +18,10 @@ body {
     margin-bottom: 40px;
 }
 
-/* タブメニュー */
 .tabs {
     display: flex;
     gap: 90px;
     border-bottom: 1px solid #000000;
-    /* 下の長い横線 */
     margin-bottom: 40px;
     padding-left: 50px;
 }
@@ -39,7 +36,6 @@ body {
     position: relative;
 }
 
-/* 選択中のタブの下だけに黒い線を重ねる場合（画像 PG07 の再現） */
 .tab-item.active {
     position: relative;
     font-weight: 700;
@@ -50,14 +46,12 @@ body {
     opacity: 0.7;
 }
 
-/* テーブルスタイル */
 .stamp_correction_request-table {
     width: 100%;
     background-color: #ffffff;
     border-collapse: collapse;
     border-radius: 10px;
     overflow: hidden;
-    /* 角丸を適用するため */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
@@ -81,13 +75,11 @@ body {
     border-bottom: 2px solid #E1E1E1;
 }
 
-/* 状態や日付など中央寄せにしたい項目があれば個別に設定 */
 .stamp_correction_request-table th,
 .stamp_correction_request-table td {
     text-align: center;
 }
 
-/* 対象日時（3番目の列）と 申請日時（5番目の列） */
 .stamp_correction_request-table td:nth-child(3),
 .stamp_correction_request-table td:nth-child(5) {
     letter-spacing: 0;
@@ -107,7 +99,6 @@ body {
     text-align: center;
     padding: 20px;
     color: #666;
-    /* 少しグレーにすると「データがない感」が出て親切です */
     font-size: 14px;
 }
 
@@ -117,7 +108,6 @@ body {
 @media screen and (min-width: 1400px) and (max-width: 1540px) {
     .stamp_correction_request-list-container {
         max-width: 1200px;
-        /* 画面幅に合わせて少し広げる */
         padding: 120px 20px;
     }
 }
@@ -143,14 +133,12 @@ body {
         font-size: 18px;
     }
 
-    /* テーブルが画面外にはみ出さないように親要素でスクロールを許可 */
     .stamp_correction_request-list-container {
         overflow-x: auto;
     }
 
     .stamp_correction_request-table {
         min-width: 700px;
-        /* テーブルが潰れすぎないように最小幅を確保 */
     }
 
     .stamp_correction_request-table th,

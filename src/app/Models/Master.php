@@ -21,9 +21,6 @@ class Master extends Authenticatable
         'remember_token',
     ];
 
-    /**
-     * 自分が承認した修正申請とのリレーション
-     */
     public function approvedRequests()
     {
         return $this->hasMany(StampCorrectionRequest::class, 'master_id');

@@ -31,21 +31,16 @@ class StampCorrectionRequest extends Model
         'status'               => 'integer',
     ];
 
-    // protected $dates = ['corrected_start_time', 'corrected_end_time'];
-
-    // 申請したユーザー
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    // 対象の勤怠データ
     public function attendance()
     {
         return $this->belongsTo(Attendance::class);
     }
 
-    // 承認した管理者
     public function master()
     {
         return $this->belongsTo(Master::class, 'master_id');

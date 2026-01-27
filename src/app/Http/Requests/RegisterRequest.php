@@ -39,7 +39,5 @@ class RegisterRequest extends FormRequest
             'password.min'      => 'パスワードは8文字以上で入力してください',
             'password.confirmed' => 'パスワードと一致しません',
         ];
-        // 一致確認の仕組み: Laravelのconfirmedルールを使用する場合、HTML側の入力フォーム（確認用パスワード）のname属性を password_confirmation にする必要があります。
-        // コントローラstore：バリデーション済みデータの取得 $validated = $request->validated();　この後に保存処理
     }
 }

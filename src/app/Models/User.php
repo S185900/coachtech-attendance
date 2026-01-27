@@ -7,7 +7,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-// email認証のためにimplementsを追加
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;

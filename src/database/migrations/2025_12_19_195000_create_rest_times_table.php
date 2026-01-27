@@ -15,7 +15,6 @@ class CreateRestTimesTable extends Migration
     {
         Schema::create('rest_times', function (Blueprint $table) {
             $table->id();
-            // 勤怠テーブル（attendances）との紐付け
             $table->foreignId('attendance_id')->constrained()->cascadeOnDelete();
             $table->dateTime('start_time')->comment('休憩開始');
             $table->dateTime('end_time')->nullable()->comment('休憩終了');

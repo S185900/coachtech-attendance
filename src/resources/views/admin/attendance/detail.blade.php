@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ asset('css/admin-attendance-detail.css')}}">
 @endsection
 
-<!-- 勤怠詳細画面（管理者） http://localhost/admin/attendance/{id} -->
+{{-- 勤怠詳細画面（管理者） http://localhost/admin/attendance/{id} --}}
 @section('content')
     <div class="attendance-detail-container">
         <h1 class="page-title">勤怠詳細</h1>
@@ -37,14 +37,12 @@
                     <td>
                         <div class="time-inputs">
 
-                            {{-- 出勤時間 --}}
                             <input type="time" name="start_time" 
                                 value="{{ old('start_time', $isPending ? \Carbon\Carbon::parse($pendingRequest->corrected_start_time)->format('H:i') : $attendance->start_time->format('H:i')) }}" 
                                 class="input-time">
 
                             <span class="range-separator">〜</span>
 
-                            {{-- 退勤時間 --}}
                             <input type="time" name="end_time" 
                                 value="{{ old('end_time', $isPending ? ($pendingRequest->corrected_end_time ? \Carbon\Carbon::parse($pendingRequest->corrected_end_time)->format('H:i') : '') : ($attendance->end_time ? $attendance->end_time->format('H:i') : '')) }}" 
                                 class="input-time">
@@ -108,7 +106,6 @@
                     <th>休憩{{ $nextIndex + 1 }}</th>
                     <td>
                         <div class="time-inputs">
-                            {{-- type="text" で開始し、フォーカス時のみ time に切り替える --}}
                             <input type="text" 
                                 name="rests[new][start]" 
                                 value="" 

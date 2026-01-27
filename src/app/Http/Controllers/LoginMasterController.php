@@ -8,11 +8,17 @@ use Illuminate\Validation\ValidationException;
 
 class LoginMasterController extends Controller
 {
+    /**
+     * 管理者ログイン画面の表示
+     */
     public function create()
     {
         return view('admin.auth.login');
     }
 
+    /**
+     * 管理者ログイン処理
+     */
     public function store(AdminLoginRequest $request)
     {
         if (Auth::guard('admin')->attempt(
@@ -20,7 +26,7 @@ class LoginMasterController extends Controller
             $request->boolean('remember')
         )) {
             $request->session()->regenerate();
-            return redirect()->intended('/admin/attendance/list'); // 管理者ログイン後のリダイレクト先
+            return redirect()->intended('/admin/attendance/list');
         }
 
         throw ValidationException::withMessages([

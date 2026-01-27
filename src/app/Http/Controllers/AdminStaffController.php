@@ -10,22 +10,23 @@ use Carbon\Carbon;
 
 class AdminStaffController extends Controller
 {
+    /**
+     * スタッフ一覧画面（管理者）の表示
+     */
     public function index()
     {
-        // 一般ユーザー（管理者以外）の一覧を取得
-        // ※もしUserモデルに管理者フラグ等があれば、ここでフィルタリングします
         $users = User::all();
 
         return view('admin.staff.list', compact('users'));
     }
 
-    // スタッフ別勤怠一覧
-    // ★ ここを修正： (Request $request, $id) に書き換えます
+    /**
+     * スタッフ別勤怠一覧画面（管理者）の表示
+     */
     public function staffAttendance(Request $request, $id)
     {
         $user = User::findOrFail($id);
 
-        // これで $request が使えるようになります
         $monthParam = $request->query('month', Carbon::now()->format('Y-m'));
         $currentMonth = Carbon::parse($monthParam)->startOfMonth();
 
@@ -47,36 +48,33 @@ class AdminStaffController extends Controller
         ));
     }
 
+    /**
+     * スタッフ別勤怠一覧CSVダウンロード処理（管理者）
+     */
     public function downloadCsv(Request $request, $id)
     {
         $user = User::findOrFail($id);
         $monthParam = $request->query('month', Carbon::now()->format('Y-m'));
         $currentMonth = Carbon::parse($monthParam);
 
-        // 当該月の勤怠データを取得
         $attendances = Attendance::where('user_id', $id)
             ->whereYear('date', $currentMonth->year)
             ->whereMonth('date', $currentMonth->month)
             ->orderBy('date', 'asc')
             ->get();
 
-        // CSV生成
         $response = new StreamedResponse(function () use ($attendances) {
             $handle = fopen('php://output', 'w');
 
-            // 文字化け対策（Excelで開く場合）
             fwrite($handle, "\xEF\xBB\xBF");
-
-            // ヘッダー行
             fputcsv($handle, ['日付', '出勤', '退勤', '休憩', '合計']);
 
-            // データ行
             foreach ($attendances as $attendance) {
                 fputcsv($handle, [
                     \Carbon\Carbon::parse($attendance->date)->isoFormat('MM/DD(ddd)'),
                     $attendance->start_time->format('H:i'),
                     $attendance->end_time ? $attendance->end_time->format('H:i') : '',
-                    $attendance->total_rest_duration, // total_rest_time から修正
+                    $attendance->total_rest_duration,
                     $attendance->work_time
                 ]);
             }

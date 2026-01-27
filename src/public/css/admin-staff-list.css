@@ -10,7 +10,6 @@ body {
     padding: 90px 20px;
 }
 
-/* ページタイトル（左側の黒いバー込み） */
 .page-title {
     font-size: 30px;
     font-weight: 700;
@@ -19,14 +18,12 @@ body {
     margin-bottom: 40px;
 }
 
-/* テーブルスタイル */
 .staff-table {
     width: 100%;
     background-color: #ffffff;
     border-collapse: collapse;
     border-radius: 10px;
     overflow: hidden;
-    /* 角丸を適用するため */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
@@ -65,7 +62,6 @@ body {
 @media screen and (min-width: 1400px) and (max-width: 1540px) {
     .attendance-list-container {
         max-width: 1200px;
-        /* 画面幅に合わせて少し広げる */
         padding: 120px 20px;
     }
 }
@@ -91,14 +87,12 @@ body {
         font-size: 18px;
     }
 
-    /* テーブルが画面外にはみ出さないように親要素でスクロールを許可 */
     .attendance-list-container {
         overflow-x: auto;
     }
 
     .attendance-table {
         min-width: 700px;
-        /* テーブルが潰れすぎないように最小幅を確保 */
     }
 
     .attendance-table th,

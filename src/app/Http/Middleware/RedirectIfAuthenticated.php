@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,11 +22,11 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                // ★ここを修正：管理者なら管理者のトップへ
+
                 if ($guard === 'admin') {
                     return redirect('/admin/attendance/list');
                 }
-                // それ以外（一般ユーザー）
+
                 return redirect('/attendance');
             }
         }

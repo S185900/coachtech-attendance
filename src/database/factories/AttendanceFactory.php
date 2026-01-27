@@ -23,19 +23,16 @@ class AttendanceFactory extends Factory
      */
     public function definition()
     {
-        // テスト用の日付（今日）を基準に時間を設定
         $date = Carbon::today();
-        $startTime = Carbon::create($date->year, $date->month, $date->day, 9, 0, 0); // 09:00
-        $endTime = Carbon::create($date->year, $date->month, $date->day, 18, 0, 0);  // 18:00
+        $startTime = Carbon::create($date->year, $date->month, $date->day, 9, 0, 0);
+        $endTime = Carbon::create($date->year, $date->month, $date->day, 18, 0, 0);
 
         return [
-            // UserFactoryと連携して自動的にユーザーを作成し、そのIDをセット
             'user_id' => User::factory(), 
             'date' => $date->format('Y-m-d'),
             'start_time' => $startTime,
             'end_time' => $endTime,
-            // 0:勤務外, 1:勤務中, 2:休憩中, 3:退勤済 (マイグレーションの定義に準拠)
-            'status' => 3, 
+            'status' => 3, // 0:勤務外, 1:勤務中, 2:休憩中, 3:退勤済
             'is_corrected' => false,
         ];
     }

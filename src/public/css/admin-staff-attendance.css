@@ -10,7 +10,6 @@ body {
     padding: 90px 20px;
 }
 
-/* ページタイトル（左側の黒いバー込み） */
 .page-title {
     font-size: 30px;
     font-weight: 700;
@@ -19,7 +18,6 @@ body {
     margin-bottom: 40px;
 }
 
-/* 日付ナビゲーション */
 .date-nav {
     display: flex;
     justify-content: space-between;
@@ -31,7 +29,6 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-/* リンク全体の微調整 */
 .date-nav-link {
     display: flex;
     align-items: center;
@@ -41,46 +38,35 @@ body {
     font-weight: 700;
     font-size: 16px;
     transition: opacity 0.2s ease;
-        /* 変化を滑らかにする */
 }
 
-/* ホバー時に色を「黒」にして、アイコンも濃くする */
 .date-nav-link:hover {
     color: #000000;
-    /* 文字色を真っ黒にして濃く見せる */
 }
 
-/* 矢印アイコンの設定 */
 .arrow-icon {
     width: 20px;
     height: auto;
     display: inline-block;
     vertical-align: middle;
-    /* 仕様に基づき30%の不透明度に設定 */
     opacity: 0.3;
     transition: opacity 0.2s;
-    /* ふわっと変化させるためのアニメーション */
 }
 
-/* ホバー時に少し濃くする（アクセシビリティ向上のため推奨） */
 .date-nav-link:hover .arrow-icon {
     opacity: 0.6;
 }
 
-/* 前日：元の画像が「左」向きなので、回転は不要（0度） */
 .arrow-icon.prev {
     transform: rotate(0deg);
 }
 
-/* 翌日：元の画像を180度回転させて「右」に向ける */
 .arrow-icon.next {
     transform: rotate(180deg);
 }
 
-/* カレンダーアイコンの設定 */
 .calendar-icon {
     width: 25px;
-    /* 画像サイズに合わせて調整してください */
     height: auto;
 }
 
@@ -92,14 +78,12 @@ body {
     gap: 10px;
 }
 
-/* テーブルスタイル */
 .attendance-table {
     width: 100%;
     background-color: #ffffff;
     border-collapse: collapse;
     border-radius: 10px;
     overflow: hidden;
-    /* 角丸を適用するため */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
@@ -132,28 +116,20 @@ body {
     opacity: 0.6;
 }
 
-/* CSVボタンを囲むコンテナの調整 */
 .csv-export-container {
     display: flex;
     justify-content: flex-end;
-    /* 右寄せにする */
     margin-top: 30px;
-    /* テーブルとの間隔を空ける */
 }
 
-/* CSVボタン自体の調整 */
 .csv-button {
     display: inline-block;
-    /* aタグの場合、幅や余白を正しく適用するために必要 */
     background-color: #000000;
     color: #ffffff;
     text-decoration: none;
-    /* aタグ特有の下線を消す */
     border: none;
     padding: 10px 43px;
-    /* 上下を少し広げてバランス調整 */
     font-size: 20px;
-    /* 22pxから微調整 */
     font-weight: 700;
     letter-spacing: 0.15em;
     border-radius: 4px;
@@ -163,7 +139,6 @@ body {
 
 .csv-button:hover {
     opacity: 0.7;
-    /* ホバー時に少し薄くする */
 }
 
 /* --- レスポンシブ対応 --- */
@@ -172,7 +147,6 @@ body {
 @media screen and (min-width: 1400px) and (max-width: 1540px) {
     .attendance-list-container {
         max-width: 1200px;
-        /* 画面幅に合わせて少し広げる */
         padding: 120px 20px;
     }
 }
@@ -198,14 +172,12 @@ body {
         font-size: 18px;
     }
 
-    /* テーブルが画面外にはみ出さないように親要素でスクロールを許可 */
     .attendance-list-container {
         overflow-x: auto;
     }
 
     .attendance-table {
         min-width: 700px;
-        /* テーブルが潰れすぎないように最小幅を確保 */
     }
 
     .attendance-table th,
@@ -216,8 +188,6 @@ body {
 
     .csv-button {
         padding: 7px 30px;
-        /* 上下を少し広げてバランス調整 */
         font-size: 16px;
-        /* 22pxから微調整 */
     }
 }

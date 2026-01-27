@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ asset('css/user-stamp_correction_request-list.blade.css')}}">
 @endsection
 
-<!-- 申請一覧画面（一般ユーザー） http://localhost/stamp_correction_request/list-->
+{{-- 申請一覧画面（一般ユーザー） http://localhost/stamp_correction_request/list --}}
 @section('content')
     <div class="stamp_correction_request-list-container">
 
@@ -36,6 +36,7 @@
 
             <tbody>
                 @forelse($requests as $request)
+
                     <tr>
                         <td>
                             {{ $request->status === \App\Models\StampCorrectionRequest::STATUS_PENDING ? '承認待ち' : '承認済み' }}
@@ -56,12 +57,15 @@
                             <a href="{{ route('attendance.detail', ['attendance_id' => $request->attendance_id]) }}" class="detail-link">詳細</a>
                         </td>
                     </tr>
+
                 @empty
+
                     <tr>
                         <td colspan="6" class="empty-message">
                             現在、{{ $tab === 'pending' ? '承認待ち' : '承認済み' }}の申請はありません。
                         </td>
                     </tr>
+
                 @endforelse
             </tbody>
         </table>

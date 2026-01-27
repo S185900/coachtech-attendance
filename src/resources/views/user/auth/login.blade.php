@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ asset('css/login.css')}}">
 @endsection
 
-<!-- 一般ユーザーログイン画面 http://localhost/login-->
+{{-- 一般ユーザーログイン画面 http://localhost/login --}}
 @section('content')
     <h1 class="section-title">ログイン</h1>
 

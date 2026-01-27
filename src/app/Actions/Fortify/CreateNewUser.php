@@ -19,14 +19,10 @@ class CreateNewUser implements CreatesNewUsers
      */
     public function create(array $input): User
     {
-        // 1. RegisterRequestのインスタンスを生成
         $request = new RegisterRequest();
 
-        // 2. バリデーションを実行
-        // $inputを対象に、RegisterRequestで定義したルールとメッセージを適用
         Validator::make($input, $request->rules(), $request->messages())->validate();
 
-        // 3. ユーザー作成
         return User::create([
             'name'     => $input['name'],
             'email'    => $input['email'],

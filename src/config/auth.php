@@ -41,7 +41,6 @@ return [
             'provider' => 'users',
         ],
 
-        // 管理者用ガード
         'admin' => [
             'driver' => 'session',
             'provider' => 'masters',
@@ -71,7 +70,6 @@ return [
             'model' => App\Models\User::class,
         ],
 
-        // 管理者用プロバイダー
         'masters' => [
             'driver' => 'eloquent',
             'model' => App\Models\Master::class,

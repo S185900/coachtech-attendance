@@ -12,7 +12,7 @@
         @yield('css')
     </head>
 
-    <!-- ゲスト用ヘッダー -->
+    {{-- ゲスト用ヘッダー --}}
     <body>
         <div class="guest-layout">
             <header class="header" role="banner">

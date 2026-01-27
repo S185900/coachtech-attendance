@@ -53,7 +53,6 @@ body {
     color: #000000;
 }
 
-/* テキスト表示と入力欄の共通設定 */
 .user-name,
 .year-unit,
 .date-unit,
@@ -84,7 +83,6 @@ body {
     letter-spacing: 0.15em;
 }
 
-/* --- 入力フォーム設定：ここから重要 --- */
 .input-time,
 .input-textarea {
     font-family: "Inter", sans-serif;
@@ -95,12 +93,9 @@ body {
     border-radius: 4px;
     padding: 8px 12px;
     box-sizing: border-box;
-    /* 1. positionを relative にして z-index を効かせる */
     position: relative;
     z-index: 10;
-    /* 2. 背景色を明示（背後の要素を遮断するため） */
     background-color: #ffffff;
-    /* 3. マウスイベントを確実に受け取る */
     pointer-events: auto;
 }
 
@@ -123,16 +118,13 @@ body {
     top: 0;
     left: 0;
     opacity: 0;
-    /* 見えなくする */
     cursor: pointer;
     z-index: 11;
-    /* 入力文字より上に透明なボタンがある状態 */
 }
 
 .time-inputs input[type="time"] {
     appearance: none;
     -moz-appearance: textfield;
-    /* Firefox用 */
 }
 
 .input-textarea {
@@ -141,7 +133,6 @@ body {
     resize: none;
 }
 
-/* 4. コンテナ自体の重なり順を低くする */
 .time-inputs,
 .date-inputs-container {
     display: flex;
@@ -150,7 +141,6 @@ body {
     width: fit-content;
     position: relative;
     z-index: 1;
-    /* input(z-index:10) より下に配置 */
 }
 
 .date-year-wrapper,
@@ -164,21 +154,18 @@ body {
 .range-separator-hidden {
     font-weight: 700;
     pointer-events: none;
-    /* 重なっても背後の入力を邪魔しない */
 }
 
 .range-separator-hidden {
     visibility: hidden;
 }
 
-/* 5. 邪魔なテキスト類をクリック不可にして透過させる */
 .range-separator,
 .range-separator-hidden,
 .year-unit,
 .date-unit,
 .time-text {
     pointer-events: none;
-    /* これにより、もし重なっていても下のinputをクリックできる */
 }
 
 .form-actions {
@@ -207,14 +194,11 @@ body {
     margin-top: 8px;
 }
 
-/* 承認済みボタンのスタイル */
 .submit-button.approved {
     background-color: #696969;
-    /* グレーにする */
     cursor: not-allowed;
 }
 
-/* フォーム全体を読み取り専用に見せるための微調整 */
 .time-text,
 .note-text {
     color: #000;
@@ -243,10 +227,8 @@ body {
         border-left-width: 6px;
     }
 
-    /* テーブルのラベル幅を調整 */
     .detail-table th {
         width: 30%;
-        /* ラベルを少し広めにする */
         padding: 20px;
         font-size: 14px;
     }
@@ -256,16 +238,13 @@ body {
         font-size: 14px;
     }
 
-    /* 日付と時間のコンテナ共通設定 */
     .date-inputs-container,
     .time-inputs {
         gap: 0;
-        /* gapを0にして、セパレーターの幅で間隔を制御 */
         justify-content: flex-start;
         letter-spacing: 0.15em;
     }
 
-    /* 各入力・表示ブロックの幅を110pxで統一（少し広げました） */
     .date-year-wrapper,
     .date-day-wrapper,
     .input-time,
@@ -275,12 +254,10 @@ body {
         font-size: 14px;
     }
 
-    /* 「〜」セパレーターの幅と位置を固定 */
     .range-separator,
     .range-separator-hidden {
         width: 40px;
         text-align: center;
-        /* これで中央に配置されます */
         display: inline-block;
         font-size: 14px;
     }
@@ -290,25 +267,21 @@ body {
         font-size: 14px;
     }
 
-    /* 年、月日の文字サイズを少し調整 */
     .year-unit,
     .date-unit {
         font-size: 14px;
         margin-right: 0;
     }
 
-    /* 備考欄の幅調整 */
     .input-textarea,
     .note-text {
         width: 260px;
-        /* 110 + 40 + 110 に合わせた幅 */
         font-size: 14px;
         display: block;
     }
 
     .input-time {
         padding: 6px 0;
-        /* 横パディングを削って中央寄せを優先 */
     }
 
     .submit-button {

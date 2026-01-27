@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ asset('css/admin-attendance-list.css')}}">
 @endsection
 
-<!-- 勤怠一覧画面（管理者） http://localhost/admin/attendance/list -->
+{{-- 勤怠一覧画面（管理者） http://localhost/admin/attendance/list --}}
 @section('content')
     <div class="attendance-list-container">
         <h1 class="page-title">{{ $currentDate->format('Y年n月j日') }}の勤怠</h1>

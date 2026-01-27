@@ -11,7 +11,7 @@
         @yield('css')
     </head>
 
-    <!-- ユーザーログイン後ヘッダー -->
+    {{-- ユーザーログイン後ヘッダー --}}
     <body>
         <header class="header">
             <a href="{{ route('attendance.list') }}" class="header-logo">

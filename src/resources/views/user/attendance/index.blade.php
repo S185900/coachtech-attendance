@@ -4,18 +4,20 @@
     <link rel="stylesheet" href="{{ asset('css/user-index.css')}}">
 @endsection
 
-<!-- 出勤登録画面（一般ユーザー） http://localhost/attendance-->
+{{-- 出勤登録画面（一般ユーザー） http://localhost/attendance --}}
 @section('content')
     <div class="attendance-container">
+
         <div class="attendance-card">
+
             <div class="attendance-status">
                 @if(!$attendance)
                     <span class="status-badge status-out">勤務外</span>
-                @elseif($attendance->status == \App\Models\Attendance::STATUS_WORKING) {{-- 1から変更 --}}
+                @elseif($attendance->status == \App\Models\Attendance::STATUS_WORKING)
                     <span class="status-badge status-working">出勤中</span>
-                @elseif($attendance->status == \App\Models\Attendance::STATUS_RESTING) {{-- 2から変更 --}}
+                @elseif($attendance->status == \App\Models\Attendance::STATUS_RESTING)
                     <span class="status-badge status-break">休憩中</span>
-                @elseif($attendance->status == \App\Models\Attendance::STATUS_RETIRED) {{-- 0から変更 --}}
+                @elseif($attendance->status == \App\Models\Attendance::STATUS_RETIRED)
                     <span class="status-badge status-done">退勤済</span>
                 @endif
             </div>
@@ -31,6 +33,7 @@
             <div class="attendance-controls">
 
                 @if(!$attendance)
+
                     {{-- 未出勤（勤務外） --}}
                     <form action="{{ route('attendance.start') }}" method="POST">
                         @csrf
@@ -38,6 +41,7 @@
                     </form>
 
                 @elseif($attendance->status == \App\Models\Attendance::STATUS_WORKING)
+
                     {{-- 出勤中 --}}
                     <div class="button-group">
                         <form action="{{ route('attendance.end') }}" method="POST">
@@ -51,6 +55,7 @@
                     </div>
 
                 @elseif($attendance->status == \App\Models\Attendance::STATUS_RESTING)
+
                     {{-- 休憩中 --}}
                     <form action="{{ route('attendance.rest-end') }}" method="POST">
                         @csrf
@@ -58,6 +63,7 @@
                     </form>
 
                 @elseif($attendance->status == \App\Models\Attendance::STATUS_RETIRED)
+
                     {{-- 退勤済 --}}
                     <p class="thanks-message">お疲れ様でした。</p>
 

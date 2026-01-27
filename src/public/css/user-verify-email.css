@@ -90,7 +90,6 @@
     margin-top: 40px;
     padding: 12px 24px;
     background-color: #0073CC;
-    /* あえて黒背景 */
     color: #fff;
     border-radius: 4px;
     font-size: 16px;
@@ -99,7 +98,6 @@
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* アニメーションの定義 */
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -111,6 +109,8 @@
         transform: translateY(0);
     }
 }
+
+/* --- レスポンシブ対応 --- */
 
 /* PCサイズ（1400〜1540px）対応 */
 @media screen and (min-width: 1400px) and (max-width: 1540px) {

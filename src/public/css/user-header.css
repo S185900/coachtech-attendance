@@ -30,7 +30,6 @@ body {
     display: block;
 }
 
-/* ナビゲーション (PC) */
 .header-nav-list {
     display: flex;
     list-style: none;
@@ -56,7 +55,6 @@ body {
     opacity: 0.7;
 }
 
-/* 隠し要素 */
 .menu-checkbox {
     display: none;
 }
@@ -71,25 +69,21 @@ body {
 @media screen and (min-width: 1400px) and (max-width: 1540px) {
     .header {
         position: relative;
-            /* メニューの基準点 */
             justify-content: space-between;
     }
 
     .header-logo-img {
         width: 400px;
-        /* ★ここでも横幅を固定。これで横長になりません */
         height: auto;
     }
 }
 
 /* タブレットサイズ（768〜850px） */
 @media screen and (min-width: 768px) and (max-width: 850px) {
-    /* ロゴサイズ調整 */
         .header-logo-img {
             width: 290px;
         }
-    
-        /* 三本線アイコンの表示 */
+
         .hamburger {
             display: block;
             width: 40px;
@@ -97,7 +91,7 @@ body {
             position: relative;
             cursor: pointer;
         }
-    
+
         .hamburger span {
             display: block;
             width: 100%;
@@ -107,64 +101,58 @@ body {
             transition: transform 0.3s, opacity 0.3s;
             border-radius: 2px;
         }
-    
+
         .hamburger span:nth-child(1) {
             top: 0;
         }
-    
+
         .hamburger span:nth-child(2) {
             top: 10px;
         }
-    
+
         .hamburger span:nth-child(3) {
             top: 20px;
         }
-    
-        /* メニュー開閉時のアニメーション (×印) */
+
         .menu-checkbox:checked+.hamburger span:nth-child(1) {
             transform: translateY(10px) rotate(45deg);
         }
-    
+
         .menu-checkbox:checked+.hamburger span:nth-child(2) {
             opacity: 0;
         }
-    
+
         .menu-checkbox:checked+.hamburger span:nth-child(3) {
             transform: translateY(-10px) rotate(-45deg);
         }
-    
-        /* ナビゲーションをドロップダウン形式に */
+
         .header-nav {
             position: absolute;
             top: 80px;
-            /* ヘッダーの高さ直下 */
             left: 0;
             width: 100%;
             background-color: #000000;
             max-height: 0;
-            /* 最初は高さを0にする */
             overflow: hidden;
             transition: max-height 0.3s ease-in-out;
         }
-    
-        /* チェックが入ったらメニューを表示 */
+
         .menu-checkbox:checked~.header-nav {
             max-height: 300px;
-            /* メニューの高さ分 */
             border-top: 1px solid #333;
         }
-    
+
         .header-nav-list {
             flex-direction: column;
             gap: 0;
             padding: 10px 0;
         }
-    
+
         .header-nav-item {
             width: 100%;
             text-align: center;
         }
-    
+
         .header-nav-link {
             display: block;
             width: 100%;

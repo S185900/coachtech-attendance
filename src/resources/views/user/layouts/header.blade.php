@@ -11,7 +11,7 @@
         @yield('css')
     </head>
 
-    <!-- ログイン前共通ヘッダー(user) -->
+    {{-- ログイン前共通ヘッダー(user) --}}
     <body>
         <header class="header">
             <a href="{{ route('login') }}" class="header-logo">

@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ asset('css/admin-stamp_correction_request-approve.css')}}">
 @endsection
 
-<!-- 修正申請承認画面（管理者） http://localhost/stamp_correction_request/approve/{attendance_correct_request_id}-->
+{{-- 修正申請承認画面（管理者） http://localhost/stamp_correction_request/approve/{attendance_correct_request_id} --}}
 @section('content')
     <div class="attendance-detail-container">
         <h1 class="page-title">勤怠詳細</h1>

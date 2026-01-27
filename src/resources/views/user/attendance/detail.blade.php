@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ asset('css/user-attendance-detail.css')}}">
 @endsection
 
-<!-- 勤怠詳細画面（一般ユーザー） http://localhost/attendance/detail/{id} -->
+{{-- 勤怠詳細画面（一般ユーザー） http://localhost/attendance/detail/{id} --}}
 @section('content')
     <div class="attendance-detail-container">
         <h1 class="page-title">勤怠詳細</h1>
@@ -34,19 +34,23 @@
                     </td>
                 </tr>
 
+                {{-- 出勤・退勤部分 --}}
                 <tr>
                     <th>出勤・退勤</th>
                     <td>
                         <div class="time-inputs">
                             @if($isPending)
+
                                 <span class="time-text">{{ $pendingRequest->corrected_start_time->format('H:i') }}</span>
                                 <span class="range-separator">〜</span>
                                 <span class="time-text">{{ $pendingRequest->corrected_end_time ? $pendingRequest->corrected_end_time->format('H:i') : '' }}</span>
+
                             @else
-                                {{-- 修正点: old() を使ってエラー時の入力を保持 --}}
+
                                 <input type="time" name="start_time" value="{{ old('start_time', $attendance->start_time->format('H:i')) }}" class="input-time">
                                 <span class="range-separator">〜</span>
                                 <input type="time" name="end_time" value="{{ old('end_time', $attendance->end_time ? $attendance->end_time->format('H:i') : '') }}" class="input-time">
+
                             @endif
                         </div>
 
@@ -66,9 +70,11 @@
                             <div class="time-inputs">
 
                                 @if($isPending)
+
                                     <span class="time-text">{{ $rest['start'] }}</span>
                                     <span class="range-separator">〜</span>
                                     <span class="time-text">{{ $rest['end'] }}</span>
+
                                 @else
 
                                     @php
@@ -92,7 +98,9 @@
                                         class="input-time"
                                         onfocus="(this.type='time')" 
                                         onblur="if(!this.value)this.type='text'">
+
                                 @endif
+
                             </div>
                         </td>
 
@@ -118,7 +126,7 @@
                     </tr>
                 @endif
 
-                {{-- 備考欄 --}}
+                {{-- 備考欄部分 --}}
                 <tr>
                     <th>備考</th>
                     <td>

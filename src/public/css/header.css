@@ -8,7 +8,6 @@ body {
     background-color: #000000;
     width: 100%;
     height: 80px;
-    /* PC/基本の高さ */
     display: flex;
     align-items: center;
     padding: 0 25px;
@@ -19,16 +18,12 @@ body {
     display: flex;
     align-items: center;
     flex-shrink: 0;
-    /* ロゴが潰されるのを防ぐ（以前のコードにもありましたね！） */
     text-decoration: none;
 }
 
 .header-logo-img {
-    /* 比率を壊さないための絶対ルール */
     width: 370px;
-    /* ★まず、PCで綺麗に見える「横幅」を数値で指定してください */
     height: auto;
-    /* ★高さは「自動」に任せる */
     display: block;
 }
 
@@ -42,7 +37,6 @@ body {
 
     .header-logo-img {
         width: 400px;
-        /* ★ここでも横幅を固定。これで横長になりません */
         height: auto;
     }
 }
@@ -51,12 +45,10 @@ body {
 @media screen and (min-width: 768px) and (max-width: 850px) {
     .header {
         height: 70px;
-        /* タブレットでヘッダーを低くする場合 */
     }
 
     .header-logo-img {
         width: 290px;
-        /* ★タブレット用の横幅を数値で指定。これで縦長になりません */
         height: auto;
     }
 }

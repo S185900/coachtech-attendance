@@ -4,13 +4,11 @@ body {
     background-color: #F0EFF2;
 }
 
-/* 中央配置のためのコンテナ */
 .attendance-container {
     display: flex;
     justify-content: center;
     min-height: calc(100vh - 80px);
     text-align: center;
-    /* 上からの位置を固定（例：上から150pxの位置に配置） */
     padding-top: 100px;
     box-sizing: border-box;
 }
@@ -21,7 +19,6 @@ body {
     align-items: center;
 }
 
-/* ステータスバッジ（グレーの楕円） */
 .status-badge {
     display: inline-block;
     background-color: #C8C8C8;
@@ -34,7 +31,6 @@ body {
     margin-bottom: 25px;
 }
 
-/* 日付 */
 .attendance-date {
     font-weight: 400;
     font-size: 40px;
@@ -42,7 +38,6 @@ body {
     margin: 0 0 30px 0;
 }
 
-/* 時刻（h1） */
 .attendance-time {
     font-weight: 700;
     font-size: 80px;
@@ -51,7 +46,6 @@ body {
     line-height: 1;
 }
 
-/* ボタンの共通スタイル */
 .attendance-button {
     border: none;
     width: 221px;
@@ -69,35 +63,29 @@ body {
     opacity: 0.8;
 }
 
-/* 黒ボタン（出勤・退勤） */
 .btn-black,
 .attendance-button:not(.btn-white) {
     background-color: #000000;
     color: #FFFFFF;
 }
 
-/* 白ボタン（休憩系） */
 .btn-white {
     background-color: #FFFFFF;
     color: #000000;
     border: 1px solid #d9d9d9;
 }
 
-/* ボタンの横並び設定 */
 .button-group {
     display: flex;
     gap: 60px;
-    /* ボタン同士の間隔 */
 }
 
-/* 退勤後のメッセージ */
 .thanks-message {
     font-size: 26px;
     font-weight: 700;
     margin-top: 20px;
     letter-spacing: 0.15em;
     text-align: center;
-    /* 追加：文字間隔による右側の余白を打ち消すために、同じ分だけ左にずらす */
     text-indent: 0.70em;
 }
 
@@ -106,20 +94,17 @@ body {
 /* PCサイズ（1400〜1540px） */
 @media screen and (min-width: 1400px) and (max-width: 1540px) {
     .attendance-container {
-        /* 大きな画面では少し下げて余裕を持たせる */
         padding-top: 100px;
         min-height: calc(100vh - 90px);
     }
 
     .attendance-date {
         font-size: 48px;
-        /* 少し大きく */
         margin-bottom: 40px;
     }
 
     .attendance-time {
         font-size: 100px;
-        /* PC大画面でインパクトを出す */
         margin-bottom: 100px;
     }
 
@@ -133,13 +118,10 @@ body {
 /* タブレットサイズ（768〜850px） */
 @media screen and (min-width: 768px) and (max-width: 850px) {
     .attendance-container {
-        /* タブレットはヘッダーが2段（ハンバーガー）になる想定なら、高さを調整 */
         min-height: calc(100vh - 70px);
         padding-top: 80px;
-        /* 方法1：下に大きなパディングを入れて、要素を押し上げる */
         padding-bottom: 200px;
         box-sizing: border-box;
-        /* パディングを含めた高さ計算にする */
     }
 
     .status-badge {
@@ -154,7 +136,6 @@ body {
 
     .attendance-time {
         font-size: 64px;
-        /* 画面幅に合わせて少し小さく */
         margin-bottom: 60px;
     }
 

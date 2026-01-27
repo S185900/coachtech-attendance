@@ -26,7 +26,7 @@ class MasterFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
-            'password' => Hash::make('password'), // テストで使いやすいよう固定パスワード
+            'password' => Hash::make('password'),
             'remember_token' => Str::random(10),
         ];
     }

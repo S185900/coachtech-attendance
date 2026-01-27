@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ asset('css/user-verify-email.css')}}">
 @endsection
 
-<!-- メール認証誘導画面 -->
+{{-- メール認証誘導画面 --}}
 @section('content')
     <div class="notice">
         <p class="notice-text">
@@ -30,7 +30,6 @@
             <button class="resend-verification__link" type="submit">認証メールを再送する</button>
         </form>
 
-        {{-- 再送信完了メッセージ --}}
         @if (session('message'))
             <p id="js-flash-message" class="send-message">認証メールを再送しました</p>
 

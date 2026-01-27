@@ -12,7 +12,7 @@
         @yield('css')
     </head>
 
-    <!-- 管理者ログイン後ヘッダー -->
+    {{-- 管理者ログイン後ヘッダー --}}
     <body>
         <header class="header">
             <a href="{{ route('admin.attendance.list') }}" class="header-logo">

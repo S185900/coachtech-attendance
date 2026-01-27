@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ asset('css/admin-staff-attendance.css')}}">
 @endsection
 
-<!-- スタッフ別勤怠一覧画面（管理者） http://localhost/admin/attendance/staff/{id} -->
+{{-- スタッフ別勤怠一覧画面（管理者） http://localhost/admin/attendance/staff/{id} --}}
 @section('content')
     <div class="attendance-list-container">
         <h1 class="page-title">{{ $user->name }}さんの勤怠</h1>
