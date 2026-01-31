@@ -38,7 +38,7 @@ class AttendanceDateTimeTest extends TestCase
 
         $response = $this->actingAs($user)->get('/attendance');
 
-        $expectedDate = $now->isoFormat('YYYY年MM月DD日 (ddd)');
+        $expectedDate = $now->isoFormat('YYYY年M月D日(ddd)');
 
         $response->assertStatus(200);
         $response->assertSee($expectedDate);

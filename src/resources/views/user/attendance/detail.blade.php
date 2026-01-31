@@ -126,40 +126,16 @@
                         <th>休憩{{ count($displayRestTimes) + 1 }}</th>
                         <td>
                             <div class="time-inputs">
+                                <input type="text" name="rests[new][start]" value="{{ old('rests.new.start') }}" 
+                                    class="input-time"
+                                    onfocus="(this.type='time')" onblur="if(!this.value)this.type='text'">
 
-                                @if($isPending)
+                                <span class="range-separator">〜</span>
 
-                                    <input type="text" name="rests[new][start]" value="{{ old('rests.new.start') }}" 
-                                        class="input-time"
-                                        onfocus="(this.type='time')" onblur="if(!this.value)this.type='text'">
-
-                                    <span class="range-separator">〜</span>
-
-                                    <input type="text" name="rests[new][end]" value="{{ old('rests.new.end') }}" 
-                                        class="input-time"
-                                        onfocus="(this.type='time')" onblur="if(!this.value)this.type='text'">
-
-                                @else
-
-                                    @php
-                                        $startTime = old("rests.{$restKey}.start", $rest['start']);
-                                        $endTime = old("rests.{$restKey}.end", $rest['end']);
-                                    @endphp
-
-                                    <input type="text" name="rests[new][start]" value="{{ old('rests.new.start') }}" 
-                                        class="input-time"
-                                        onfocus="(this.type='time')" onblur="if(!this.value)this.type='text'">
-
-                                    <span class="range-separator">〜</span>
-
-                                    <input type="text" name="rests[new][end]" value="{{ old('rests.new.end') }}" 
-                                        class="input-time"
-                                        onfocus="(this.type='time')" onblur="if(!this.value)this.type='text'">
-
-                                @endif
-
+                                <input type="text" name="rests[new][end]" value="{{ old('rests.new.end') }}" 
+                                    class="input-time"
+                                    onfocus="(this.type='time')" onblur="if(!this.value)this.type='text'">
                             </div>
-
                         </td>
                     </tr>
                 @endif

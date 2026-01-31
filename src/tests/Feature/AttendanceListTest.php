@@ -18,18 +18,20 @@ class AttendanceListTest extends TestCase
      */
     public function test_user_can_see_their_own_attendance_data()
     {
+        Carbon::setTestNow('2026-01-15');
+
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $attendance1 = Attendance::factory()->create([
+        Attendance::factory()->create([
             'user_id' => $user->id,
-            'date' => Carbon::today()->format('Y-m-d'),
-            'start_time' => '09:00:00',
+            'date' => '2026-01-15',
+            'start_time' => '2026-01-15 09:00:00',
         ]);
-        $attendance2 = Attendance::factory()->create([
+        Attendance::factory()->create([
             'user_id' => $user->id,
-            'date' => Carbon::yesterday()->format('Y-m-d'),
-            'start_time' => '10:00:00',
+            'date' => '2026-01-14',
+            'start_time' => '2026-01-14 10:00:00',
         ]);
 
         $response = $this->get(route('attendance.list'));
@@ -110,20 +112,23 @@ class AttendanceListTest extends TestCase
      */
     public function test_detail_button_redirects_to_correct_page()
     {
+        Carbon::setTestNow('2026-01-15');
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $attendance = Attendance::factory()->create([
+        $attendance = Attendance::create([
             'user_id' => $user->id,
-            'date' => Carbon::today()->format('Y-m-d'),
+            'date' => '2026-01-15',
+            'start_time' => '2026-01-15 09:00:00',
+            'status' => 1,
         ]);
 
         $response = $this->get(route('attendance.list'));
-
-        $detailUrl = route('attendance.detail', ['attendance_id' => $attendance->id]);
+        $detailUrl = route('attendance.detail', ['id' => $attendance->id], false);
         $response->assertSee($detailUrl);
-
         $detailResponse = $this->get($detailUrl);
         $detailResponse->assertStatus(200);
+
+        Carbon::setTestNow();
     }
 }

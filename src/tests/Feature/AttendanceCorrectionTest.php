@@ -31,7 +31,7 @@ class AttendanceCorrectionTest extends TestCase
     public function test_error_when_start_time_is_after_end_time()
     {
         $this->actingAs($this->user);
-        $url = route('attendance.update', ['attendance_id' => $this->attendance->id]);
+        $url = route('attendance.update', ['id' => $this->attendance->id]);
 
         $response = $this->post($url, [
             'start_time' => '19:00',
@@ -52,7 +52,7 @@ class AttendanceCorrectionTest extends TestCase
     public function test_error_when_rest_start_is_after_end_time()
     {
         $this->actingAs($this->user);
-        $url = route('attendance.update', ['attendance_id' => $this->attendance->id]);
+        $url = route('attendance.update', ['id' => $this->attendance->id]);
 
         $response = $this->post($url, [
             'start_time' => '09:00',
@@ -74,7 +74,7 @@ class AttendanceCorrectionTest extends TestCase
     public function test_error_when_rest_end_is_after_end_time()
     {
         $this->actingAs($this->user);
-        $url = route('attendance.update', ['attendance_id' => $this->attendance->id]);
+        $url = route('attendance.update', ['id' => $this->attendance->id]);
 
         $response = $this->post($url, [
             'start_time' => '09:00',
@@ -96,7 +96,7 @@ class AttendanceCorrectionTest extends TestCase
     public function test_error_when_reason_is_missing()
     {
         $this->actingAs($this->user);
-        $url = route('attendance.update', ['attendance_id' => $this->attendance->id]);
+        $url = route('attendance.update', ['id' => $this->attendance->id]);
 
         $response = $this->post($url, [
             'start_time' => '09:00',
@@ -118,7 +118,7 @@ class AttendanceCorrectionTest extends TestCase
     {
         $this->actingAs($this->user);
 
-        $this->post(route('attendance.update', ['attendance_id' => $this->attendance->id]), [
+        $this->post(route('attendance.update', ['id' => $this->attendance->id]), [
             'start_time' => '08:30',
             'end_time' => '17:30',
             'reason' => '早出のため修正',
@@ -138,7 +138,7 @@ class AttendanceCorrectionTest extends TestCase
     {
         $this->actingAs($this->user);
 
-        $this->post(route('attendance.update', ['attendance_id' => $this->attendance->id]), [
+        $this->post(route('attendance.update', ['id' => $this->attendance->id]), [
             'start_time' => '08:30',
             'end_time' => '17:30',
             'reason' => '詳細ボタンのテスト',

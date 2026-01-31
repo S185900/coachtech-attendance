@@ -43,7 +43,7 @@ class AdminStampCorrectionTest extends TestCase
         ]);
 
         $this->actingAs($this->admin, 'admin');
-        $response = $this->get(route('admin.stamp_correction.list', ['tab' => 'pending']));
+        $response = $this->get(route('stamp_correction_request.list', ['tab' => 'pending']));
 
         $response->assertStatus(200);
         $response->assertSee('テストスタッフ');
@@ -66,8 +66,7 @@ class AdminStampCorrectionTest extends TestCase
         ]);
 
         $this->actingAs($this->admin, 'admin');
-        $response = $this->get(route('admin.stamp_correction.list', ['tab' => 'approved']));
-
+        $response = $this->get(route('stamp_correction_request.list', ['tab' => 'approved']));
         $response->assertStatus(200);
         $response->assertSee('テストスタッフ');
         $response->assertSee('早退のため');
@@ -112,15 +111,11 @@ class AdminStampCorrectionTest extends TestCase
         ]);
 
         $this->actingAs($this->admin, 'admin');
-
-        $response = $this->post(route('admin.stamp_correction.update', ['id' => $request->id]));
-
+        $response = $this->post(route('admin.stamp_correction.update', ['attendance_correct_request_id' => $request->id]));
         $response->assertStatus(302);
 
         $this->assertEquals(1, $request->fresh()->status);
-
         $attendance = $this->attendance->fresh();
-
         $this->assertEquals('08:00:00', Carbon::parse($attendance->start_time)->format('H:i:s'));
         $this->assertEquals('17:00:00', Carbon::parse($attendance->end_time)->format('H:i:s'));
     }

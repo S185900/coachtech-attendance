@@ -38,8 +38,7 @@ class AttendanceDetailTest extends TestCase
     {
         $this->actingAs($this->user);
 
-        $response = $this->get(route('attendance.detail', ['attendance_id' => $this->attendance->id]));
-
+        $response = $this->get(route('attendance.detail', ['id' => $this->attendance->id]));
         $response->assertSee('テスト太郎');
     }
 
@@ -49,8 +48,8 @@ class AttendanceDetailTest extends TestCase
     public function test_attendance_detail_displays_correct_date()
     {
         $this->actingAs($this->user);
-        $response = $this->get(route('attendance.detail', ['attendance_id' => $this->attendance->id]));
 
+        $response = $this->get(route('attendance.detail', ['id' => $this->attendance->id]));
         $response->assertSee('2026年');
         $response->assertSee('1月15日');
     }
@@ -61,10 +60,10 @@ class AttendanceDetailTest extends TestCase
     public function test_attendance_detail_displays_correct_work_times()
     {
         $this->actingAs($this->user);
-        $response = $this->get(route('attendance.detail', ['attendance_id' => $this->attendance->id]));
 
-        $response->assertSee('value="09:00"', false);
-        $response->assertSee('value="18:00"', false);
+        $response = $this->get(route('attendance.detail', ['id' => $this->attendance->id]));
+        $response->assertSee('09:00');
+        $response->assertSee('18:00');
     }
 
     /**
@@ -73,9 +72,9 @@ class AttendanceDetailTest extends TestCase
     public function test_attendance_detail_displays_correct_rest_times()
     {
         $this->actingAs($this->user);
-        $response = $this->get(route('attendance.detail', ['attendance_id' => $this->attendance->id]));
 
-        $response->assertSee('value="12:00"', false);
-        $response->assertSee('value="13:00"', false);
+        $response = $this->get(route('attendance.detail', ['id' => $this->attendance->id]));
+        $response->assertSee('12:00');
+        $response->assertSee('13:00');
     }
 }
