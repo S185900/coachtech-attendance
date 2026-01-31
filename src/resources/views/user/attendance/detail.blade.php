@@ -54,15 +54,23 @@
                             @endif
                         </div>
 
-                        @error('start_time')
-                            <p class="status-message">{{ $message }}</p>
-                        @enderror
+                        @if ($errors->has('start_time') || $errors->has('end_time'))
+                            <p class="status-message">
+                                {{ $errors->first('start_time') ?: $errors->first('end_time') }}
+                            </p>
+                        @endif
 
                     </td>
                 </tr>
 
                 {{-- 休憩時間の表示 --}}
                 @foreach($displayRestTimes as $index => $rest)
+                    @php
+                        $restKey = $rest['rest_id'] ?? $index;
+                        if ($isPending && empty($rest['start'])) {
+                            continue;
+                        }
+                    @endphp
                     <tr>
                         <th>休憩{{ $index > 0 ? $index + 1 : '' }}</th>
 
@@ -78,7 +86,6 @@
                                 @else
 
                                     @php
-                                        $restKey = $rest['rest_id'] ?? $index;
                                         $startTime = old("rests.{$restKey}.start", $rest['start']);
                                         $endTime = old("rests.{$restKey}.end", $rest['end']);
                                     @endphp
@@ -102,6 +109,13 @@
                                 @endif
 
                             </div>
+
+                            @if (!$isPending && ($errors->has("rests.{$restKey}.start") || $errors->has("rests.{$restKey}.end")))
+                                <p class="status-message">
+                                    {{ $errors->first("rests.{$restKey}.start") ?: $errors->first("rests.{$restKey}.end") }}
+                                </p>
+                            @endif
+
                         </td>
 
                     </tr>
@@ -112,16 +126,40 @@
                         <th>休憩{{ count($displayRestTimes) + 1 }}</th>
                         <td>
                             <div class="time-inputs">
-                                <input type="text" name="rests[new][start]" value="{{ old('rests.new.start') }}" 
-                                    class="input-time"
-                                    onfocus="(this.type='time')" onblur="if(!this.value)this.type='text'">
 
-                                <span class="range-separator">〜</span>
+                                @if($isPending)
 
-                                <input type="text" name="rests[new][end]" value="{{ old('rests.new.end') }}" 
-                                    class="input-time"
-                                    onfocus="(this.type='time')" onblur="if(!this.value)this.type='text'">
+                                    <input type="text" name="rests[new][start]" value="{{ old('rests.new.start') }}" 
+                                        class="input-time"
+                                        onfocus="(this.type='time')" onblur="if(!this.value)this.type='text'">
+
+                                    <span class="range-separator">〜</span>
+
+                                    <input type="text" name="rests[new][end]" value="{{ old('rests.new.end') }}" 
+                                        class="input-time"
+                                        onfocus="(this.type='time')" onblur="if(!this.value)this.type='text'">
+
+                                @else
+
+                                    @php
+                                        $startTime = old("rests.{$restKey}.start", $rest['start']);
+                                        $endTime = old("rests.{$restKey}.end", $rest['end']);
+                                    @endphp
+
+                                    <input type="text" name="rests[new][start]" value="{{ old('rests.new.start') }}" 
+                                        class="input-time"
+                                        onfocus="(this.type='time')" onblur="if(!this.value)this.type='text'">
+
+                                    <span class="range-separator">〜</span>
+
+                                    <input type="text" name="rests[new][end]" value="{{ old('rests.new.end') }}" 
+                                        class="input-time"
+                                        onfocus="(this.type='time')" onblur="if(!this.value)this.type='text'">
+
+                                @endif
+
                             </div>
+
                         </td>
                     </tr>
                 @endif
@@ -138,6 +176,7 @@
                             @error('reason')
                                 <p class="status-message">{{ $message }}</p>
                             @enderror
+
                         @endif
                     </td>
                 </tr>
@@ -145,7 +184,7 @@
 
             <div class="form-actions">
                 @if($isPending)
-                    <p class="status-message">承認待ちのため修正はできません。</p>
+                    <p class="info-message">*承認待ちのため修正はできません。</p>
                 @else
                     <button type="submit" class="submit-button">修正</button>
                 @endif

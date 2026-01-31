@@ -194,6 +194,14 @@ body {
     margin-top: 8px;
 }
 
+.info-message {
+    color: #ff0000;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    padding-bottom: 15px;
+}
+
 /* --- レスポンシブ対応 --- */
 
 /* PCサイズ（1400〜1540px） */

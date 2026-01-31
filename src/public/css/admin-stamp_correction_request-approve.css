@@ -194,6 +194,14 @@ body {
     margin-top: 8px;
 }
 
+.info-message {
+    color: #ff0000;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    padding-bottom: 15px;
+}
+
 .submit-button.approved {
     background-color: #696969;
     cursor: not-allowed;

@@ -50,6 +50,11 @@
                 @php $displayRestTimes = $request->corrected_rest_times ?? []; @endphp
 
                 @foreach($displayRestTimes as $index => $rest)
+
+                    @if(empty($rest['start']))
+                        @continue
+                    @endif
+
                     <tr>
                         <th>休憩{{ $index > 0 ? $index + 1 : '' }}</th>
                         <td>
@@ -62,15 +67,17 @@
                     </tr>
                 @endforeach
 
-                <tr>
-                    <th>休憩{{ count($displayRestTimes) > 0 ? count($displayRestTimes) + 1 : '' }}</th>
-                    <td>
-                        <div class="time-inputs">
-                            <span class="time-text"></span>
-                            <span class="time-text"></span>
-                        </div>
-                    </td>
-                </tr>
+                @if($request->status !== \App\Models\StampCorrectionRequest::STATUS_PENDING)
+                    <tr>
+                        <th>休憩{{ count($displayRestTimes) > 0 ? count($displayRestTimes) + 1 : '' }}</th>
+                        <td>
+                            <div class="time-inputs">
+                                <span class="time-text"></span>
+                                <span class="time-text"></span>
+                            </div>
+                        </td>
+                    </tr>
+                @endif
 
                 {{-- 備考欄 --}}
                 <tr>

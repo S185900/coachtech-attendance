@@ -23,7 +23,7 @@
             </div>
 
             <p class="attendance-date">
-                {{ \Carbon\Carbon::now()->isoFormat('YYYY年MM月DD日 (ddd)') }}
+                {{ \Carbon\Carbon::now()->isoFormat('YYYY年M月D日(ddd)') }}
             </p>
 
             <h1 class="attendance-time" id="realtime">
@@ -89,5 +89,4 @@
         updateTime();
 
     </script>
-
 @endsection

@@ -56,8 +56,7 @@ body {
 .user-name,
 .year-unit,
 .date-unit,
-.time-text,
-.note-text {
+.time-text {
     display: inline-block;
     vertical-align: middle;
     letter-spacing: 0.15em;
@@ -68,14 +67,7 @@ body {
     text-align: center;
 }
 
-.note-text {
-    width: 315px;
-    margin: 0;
-    line-height: 1.6;
-    letter-spacing: 0.15em;
-    white-space: pre-wrap;
-    display: inline-block;
-}
+
 
 .user-name {
     padding-left: 30px;
@@ -187,13 +179,37 @@ body {
     font-size: 15px;
     font-weight: 800;
     letter-spacing: 0.15em;
-    margin-top: 8px;
+    padding-top: 8px;
+}
+
+.info-message {
+    color: #ff0000;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    padding-bottom: 15px;
 }
 
 .input-time {
     width: 120px;
     height: 35px;
     box-sizing: border-box;
+}
+
+.input-time[readonly],
+.input-textarea[readonly] {
+    border: none;
+    background: transparent;
+    outline: none;
+    pointer-events: none;
+    color: #333;
+    padding: 0;
+}
+
+.input-textarea[readonly] {
+    resize: none;
+    width: 100%;
+    padding-left: 23px;
 }
 
 /* --- レスポンシブ対応 --- */
@@ -270,6 +286,16 @@ body {
         width: 260px;
         font-size: 14px;
         display: block;
+        text-align: left;
+    }
+
+    .note-text {
+        width: 315px;
+        margin: 0;
+        line-height: 1.6;
+        letter-spacing: 0.15em;
+        white-space: pre-wrap;
+        display: inline-block;
     }
 
     .input-time {

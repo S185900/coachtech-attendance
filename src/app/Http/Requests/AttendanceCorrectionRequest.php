@@ -38,15 +38,17 @@ class AttendanceCorrectionRequest extends FormRequest
             'end_time.after' => '出勤時間もしくは退勤時間が不適切な値です',
             'reason.required' => '備考を記入してください',
             'reason.max' => '備考は255文字以内で入力してください',
-            'rests.*.start.required_with' => '休憩時間を入力してください',
-            'rests.*.end.required_with' => '休憩時間を入力してください',
         ];
     }
 
     private function validateRestStart(): \Closure
     {
         return function ($attribute, $value, $fail) {
-            if ($value && ($value < $this->start_time || $value > $this->end_time)) {
+            if (!$value || !$this->start_time || !$this->end_time) {
+                return;
+            }
+
+            if ($value < $this->start_time || $value > $this->end_time) {
                 $fail('休憩時間が不適切な値です');
             }
         };
@@ -61,10 +63,11 @@ class AttendanceCorrectionRequest extends FormRequest
 
             if ($value > $this->end_time) {
                 $fail('休憩時間もしくは退勤時間が不適切な値です');
+                return;
             }
 
-            $index = explode('.', $attribute)[1];
-            $restStart = $this->input("rests.{$index}.start");
+            $restIndex = explode('.', $attribute)[1];
+            $restStart = $this->input("rests.{$restIndex}.start");
 
             if ($restStart && $value <= $restStart) {
                 $fail('休憩時間が不適切な値です');
