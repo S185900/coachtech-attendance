@@ -164,11 +164,11 @@ class AttendanceController extends Controller
     /**
      * 勤怠詳細画面
      */
-    public function show($attendance_id)
+    public function show($id)
     {
-        $attendance = Attendance::with('restTimes')->findOrFail($attendance_id);
+        $attendance = Attendance::with('restTimes')->findOrFail($id);
 
-        $pendingRequest = StampCorrectionRequest::where('attendance_id', $attendance_id)
+        $pendingRequest = StampCorrectionRequest::where('attendance_id', $id)
             ->where('status', StampCorrectionRequest::STATUS_PENDING)
             ->first();
 
@@ -183,11 +183,11 @@ class AttendanceController extends Controller
 
         } else {
 
-            foreach($attendance->restTimes as $rest) {
+            foreach($attendance->restTimes as $restTime) {
                 $displayRestTimes[] = [
-                    'rest_id' => $rest->id,
-                    'start'   => $rest->start_time->format('H:i'),
-                    'end'     => $rest->end_time ? $rest->end_time->format('H:i') : ''
+                    'rest_id' => $restTime->id,
+                    'start'   => $restTime->start_time->format('H:i'),
+                    'end'     => $restTime->end_time ? $restTime->end_time->format('H:i') : ''
                 ];
             }
         }
@@ -206,12 +206,12 @@ class AttendanceController extends Controller
     /**
      * 勤怠修正申請処理
      */
-    public function correctionRequest(AttendanceCorrectionRequest $request, $attendance_id)
+    public function correctionRequest(AttendanceCorrectionRequest $request, $id)
     {
-        $attendance = Attendance::findOrFail($attendance_id);
-        $dateStr = Carbon::parse($attendance->date)->format('Y-m-d');
+        $attendance = Attendance::findOrFail($id);
+        $dateString = Carbon::parse($attendance->date)->format('Y-m-d');
 
-        DB::transaction(function () use ($attendance, $request, $dateStr) {
+        DB::transaction(function () use ($attendance, $request, $dateString) {
 
             $restTimesData = [];
             if ($request->has('rests')) {
@@ -228,8 +228,8 @@ class AttendanceController extends Controller
             StampCorrectionRequest::create([
                 'user_id'              => auth()->id(),
                 'attendance_id'        => $attendance->id,
-                'corrected_start_time' => Carbon::parse($dateStr . ' ' . $request->start_time),
-                'corrected_end_time'   => Carbon::parse($dateStr . ' ' . $request->end_time),
+                'corrected_start_time' => Carbon::parse($dateString . ' ' . $request->start_time),
+                'corrected_end_time'   => Carbon::parse($dateString . ' ' . $request->end_time),
                 'corrected_rest_times' => $restTimesData,
                 'reason'               => $request->reason,
                 'status' => StampCorrectionRequest::STATUS_PENDING,

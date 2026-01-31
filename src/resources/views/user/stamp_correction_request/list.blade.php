@@ -54,7 +54,7 @@
                             {{ $request->created_at->format('Y/m/d') }}
                         </td>
                         <td>
-                            <a href="{{ route('attendance.detail', ['attendance_id' => $request->attendance_id]) }}" class="detail-link">詳細</a>
+                            <a href="{{ route('attendance.detail', ['id' => $request->attendance_id]) }}" class="detail-link">詳細</a>
                         </td>
                     </tr>
 

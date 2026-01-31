@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 
 class StampCorrectionRequest extends Model
@@ -27,21 +28,21 @@ class StampCorrectionRequest extends Model
     protected $casts = [
         'corrected_rest_times' => 'array',
         'corrected_start_time' => 'datetime',
-        'corrected_end_time'   => 'datetime',
-        'status'               => 'integer',
+        'corrected_end_time' => 'datetime',
+        'status' => 'integer',
     ];
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function attendance()
+    public function attendance(): BelongsTo
     {
         return $this->belongsTo(Attendance::class);
     }
 
-    public function master()
+    public function master(): BelongsTo
     {
         return $this->belongsTo(Master::class, 'master_id');
     }

@@ -58,7 +58,7 @@ class AttendanceStatusTest extends TestCase
         $user = User::factory()->create();
         $today = Carbon::today()->toDateString();
 
-        $attendanceId = DB::table('attendances')->insertGetId([
+        $id = DB::table('attendances')->insertGetId([
             'user_id' => $user->id,
             'date' => $today,
             'start_time' => '09:00',
@@ -68,7 +68,7 @@ class AttendanceStatusTest extends TestCase
         ]);
 
         DB::table('rest_times')->insert([
-            'attendance_id' => $attendanceId,
+            'attendance_id' => $id,
             'start_time' => '12:00',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),

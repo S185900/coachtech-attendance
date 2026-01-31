@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\StampCorrectionRequest;
 use Carbon\Carbon;
 
@@ -24,30 +26,38 @@ class Attendance extends Model
         'is_corrected',
     ];
 
-    protected $dates = ['date', 'start_time', 'end_time'];
+    protected $casts = [
+        'date' => 'date',
+        'start_time' => 'datetime',
+        'end_time' => 'datetime',
+        'is_corrected' => 'boolean',
+    ];
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function restTimes()
+    public function restTimes(): HasMany
     {
         return $this->hasMany(RestTime::class);
     }
 
-    public function stampCorrectionRequests()
+    public function stampCorrectionRequests(): HasMany
     {
         return $this->hasMany(StampCorrectionRequest::class);
     }
 
+    /**
+     * 合計休憩時間の取得
+     */
     public function getTotalRestTimeAttribute()
     {
         $totalMinutes = 0;
-        foreach ($this->restTimes as $rest) {
-            if ($rest->start_time && $rest->end_time) {
-                $start = Carbon::parse($rest->start_time);
-                $end = Carbon::parse($rest->end_time);
+        foreach ($this->restTimes as $restTime) {
+            if ($restTime->start_time && $restTime->end_time) {
+                $start = Carbon::parse($restTime->start_time);
+                $end = Carbon::parse($restTime->end_time);
                 $totalMinutes += $start->diffInMinutes($end);
             }
         }
@@ -55,6 +65,9 @@ class Attendance extends Model
         return sprintf('%02d:%02d', floor($totalMinutes / 60), $totalMinutes % 60);
     }
 
+    /**
+     * 実労働時間の取得
+     */
     public function getWorkTimeAttribute()
     {
         if (!$this->start_time || !$this->end_time) {
@@ -64,9 +77,9 @@ class Attendance extends Model
         $totalDurationMinutes = $this->start_time->diffInMinutes($this->end_time);
 
         $restMinutes = 0;
-        foreach ($this->restTimes as $rest) {
-            if ($rest->start_time && $rest->end_time) {
-                $restMinutes += Carbon::parse($rest->start_time)->diffInMinutes(Carbon::parse($rest->end_time));
+        foreach ($this->restTimes as $restTime) {
+            if ($restTime->start_time && $restTime->end_time) {
+                $restMinutes += Carbon::parse($restTime->start_time)->diffInMinutes(Carbon::parse($restTime->end_time));
             }
         }
 

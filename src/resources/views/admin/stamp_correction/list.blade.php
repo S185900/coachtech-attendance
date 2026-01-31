@@ -10,10 +10,10 @@
         <h1 class="page-title">申請一覧</h1>
 
         <div class="tabs">
-            <a href="{{ route('admin.stamp_correction.list', ['tab' => 'pending']) }}" class="tab-item {{ $tab === 'pending' ? 'active' : '' }}">
+            <a href="{{ route('stamp_correction_request.list', ['tab' => 'pending']) }}" class="tab-item {{ $tab === 'pending' ? 'active' : '' }}">
                 承認待ち
             </a>
-            <a href="{{ route('admin.stamp_correction.list', ['tab' => 'approved']) }}"  class="tab-item {{ $tab === 'approved' ? 'active' : '' }}">
+            <a href="{{ route('stamp_correction_request.list', ['tab' => 'approved']) }}"  class="tab-item {{ $tab === 'approved' ? 'active' : '' }}">
                 承認済み
             </a>
         </div>

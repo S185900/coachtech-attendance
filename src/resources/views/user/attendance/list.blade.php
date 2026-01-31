@@ -10,7 +10,7 @@
         <h1 class="page-title">勤怠一覧</h1>
 
         {{-- 月毎ナビゲーション部分 --}}
-        <div class="date-nav">
+        <nav class="date-nav">
 
             <a href="{{ route('attendance.list', ['month' => $prevMonth]) }}" class="date-nav-link">
                 <img src="{{ asset('images/arrow-image.png') }}" alt="前月" class="arrow-icon prev">
@@ -27,7 +27,7 @@
                 <img src="{{ asset('images/arrow-image.png') }}" alt="翌月" class="arrow-icon next">
             </a>
 
-        </div>
+        </nav>
 
         <table class="attendance-table">
 
@@ -68,7 +68,7 @@
                         </td>
                         <td>
                             @if($attendance)
-                                <a href="{{ route('attendance.detail', ['attendance_id' => $attendance->id]) }}" class="detail-link">詳細</a>
+                                <a href="{{ route('attendance.detail', ['id' => $attendance->id]) }}" class="detail-link">詳細</a>
                             @endif
                         </td>
                     </tr>

@@ -9,7 +9,7 @@
     <div class="attendance-detail-container">
         <h1 class="page-title">勤怠詳細</h1>
 
-        <form action="{{ route('admin.stamp_correction.update', ['id' => $request->id]) }}" method="POST">
+        <form action="{{ route('admin.stamp_correction.update', ['attendance_correct_request_id' => $request->id]) }}" method="POST">
             @csrf
 
             <table class="detail-table">

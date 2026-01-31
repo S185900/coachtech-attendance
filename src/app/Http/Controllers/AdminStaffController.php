@@ -27,8 +27,8 @@ class AdminStaffController extends Controller
     {
         $user = User::findOrFail($id);
 
-        $monthParam = $request->query('month', Carbon::now()->format('Y-m'));
-        $currentMonth = Carbon::parse($monthParam)->startOfMonth();
+        $monthParameter = $request->query('month', Carbon::now()->format('Y-m'));
+        $currentMonth = Carbon::parse($monthParameter)->startOfMonth();
 
         $prevMonth = $currentMonth->copy()->subMonth()->format('Y-m');
         $nextMonth = $currentMonth->copy()->addMonth()->format('Y-m');
@@ -54,8 +54,8 @@ class AdminStaffController extends Controller
     public function downloadCsv(Request $request, $id)
     {
         $user = User::findOrFail($id);
-        $monthParam = $request->query('month', Carbon::now()->format('Y-m'));
-        $currentMonth = Carbon::parse($monthParam);
+        $monthParameter = $request->query('month', Carbon::now()->format('Y-m'));
+        $currentMonth = Carbon::parse($monthParameter);
 
         $attendances = Attendance::where('user_id', $id)
             ->whereYear('date', $currentMonth->year)
@@ -71,10 +71,10 @@ class AdminStaffController extends Controller
 
             foreach ($attendances as $attendance) {
                 fputcsv($handle, [
-                    \Carbon\Carbon::parse($attendance->date)->isoFormat('MM/DD(ddd)'),
+                    Carbon::parse($attendance->date)->isoFormat('MM/DD(ddd)'),
                     $attendance->start_time->format('H:i'),
                     $attendance->end_time ? $attendance->end_time->format('H:i') : '',
-                    $attendance->total_rest_duration,
+                    $attendance->total_rest_time,
                     $attendance->work_time
                 ]);
             }

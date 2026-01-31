@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -21,8 +22,13 @@ class Master extends Authenticatable
         'remember_token',
     ];
 
-    public function approvedRequests()
+    public function approvedRequests(): HasMany
     {
         return $this->hasMany(StampCorrectionRequest::class, 'master_id');
+    }
+
+    public function fullName()
+    {
+        return $this->name;
     }
 }

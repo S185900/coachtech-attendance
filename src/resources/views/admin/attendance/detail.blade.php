@@ -9,7 +9,7 @@
     <div class="attendance-detail-container">
         <h1 class="page-title">勤怠詳細</h1>
 
-        <form action="{{ route('admin.attendance.detail', ['id' => $attendance->id]) }}" method="POST">
+        <form action="{{ route('admin.attendance.approve', ['id' => $attendance->id]) }}" method="POST">
             @csrf
             <table class="detail-table">
                 <tr>
@@ -59,16 +59,16 @@
                 </tr>
 
                 {{-- 休憩時間の表示 --}}
-                @foreach($displayRestTimes as $index => $rest)
+                @foreach($displayRestTimes as $restTimeIndex => $restTime)
 
                     @php
-                        $restKey = $rest['rest_id'] ?? $index;
-                        $currentStart = old("rests.{$restKey}.start", $rest['start']);
-                        $currentEnd = old("rests.{$restKey}.end", $rest['end']);
+                        $restKey = $restTime['rest_id'] ?? $restTimeIndex;
+                        $currentStart = old("rests.{$restKey}.start", $restTime['start']);
+                        $currentEnd = old("rests.{$restKey}.end", $restTime['end']);
                     @endphp
 
                     <tr>
-                        <th>休憩{{ $index > 0 ? $index + 1 : '' }}</th>
+                        <th>休憩{{ $restTimeIndex > 0 ? $restTimeIndex + 1 : '' }}</th>
 
                         <td>
                             <div class="time-inputs">

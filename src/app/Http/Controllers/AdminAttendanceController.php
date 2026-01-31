@@ -32,13 +32,13 @@ class AdminAttendanceController extends Controller
     /**
      * 勤怠詳細画面（管理者）の表示
      */
-    public function showDetail($id)
+    public function showAttendanceDetail($id)
     {
         $attendance = Attendance::with(['user', 'restTimes'])->findOrFail($id);
 
         $pendingRequest = $attendance->stampCorrectionRequests()
-        ->where('status', StampCorrectionRequest::STATUS_PENDING) 
-        ->first();
+            ->where('status', StampCorrectionRequest::STATUS_PENDING) 
+            ->first();
 
         $isPending = !is_null($pendingRequest);
 
@@ -48,11 +48,11 @@ class AdminAttendanceController extends Controller
                 ? json_decode($pendingRequest->corrected_rest_times, true) 
                 : $pendingRequest->corrected_rest_times;
         } else {
-            foreach($attendance->restTimes as $rest) {
+            foreach($attendance->restTimes as $restTime) {
                 $displayRestTimes[] = [
-                    'rest_id' => $rest->id,
-                    'start'   => $rest->start_time->format('H:i'),
-                    'end'     => $rest->end_time ? $rest->end_time->format('H:i') : ''
+                    'rest_id' => $restTime->id,
+                    'start'   => $restTime->start_time->format('H:i'),
+                    'end'     => $restTime->end_time ? $restTime->end_time->format('H:i') : ''
                 ];
             }
         }
@@ -73,8 +73,9 @@ class AdminAttendanceController extends Controller
      */
     public function approve(AdminApproveRequest $request, $id)
     {
-        DB::transaction(function () use ($request, $id) {
-            $attendance = Attendance::findOrFail($id);
+        $attendance = Attendance::findOrFail($id);
+
+        DB::transaction(function () use ($request, $attendance) {
             $date = Carbon::parse($attendance->date)->format('Y-m-d');
 
             $attendance->update([
@@ -87,19 +88,17 @@ class AdminAttendanceController extends Controller
             $attendance->restTimes()->delete();
 
             if ($request->has('rests')) {
-                foreach ($request->rests as $times) {
-
-                    if (!empty($times['start'])) {
+                foreach ($request->rests as $restTimeData) {
+                    if (!empty($restTimeData['start'])) {
                         $attendance->restTimes()->create([
-                            'start_time' => $date . ' ' . $times['start'],
-                            'end_time'   => !empty($times['end']) ? ($date . ' ' . $times['end']) : null,
+                            'start_time' => $date . ' ' . $restTimeData['start'],
+                            'end_time'   => !empty($restTimeData['end']) ? ($date . ' ' . $restTimeData['end']) : null,
                         ]);
                     }
-
                 }
             }
 
-            StampCorrectionRequest::where('attendance_id', $id)
+            StampCorrectionRequest::where('attendance_id', $attendance->id)
                 ->where('status', StampCorrectionRequest::STATUS_PENDING) 
                 ->update([
                     'status' => StampCorrectionRequest::STATUS_APPROVED, 
@@ -107,7 +106,7 @@ class AdminAttendanceController extends Controller
                 ]);
         });
 
-        return redirect()->route('admin.attendance.list', ['date' => Attendance::find($id)->date->toDateString()])
+        return redirect()->route('admin.attendance.list', ['date' => $attendance->date->toDateString()])
             ->with('success', '勤怠情報を承認しました。');
     }
 }
