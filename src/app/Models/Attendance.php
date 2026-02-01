@@ -13,9 +13,10 @@ class Attendance extends Model
 {
     use HasFactory;
 
-    const STATUS_RETIRED = 0;
+    const STATUS_OUT_OF_WORK = 0;
     const STATUS_WORKING = 1;
     const STATUS_RESTING = 2;
+    const STATUS_FINISHED = 3;
 
     protected $fillable = [
         'user_id',

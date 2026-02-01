@@ -100,9 +100,9 @@ class RestTest extends TestCase
             'status' => Attendance::STATUS_WORKING,
         ]);
 
-        $this->post('/attendance/rest-start'); // 1回目入
-        $this->post('/attendance/rest-end');   // 1回目戻
-        $this->post('/attendance/rest-start'); // 2回目入
+        $this->post('/attendance/rest-start');
+        $this->post('/attendance/rest-end');
+        $this->post('/attendance/rest-start');
 
         $response = $this->get('/attendance');
         $response->assertSee('休憩戻');

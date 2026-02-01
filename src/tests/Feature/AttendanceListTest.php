@@ -120,7 +120,7 @@ class AttendanceListTest extends TestCase
             'user_id' => $user->id,
             'date' => '2026-01-15',
             'start_time' => '2026-01-15 09:00:00',
-            'status' => 1,
+            'status' => Attendance::STATUS_WORKING,
         ]);
 
         $response = $this->get(route('attendance.list'));

@@ -17,7 +17,7 @@
                     <span class="status-badge status-working">出勤中</span>
                 @elseif($attendance->status == \App\Models\Attendance::STATUS_RESTING)
                     <span class="status-badge status-break">休憩中</span>
-                @elseif($attendance->status == \App\Models\Attendance::STATUS_RETIRED)
+                @elseif($attendance->status == \App\Models\Attendance::STATUS_FINISHED)
                     <span class="status-badge status-done">退勤済</span>
                 @endif
             </div>
@@ -62,7 +62,7 @@
                         <button type="submit" class="attendance-button btn-white">休憩戻</button>
                     </form>
 
-                @elseif($attendance->status == \App\Models\Attendance::STATUS_RETIRED)
+                @elseif($attendance->status == \App\Models\Attendance::STATUS_FINISHED)
 
                     {{-- 退勤済 --}}
                     <p class="thanks-message">お疲れ様でした。</p>

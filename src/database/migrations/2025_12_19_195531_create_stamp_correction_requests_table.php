@@ -24,7 +24,7 @@ class CreateStampCorrectionRequestsTable extends Migration
             $table->json('corrected_rest_times')->nullable();
 
             $table->text('reason');
-            $table->tinyInteger('status')->default(0); // 0:承認待ち, 1:承認済み
+            $table->tinyInteger('status')->default(0);
             $table->foreignId('master_id')->nullable()->constrained('masters')->nullOnDelete();
             $table->string('master_comment', 255)->nullable();
             $table->timestamps();

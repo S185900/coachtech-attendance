@@ -21,7 +21,7 @@ class AttendanceDateTimeTest extends TestCase
         parent::setUp();
 
         Route::get('/dummy-list', function () {})->name('stamp_correction_request.list');
-        Route::get('/dummy-approve', function () {})->name('stamp_correction_request.approve'); // 他にも足りないと言われそうなものを予備で追加
+        Route::get('/dummy-approve', function () {})->name('stamp_correction_request.approve');
     }
 
     /**

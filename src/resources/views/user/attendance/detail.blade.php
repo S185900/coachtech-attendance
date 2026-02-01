@@ -9,21 +9,21 @@
     <div class="attendance-detail-container">
         <h1 class="page-title">勤怠詳細</h1>
 
-        <form action="{{ route('attendance.update', ['id' => $attendance->id]) }}" method="POST">
+        <form class="attendance-detail-form" action="{{ route('attendance.update', ['id' => $attendance->id]) }}" method="POST">
             @csrf
 
             <table class="detail-table">
 
-                <tr>
-                    <th>名前</th>
-                    <td>
+                <tr class="detail-table-row">
+                    <th class="detail-table-th">名前</th>
+                    <td class="detail-table-td">
                         <span class="user-name">{{ $attendance->user->name }}</span>
                     </td>
                 </tr>
 
-                <tr>
-                    <th>日付</th>
-                    <td class="date-inputs-container">
+                <tr class="detail-table-row">
+                    <th class="detail-table-th">日付</th>
+                    <td class="detail-table-td date-inputs-container">
                         <div class="date-year-wrapper">
                             <span class="year-unit">{{ $attendance->date->format('Y') }}年</span>
                         </div>
@@ -35,9 +35,9 @@
                 </tr>
 
                 {{-- 出勤・退勤部分 --}}
-                <tr>
-                    <th>出勤・退勤</th>
-                    <td>
+                <tr class="detail-table-row">
+                    <th class="detail-table-th">出勤・退勤</th>
+                    <td class="detail-table-td">
                         <div class="time-inputs">
                             @if($isPending)
 
@@ -47,9 +47,9 @@
 
                             @else
 
-                                <input type="time" name="start_time" value="{{ old('start_time', $attendance->start_time->format('H:i')) }}" class="input-time">
+                                <input type="time" name="start_time" value="{{ old('start_time', $attendance->start_time->format('H:i')) }}" class="input-time time-input-control">
                                 <span class="range-separator">〜</span>
-                                <input type="time" name="end_time" value="{{ old('end_time', $attendance->end_time ? $attendance->end_time->format('H:i') : '') }}" class="input-time">
+                                <input type="time" name="end_time" value="{{ old('end_time', $attendance->end_time ? $attendance->end_time->format('H:i') : '') }}" class="input-time time-input-control">
 
                             @endif
                         </div>
@@ -65,16 +65,9 @@
 
                 {{-- 休憩時間の表示 --}}
                 @foreach($displayRestTimes as $index => $rest)
-                    @php
-                        $restKey = $rest['rest_id'] ?? $index;
-                        if ($isPending && empty($rest['start'])) {
-                            continue;
-                        }
-                    @endphp
-                    <tr>
-                        <th>休憩{{ $index > 0 ? $index + 1 : '' }}</th>
-
-                        <td>
+                    <tr class="detail-table-row">
+                        <th class="detail-table-th">休憩{{ $index > 0 ? $index + 1 : '' }}</th>
+                        <td class="detail-table-td">
                             <div class="time-inputs">
 
                                 @if($isPending)
@@ -85,65 +78,65 @@
 
                                 @else
 
-                                    @php
-                                        $startTime = old("rests.{$restKey}.start", $rest['start']);
-                                        $endTime = old("rests.{$restKey}.end", $rest['end']);
-                                    @endphp
-
-                                    <input type="{{ $startTime ? 'time' : 'text' }}" 
-                                        name="rests[{{ $restKey }}][start]" 
-                                        value="{{ $startTime }}" 
-                                        class="input-time"
-                                        onfocus="(this.type='time')" 
+                                    <input type="{{ old("rests.{$rest['key']}.start", $rest['start']) ? 'time' : 'text' }}"
+                                        name="rests[{{ $rest['key'] }}][start]"
+                                        value="{{ old("rests.{$rest['key']}.start", $rest['start']) }}"
+                                        class="input-time time-input-control"
+                                        onfocus="(this.type='time')"
                                         onblur="if(!this.value)this.type='text'">
 
                                     <span class="range-separator">〜</span>
 
-                                    <input type="{{ $endTime ? 'time' : 'text' }}" 
-                                        name="rests[{{ $restKey }}][end]" 
-                                        value="{{ $endTime }}" 
-                                        class="input-time"
-                                        onfocus="(this.type='time')" 
+                                    <input type="{{ old("rests.{$rest['key']}.end", $rest['end']) ? 'time' : 'text' }}" 
+                                        name="rests[{{ $rest['key'] }}][end]"
+                                        value="{{ old("rests.{$rest['key']}.end", $rest['end']) }}"
+                                        class="input-time time-input-control"
+                                        onfocus="(this.type='time')"
                                         onblur="if(!this.value)this.type='text'">
 
                                 @endif
 
                             </div>
 
-                            @if (!$isPending && ($errors->has("rests.{$restKey}.start") || $errors->has("rests.{$restKey}.end")))
+                            @if (!$isPending && ($errors->has("rests.{$rest['key']}.start") || $errors->has("rests.{$rest['key']}.end")))
                                 <p class="status-message">
-                                    {{ $errors->first("rests.{$restKey}.start") ?: $errors->first("rests.{$restKey}.end") }}
+                                    {{ $errors->first("rests.{$rest['key']}.start") ?: $errors->first("rests.{$rest['key']}.end") }}
                                 </p>
                             @endif
 
                         </td>
-
                     </tr>
                 @endforeach
 
                 @if(!$isPending)
-                    <tr>
-                        <th>休憩{{ count($displayRestTimes) + 1 }}</th>
-                        <td>
+                    <tr class="detail-table-row">
+                        <th class="detail-table-th">休憩{{ count($displayRestTimes) + 1 }}</th>
+                        <td class="detail-table-td">
                             <div class="time-inputs">
-                                <input type="text" name="rests[new][start]" value="{{ old('rests.new.start') }}" 
-                                    class="input-time"
+                                <input type="text" name="rests[new][start]" value="{{ old('rests.new.start') }}"
+                                    class="input-time time-input-control"
                                     onfocus="(this.type='time')" onblur="if(!this.value)this.type='text'">
 
                                 <span class="range-separator">〜</span>
 
-                                <input type="text" name="rests[new][end]" value="{{ old('rests.new.end') }}" 
-                                    class="input-time"
+                                <input type="text" name="rests[new][end]" value="{{ old('rests.new.end') }}"
+                                    class="input-time time-input-control"
                                     onfocus="(this.type='time')" onblur="if(!this.value)this.type='text'">
                             </div>
+
+                            @if ($errors->has('rests.new.start') || $errors->has('rests.new.end'))
+                                <p class="status-message">
+                                    {{ $errors->first('rests.new.start') ?: $errors->first('rests.new.end') }}
+                                </p>
+                            @endif
                         </td>
                     </tr>
                 @endif
 
                 {{-- 備考欄部分 --}}
-                <tr>
-                    <th>備考</th>
-                    <td>
+                <tr class="detail-table-row">
+                    <th class="detail-table-th">備考</th>
+                    <td class="detail-table-td">
                         @if($isPending)
                             <p class="note-text">{{ $displayReason }}</p>
                         @else

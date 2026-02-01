@@ -69,7 +69,7 @@ class AttendanceController extends Controller
 
         $attendance->update([
             'end_time' => Carbon::now(),
-            'status' => Attendance::STATUS_RETIRED,
+            'status' => Attendance::STATUS_FINISHED,
         ]);
 
         return redirect()->back();
@@ -173,31 +173,41 @@ class AttendanceController extends Controller
             ->first();
 
         $isPending = !is_null($pendingRequest);
-
         $displayRestTimes = [];
+
         if ($isPending && !empty($pendingRequest->corrected_rest_times)) {
 
-            $displayRestTimes = is_string($pendingRequest->corrected_rest_times) 
-                ? json_decode($pendingRequest->corrected_rest_times, true) 
-                : $pendingRequest->corrected_rest_times;
+            $correctedRests = is_string($pendingRequest->corrected_rest_times)
+                ? json_decode($pendingRequest->corrected_rest_times, true)
+                : ($pendingRequest->corrected_rest_times ?? []);
+
+            foreach ($correctedRests as $rest) {
+                if (!empty($rest['start'])) {
+                    $displayRestTimes[] = [
+                        'key'   => $rest['rest_id'] ?? 'new',
+                        'start' => $rest['start'],
+                        'end'   => $rest['end'] ?? ''
+                    ];
+                }
+            }
+            $displayReason = $pendingRequest->reason;
 
         } else {
 
             foreach($attendance->restTimes as $restTime) {
                 $displayRestTimes[] = [
-                    'rest_id' => $restTime->id,
-                    'start'   => $restTime->start_time->format('H:i'),
-                    'end'     => $restTime->end_time ? $restTime->end_time->format('H:i') : ''
+                    'key'   => $restTime->id,
+                    'start' => $restTime->start_time->format('H:i'),
+                    'end'   => $restTime->end_time ? $restTime->end_time->format('H:i') : ''
                 ];
             }
+            $displayReason = $attendance->reason;
         }
 
-        $displayReason = $isPending ? $pendingRequest->reason : $attendance->reason;
-
         return view('user.attendance.detail', compact(
-            'attendance', 
-            'isPending', 
-            'pendingRequest', 
+            'attendance',
+            'isPending',
+            'pendingRequest',
             'displayRestTimes',
             'displayReason'
         ));
@@ -218,20 +228,19 @@ class AttendanceController extends Controller
                 foreach ($request->rests as $restId => $times) {
                     $restTimesData[] = [
                         'rest_id' => $restId,
-                        'start'   => $times['start'],
-                        'end'     => $times['end'],
+                        'start' => $times['start'],
+                        'end' => $times['end'],
                     ];
                 }
             }
 
-
             StampCorrectionRequest::create([
-                'user_id'              => auth()->id(),
-                'attendance_id'        => $attendance->id,
+                'user_id' => auth()->id(),
+                'attendance_id' => $attendance->id,
                 'corrected_start_time' => Carbon::parse($dateString . ' ' . $request->start_time),
-                'corrected_end_time'   => Carbon::parse($dateString . ' ' . $request->end_time),
+                'corrected_end_time' => Carbon::parse($dateString . ' ' . $request->end_time),
                 'corrected_rest_times' => $restTimesData,
-                'reason'               => $request->reason,
+                'reason' => $request->reason,
                 'status' => StampCorrectionRequest::STATUS_PENDING,
             ]);
         });

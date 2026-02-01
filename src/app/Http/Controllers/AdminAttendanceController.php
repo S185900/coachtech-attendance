@@ -37,16 +37,22 @@ class AdminAttendanceController extends Controller
         $attendance = Attendance::with(['user', 'restTimes'])->findOrFail($id);
 
         $pendingRequest = $attendance->stampCorrectionRequests()
-            ->where('status', StampCorrectionRequest::STATUS_PENDING) 
+            ->where('status', StampCorrectionRequest::STATUS_PENDING)
             ->first();
 
         $isPending = !is_null($pendingRequest);
 
         $displayRestTimes = [];
         if ($isPending && !empty($pendingRequest->corrected_rest_times)) {
-            $displayRestTimes = is_string($pendingRequest->corrected_rest_times) 
-                ? json_decode($pendingRequest->corrected_rest_times, true) 
+
+            $decodedRestTimes = is_string($pendingRequest->corrected_rest_times)
+                ? json_decode($pendingRequest->corrected_rest_times, true)
                 : $pendingRequest->corrected_rest_times;
+
+            $displayRestTimes = array_values(array_filter($decodedRestTimes ?: [], function($rest) {
+                return !empty($rest['start']) || !empty($rest['end']);
+            }));
+
         } else {
             foreach($attendance->restTimes as $restTime) {
                 $displayRestTimes[] = [
@@ -60,10 +66,10 @@ class AdminAttendanceController extends Controller
         $displayReason = $isPending ? $pendingRequest->reason : $attendance->reason;
 
         return view('admin.attendance.detail', compact(
-            'attendance', 
-            'isPending', 
-            'pendingRequest', 
-            'displayRestTimes', 
+            'attendance',
+            'isPending',
+            'pendingRequest',
+            'displayRestTimes',
             'displayReason'
         ));
     }
@@ -74,36 +80,52 @@ class AdminAttendanceController extends Controller
     public function approve(AdminApproveRequest $request, $id)
     {
         $attendance = Attendance::findOrFail($id);
+        $pendingRequest = $attendance->stampCorrectionRequests()
+            ->where('status', StampCorrectionRequest::STATUS_PENDING)
+            ->first();
 
         DB::transaction(function () use ($request, $attendance) {
             $date = Carbon::parse($attendance->date)->format('Y-m-d');
 
+            if ($pendingRequest) {
+                $startTime = $pendingRequest->corrected_start_time;
+                $endTime = $pendingRequest->corrected_end_time;
+                $reason = $pendingRequest->reason;
+                $restTimes = is_string($pendingRequest->corrected_rest_times) 
+                    ? json_decode($pendingRequest->corrected_rest_times, true) 
+                    : $pendingRequest->corrected_rest_times;
+            } else {
+                $startTime = $date . ' ' . $request->start_time;
+                $endTime = $request->end_time ? $date . ' ' . $request->end_time : null;
+                $reason = $request->reason;
+                $restTimes = $request->rests;
+            }
+
             $attendance->update([
-                'start_time' => $date . ' ' . $request->start_time,
-                'end_time'   => $request->end_time ? $date . ' ' . $request->end_time : null,
-                'reason'     => $request->reason,
+                'start_time' => $startTime,
+                'end_time' => $endTime,
+                'reason' => $reason,
                 'is_corrected' => true,
             ]);
 
             $attendance->restTimes()->delete();
-
-            if ($request->has('rests')) {
-                foreach ($request->rests as $restTimeData) {
-                    if (!empty($restTimeData['start'])) {
+            if (!empty($restTimes)) {
+                foreach ($restTimes as $rest) {
+                    if (!empty($rest['start'])) {
                         $attendance->restTimes()->create([
-                            'start_time' => $date . ' ' . $restTimeData['start'],
-                            'end_time'   => !empty($restTimeData['end']) ? ($date . ' ' . $restTimeData['end']) : null,
+                            'start_time' => $pendingRequest ? $date . ' ' . $rest['start'] : $date . ' ' . $rest['start'],
+                            'end_time'   => !empty($rest['end']) ? $date . ' ' . $rest['end'] : null,
                         ]);
                     }
                 }
             }
 
-            StampCorrectionRequest::where('attendance_id', $attendance->id)
-                ->where('status', StampCorrectionRequest::STATUS_PENDING) 
-                ->update([
-                    'status' => StampCorrectionRequest::STATUS_APPROVED, 
+            if ($pendingRequest) {
+                $pendingRequest->update([
+                    'status' => StampCorrectionRequest::STATUS_APPROVED,
                     'master_id' => auth('admin')->id(),
                 ]);
+            }
         });
 
         return redirect()->route('admin.attendance.list', ['date' => $attendance->date->toDateString()])

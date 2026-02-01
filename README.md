@@ -141,6 +141,9 @@ https://docs.google.com/spreadsheets/d/1vpKz6K7swjZcZIrj2miOFVXzOABBeqwKwvqgHdIG
 ** 勤怠一覧画面（一般ユーザー）について **
 > *勤務終了後に修正申請可能な仕様となっております。
 
+** 勤怠詳細画面（管理者）について **
+> *要件ID:FN038に基づき、「承認待ちのため修正はできません。」とメッセージが表示される仕様となっております。
+
 ** PHPUnitによるテストについて **
 - テスト実行コード一覧
 ``` bash

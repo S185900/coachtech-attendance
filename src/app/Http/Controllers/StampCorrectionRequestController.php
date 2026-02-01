@@ -17,8 +17,8 @@ class StampCorrectionRequestController extends Controller
         $user = Auth::user();
 
         if (Auth::guard('admin')->check()) {
-            $status = $request->query('tab') === 'approved' 
-                ? StampCorrectionRequest::STATUS_APPROVED 
+            $status = $request->query('tab') === 'approved'
+                ? StampCorrectionRequest::STATUS_APPROVED
                 : StampCorrectionRequest::STATUS_PENDING;
 
             $requests = StampCorrectionRequest::with(['attendance', 'user'])
@@ -33,8 +33,8 @@ class StampCorrectionRequestController extends Controller
         }
 
         $user = Auth::user();
-        $status = $request->query('tab') === 'approved' 
-            ? StampCorrectionRequest::STATUS_APPROVED 
+        $status = $request->query('tab') === 'approved'
+            ? StampCorrectionRequest::STATUS_APPROVED
             : StampCorrectionRequest::STATUS_PENDING;
 
         $requests = StampCorrectionRequest::with('attendance')
@@ -54,8 +54,8 @@ class StampCorrectionRequestController extends Controller
      */
     public function adminIndex(Request $request)
     {
-        $status = $request->query('tab') === 'approved' 
-            ? StampCorrectionRequest::STATUS_APPROVED 
+        $status = $request->query('tab') === 'approved'
+            ? StampCorrectionRequest::STATUS_APPROVED
             : StampCorrectionRequest::STATUS_PENDING;
 
         $requests = StampCorrectionRequest::with(['attendance', 'user'])
@@ -91,14 +91,14 @@ class StampCorrectionRequestController extends Controller
         \DB::transaction(function () use ($correctionRequest, $attendance) {
 
             $attendance->update([
-                'start_time' => $correctionRequest->corrected_start_time, 
-                'end_time'   => $correctionRequest->corrected_end_time,
+                'start_time' => $correctionRequest->corrected_start_time,
+                'end_time' => $correctionRequest->corrected_end_time,
             ]);
 
             $attendance->restTimes()->delete();
 
-            $restTimes = is_string($correctionRequest->corrected_rest_times) 
-                ? json_decode($correctionRequest->corrected_rest_times, true) 
+            $restTimes = is_string($correctionRequest->corrected_rest_times)
+                ? json_decode($correctionRequest->corrected_rest_times, true)
                 : $correctionRequest->corrected_rest_times;
 
             if (!empty($restTimes)) {
@@ -110,17 +110,17 @@ class StampCorrectionRequestController extends Controller
 
                     $attendance->restTimes()->create([
                         'start_time' => $restTime['start'],
-                        'end_time'   => $restTime['end'] ?? null,
+                        'end_time' => $restTime['end'] ?? null,
                     ]);
                 }
             }
 
             $correctionRequest->update([
-                'status' => StampCorrectionRequest::STATUS_APPROVED 
+                'status' => StampCorrectionRequest::STATUS_APPROVED
             ]);
         });
 
         return redirect()->route('stamp_correction_request.list', ['tab' => 'approved'])
-                        ->with('success', '申請を承認しました');
+            ->with('success', '申請を承認しました');
     }
 }

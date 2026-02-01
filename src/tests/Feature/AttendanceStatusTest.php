@@ -93,7 +93,7 @@ class AttendanceStatusTest extends TestCase
             'date' => $today,
             'start_time' => '09:00',
             'end_time' => '18:00',
-            'status' => Attendance::STATUS_RETIRED,
+            'status' => Attendance::STATUS_FINISHED,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);

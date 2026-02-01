@@ -28,17 +28,17 @@ body {
     margin-bottom: 20px;
 }
 
-.detail-table tr {
+.detail-table-row {
     border-bottom: 2px solid #E1E1E1;
 }
 
-.detail-table tr:last-child {
+.detail-table-row:last-child {
     border-bottom: none;
 }
 
-.detail-table th {
+.detail-table-th {
     width: 25%;
-    padding: 30px 40px;
+    padding: 30px 40px 30px 50px;
     text-align: left;
     font-weight: 700;
     font-size: 16px;
@@ -46,7 +46,7 @@ body {
     color: #737373;
 }
 
-.detail-table td {
+.detail-table-td {
     padding: 30px 40px;
     font-size: 16px;
     font-weight: 700;
@@ -56,7 +56,8 @@ body {
 .user-name,
 .year-unit,
 .date-unit,
-.time-text {
+.time-text,
+.note-text {
     display: inline-block;
     vertical-align: middle;
     letter-spacing: 0.15em;
@@ -66,8 +67,6 @@ body {
     width: 120px;
     text-align: center;
 }
-
-
 
 .user-name {
     padding-left: 30px;
@@ -92,13 +91,12 @@ body {
 
 .input-time {
     width: 120px;
+    height: 35px;
     text-align: center;
-    letter-spacing: 0.15rem;
-    background-color: #ffffff;
     display: inline-block;
 }
 
-.time-inputs input[type="time"]::-webkit-calendar-picker-indicator {
+.time-input-control::-webkit-calendar-picker-indicator {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -109,9 +107,19 @@ body {
     z-index: 11;
 }
 
-.time-inputs input[type="time"] {
+.time-input-control {
     appearance: none;
     -moz-appearance: textfield;
+}
+
+.note-text {
+    width: 315px;
+    margin: 0;
+    padding-left: 30px;
+    line-height: 1.6;
+    letter-spacing: 0.15em;
+    white-space: pre-wrap;
+    display: inline-block;
 }
 
 .input-textarea {
@@ -190,28 +198,6 @@ body {
     padding-bottom: 15px;
 }
 
-.input-time {
-    width: 120px;
-    height: 35px;
-    box-sizing: border-box;
-}
-
-.input-time[readonly],
-.input-textarea[readonly] {
-    border: none;
-    background: transparent;
-    outline: none;
-    pointer-events: none;
-    color: #333;
-    padding: 0;
-}
-
-.input-textarea[readonly] {
-    resize: none;
-    width: 100%;
-    padding-left: 23px;
-}
-
 /* --- レスポンシブ対応 --- */
 
 /* PCサイズ（1400〜1540px） */
@@ -235,13 +221,13 @@ body {
         border-left-width: 6px;
     }
 
-    .detail-table th {
+    .detail-table-th {
         width: 30%;
         padding: 20px;
         font-size: 14px;
     }
 
-    .detail-table td {
+    .detail-table-td {
         padding: 20px;
         font-size: 14px;
     }
@@ -257,7 +243,7 @@ body {
     .date-day-wrapper,
     .input-time,
     .time-text {
-        width: 110px !important;
+        width: 110px;
         flex-shrink: 0;
         font-size: 14px;
     }
@@ -292,6 +278,7 @@ body {
     .note-text {
         width: 315px;
         margin: 0;
+        padding-left: 25px;
         line-height: 1.6;
         letter-spacing: 0.15em;
         white-space: pre-wrap;
@@ -308,6 +295,10 @@ body {
     }
 
     .status-message {
+        font-size: 13px;
+    }
+
+    .info-message {
         font-size: 13px;
     }
 }

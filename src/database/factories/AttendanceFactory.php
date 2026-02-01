@@ -32,7 +32,7 @@ class AttendanceFactory extends Factory
             'date' => $date->format('Y-m-d'),
             'start_time' => $startTime,
             'end_time' => $endTime,
-            'status' => 3, // 0:勤務外, 1:勤務中, 2:休憩中, 3:退勤済
+            'status' => Attendance::STATUS_FINISHED,
             'is_corrected' => false,
         ];
     }
@@ -45,7 +45,7 @@ class AttendanceFactory extends Factory
         return $this->state(function (array $attributes) {
             return [
                 'end_time' => null,
-                'status' => 1,
+                'status' => Attendance::STATUS_WORKING,
             ];
         });
     }

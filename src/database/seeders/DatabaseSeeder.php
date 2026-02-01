@@ -38,16 +38,16 @@ class DatabaseSeeder extends Seeder
             $attendance = Attendance::create([
                 'user_id' => $user->id,
                 'date' => $date->format('Y-m-d'),
-                'start_time' => $date->copy()->setTime(9, 0, 0), 
-                'end_time' => $date->copy()->setTime(18, 0, 0),  
-                'status' => 3, // 0:勤務外, 1:勤務中, 2:休憩中, 3:退勤済
+                'start_time' => $date->copy()->setTime(9, 0, 0),
+                'end_time' => $date->copy()->setTime(18, 0, 0),
+                'status' => Attendance::STATUS_FINISHED,
                 'is_corrected' => false,
             ]);
 
             RestTime::create([
                 'attendance_id' => $attendance->id,
-                'start_time' => $date->copy()->setTime(12, 0, 0), 
-                'end_time' => $date->copy()->setTime(13, 0, 0),   
+                'start_time' => $date->copy()->setTime(12, 0, 0),
+                'end_time' => $date->copy()->setTime(13, 0, 0),
             ]);
         }
     }
