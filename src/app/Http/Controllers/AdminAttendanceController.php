@@ -24,7 +24,12 @@ class AdminAttendanceController extends Controller
 
         $attendances = Attendance::with(['user', 'restTimes'])
             ->whereDate('date', $currentDate->toDateString())
-            ->get();
+            ->get()
+            ->map(function ($attendance) {
+                $attendance->display_total_rest_time = preg_replace('/^0/', '', $attendance->total_rest_time);
+                $attendance->display_work_time = preg_replace('/^0/', '', $attendance->work_time);
+                return $attendance;
+            });
 
         return view('admin.attendance.list', compact('attendances', 'currentDate', 'prevDate', 'nextDate'));
     }
@@ -84,7 +89,7 @@ class AdminAttendanceController extends Controller
             ->where('status', StampCorrectionRequest::STATUS_PENDING)
             ->first();
 
-        DB::transaction(function () use ($request, $attendance) {
+        DB::transaction(function () use ($request, $attendance, $pendingRequest) {
             $date = Carbon::parse($attendance->date)->format('Y-m-d');
 
             if ($pendingRequest) {

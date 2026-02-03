@@ -77,7 +77,17 @@ class StampCorrectionRequestController extends Controller
         $request = StampCorrectionRequest::with(['attendance', 'user'])
             ->findOrFail($attendanceCorrectRequestId);
 
-        return view('admin.stamp_correction.approve', compact('request'));
+        $isPending = ($request->status === StampCorrectionRequest::STATUS_PENDING);
+
+        $rawRestTimes = is_string($request->corrected_rest_times)
+            ? json_decode($request->corrected_rest_times, true)
+            : $request->corrected_rest_times;
+
+        $request->active_rest_times = array_values(array_filter($rawRestTimes ?? [], function($rest) {
+            return !empty($rest['start']);
+        }));
+
+        return view('admin.stamp_correction.approve', compact('request', 'isPending'));
     }
 
     /**

@@ -146,6 +146,11 @@ class AttendanceController extends Controller
             ->where('user_id', auth()->id())
             ->whereBetween('date', [$startDate->format('Y-m-d'), $endDate->format('Y-m-d')])
             ->get()
+            ->map(function($attendance) {
+                $attendance->display_total_rest_time = preg_replace('/^0/', '', $attendance->total_rest_time);
+                $attendance->display_work_time = preg_replace('/^0/', '', $attendance->work_time);
+                return $attendance;
+            })
             ->keyBy(function($item) {
                 return Carbon::parse($item->date)->format('Y-m-d');
             });

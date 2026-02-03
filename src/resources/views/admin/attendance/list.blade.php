@@ -56,10 +56,10 @@
                             {{ $attendance->end_time ? $attendance->end_time->format('H:i') : '' }}
                         </td>
                         <td class="attendance-table-td">
-                            {{ $attendance->total_rest_time }}
+                            {{ $attendance->display_total_rest_time !== '0:00' ? $attendance->display_total_rest_time : '' }}
                         </td>
                         <td class="attendance-table-td">
-                            {{ $attendance->work_time }}
+                            {{ $attendance->display_work_time !== '0:00' ? $attendance->display_work_time : '' }}
                         </td>
                         <td class="attendance-table-td">
                             <a href="{{ route('admin.attendance.detail', ['id' => $attendance->id]) }}" class="detail-link">詳細</a>

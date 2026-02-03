@@ -61,10 +61,10 @@
                             {{ $attendance && $attendance->end_time ? $attendance->end_time->format('H:i') : '' }}
                         </td>
                         <td class="attendance-table-td">
-                            {{ $attendance ? $attendance->total_rest_time : '' }}
+                            {{ $attendance && $attendance->display_total_rest_time !== '0:00' ? $attendance->display_total_rest_time : '' }}
                         </td>
                         <td class="attendance-table-td">
-                            {{ $attendance ? $attendance->work_time : '' }}
+                            {{ $attendance && $attendance->display_work_time !== '0:00' ? $attendance->display_work_time : '' }}
                         </td>
                         <td class="attendance-table-td">
                             @if($attendance)

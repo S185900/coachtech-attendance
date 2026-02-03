@@ -37,13 +37,18 @@ class AdminStaffController extends Controller
             ->whereYear('date', $currentMonth->year)
             ->whereMonth('date', $currentMonth->month)
             ->orderBy('date', 'asc')
-            ->get();
+            ->get()
+            ->map(function ($attendance) {
+                $attendance->display_total_rest_time = preg_replace('/^0/', '', $attendance->total_rest_time);
+                $attendance->display_work_time = preg_replace('/^0/', '', $attendance->work_time);
+                return $attendance;
+            });
 
         return view('admin.staff.attendance', compact(
-            'user', 
-            'attendances', 
-            'currentMonth', 
-            'prevMonth', 
+            'user',
+            'attendances',
+            'currentMonth',
+            'prevMonth',
             'nextMonth'
         ));
     }

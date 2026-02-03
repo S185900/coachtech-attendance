@@ -47,14 +47,7 @@
                 </tr>
 
                 {{-- 休憩時間 --}}
-                @php $displayRestTimes = $request->corrected_rest_times ?? []; @endphp
-
-                @foreach($displayRestTimes as $index => $rest)
-
-                    @if(empty($rest['start']))
-                        @continue
-                    @endif
-
+                @foreach($request->active_rest_times as $index => $rest)
                     <tr class="detail-table-row">
                         <th class="detail-table-th">休憩{{ $index > 0 ? $index + 1 : '' }}</th>
                         <td class="detail-table-td">
@@ -67,17 +60,16 @@
                     </tr>
                 @endforeach
 
-                @if($request->status !== \App\Models\StampCorrectionRequest::STATUS_PENDING)
-                    <tr class="detail-table-row">
-                        <th class="detail-table-th">休憩{{ count($displayRestTimes) > 0 ? count($displayRestTimes) + 1 : '' }}</th>
-                        <td class="detail-table-td">
-                            <div class="time-inputs">
-                                <span class="time-text"></span>
-                                <span class="time-text"></span>
-                            </div>
-                        </td>
-                    </tr>
-                @endif
+                <tr class="detail-table-row">
+                    <th class="detail-table-th">休憩{{ count($request->active_rest_times) + 1 }}</th>
+                    <td class="detail-table-td">
+                        <div class="time-inputs">
+                            <span class="time-text"></span>
+                            <span class="range-separator"></span>
+                            <span class="time-text"></span>
+                        </div>
+                    </td>
+                </tr>
 
                 {{-- 備考欄 --}}
                 <tr class="detail-table-row">
@@ -91,6 +83,7 @@
 
             <div class="form-actions">
                 @if($request->status === \App\Models\StampCorrectionRequest::STATUS_PENDING)
+                    <p class="info-message">*承認待ちのため修正はできません。</p>
                     <button type="submit" class="submit-button">承認</button>
                 @else
                     <button type="button" class="submit-button approved" disabled>承認済み</button>
