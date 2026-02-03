@@ -9,7 +9,7 @@
     <h1 class="section-title">管理者ログイン</h1>
 
     <section class="login-section">
-        <form action="{{ route('admin.login') }}" method="POST" novalidate>
+        <form class="login-form" action="{{ route('admin.login') }}" method="POST" novalidate>
             @csrf
 
             <div class="login-item">

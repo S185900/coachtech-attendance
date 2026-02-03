@@ -31,12 +31,12 @@
     text-align: center;
 }
 
-.verify-email__nav {
+.verify-email-nav {
     align-items: center;
     text-align: center;
 }
 
-.verify-email__link {
+.verify-email-link {
     display: inline-block;
     margin-top: 20px;
     font-family: Inter, sans-serif;
@@ -55,15 +55,15 @@
     box-sizing: border-box;
 }
 
-.verify-email__link:hover {
+.verify-email-link:hover {
     background-color: #c0c0c0;
 }
 
-.resend-verification__form {
+.resend-verification-form {
     text-align: center;
 }
 
-.resend-verification__link {
+.resend-verification-link {
     background: none;
     border: none;
     padding: 60px 0 0 0;
@@ -82,7 +82,7 @@
     margin: 0 auto;
 }
 
-.resend-verification__link:hover {
+.resend-verification-link:hover {
     color: rgba(221, 96, 0, 0.72);
 }
 
@@ -122,12 +122,12 @@
         font-size: 26px;
     }
 
-    .verify-email__link {
+    .verify-email-link {
         font-size: 26px;
         padding: 18px 36px;
     }
 
-    .resend-verification__link {
+    .resend-verification-link {
         font-size: 22px;
         padding-top: 70px;
     }
@@ -152,12 +152,12 @@
         padding: 15px;
     }
 
-    .verify-email__link {
+    .verify-email-link {
         font-size: 20px;
         padding: 12px 24px;
     }
 
-    .resend-verification__link {
+    .resend-verification-link {
         font-size: 18px;
         padding-top: 50px;
     }

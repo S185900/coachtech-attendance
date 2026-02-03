@@ -6,7 +6,7 @@
 
 {{-- 申請一覧画面（管理者） http://localhost/stamp_correction_request/list --}}
 @section('content')
-    <div class="stamp_correction_request-list-container">
+    <div class="stamp-correction-request-list-container">
         <h1 class="page-title">申請一覧</h1>
 
         <div class="tabs">
@@ -18,49 +18,44 @@
             </a>
         </div>
 
-        <table class="stamp_correction_request-table">
+        <table class="stamp-correction-request-table">
 
-            <thead>
+            <thead class="table-head">
                 <tr>
-                    <th>状態</th>
-                    <th>名前</th>
-                    <th>対象日時</th>
-                    <th>申請理由</th>
-                    <th>申請日時</th>
-                    <th>詳細</th>
+                    <th class="table-th">状態</th>
+                    <th class="table-th">名前</th>
+                    <th class="table-th">対象日時</th>
+                    <th class="table-th">申請理由</th>
+                    <th class="table-th">申請日時</th>
+                    <th class="table-th">詳細</th>
                 </tr>
             </thead>
 
-            <tbody>
+            <tbody class="table-body">
                 @forelse($requests as $request)
-                    <tr>
-                        <td>
-                            @php
-                                $isApproved = ($request->status === \App\Models\StampCorrectionRequest::STATUS_APPROVED);
-                            @endphp
-                            <span class="status-badge {{ $isApproved ? 'approved' : 'pending' }}">
-                                {{ $isApproved ? '承認済み' : '承認待ち' }}
-                            </span>
+                    <tr class="table-row">
+                        <td class="table-td">
+                            {{ $request->status_label }}
                         </td>
-                        <td>
+                        <td class="table-td">
                             {{ $request->user->name }}
                         </td>
-                        <td>
+                        <td class="table-td">
                             {{ $request->attendance->date->format('Y/m/d') }}
                         </td>
-                        <td class="reason-cell">
+                        <td class="table-td">
                             {{ Str::limit($request->reason, 20) }}
                         </td>
-                        <td>
+                        <td class="table-td">
                             {{ $request->created_at->format('Y/m/d') }}
                         </td>
-                        <td>
+                        <td class="table-td">
                             <a href="{{ route('admin.stamp_correction.approve', ['attendance_correct_request_id' => $request->id]) }}" class="detail-link">詳細</a>
                         </td>
                     </tr>
                 @empty
-                    <tr>
-                        <td colspan="6" class="empty-message">
+                    <tr class="table-row">
+                        <td class="empty-message" colspan="6">
                             現在、{{ $tab === 'pending' ? '承認待ち' : '承認済み' }}の申請はありません。
                         </td>
                     </tr>

@@ -4,7 +4,7 @@ body {
     font-family: "Inter", sans-serif;
 }
 
-.stamp_correction_request-list-container {
+.stamp-correction-request-list-container {
     max-width: 940px;
     margin: 0 auto;
     padding: 90px 20px;
@@ -46,7 +46,7 @@ body {
     opacity: 0.7;
 }
 
-.stamp_correction_request-table {
+.stamp-correction-request-table {
     width: 100%;
     background-color: #ffffff;
     border-collapse: collapse;
@@ -55,9 +55,9 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-.stamp_correction_request-table th {
+.table-th {
     padding: 10px;
-    text-align: center;
+    text-align: left;
     font-weight: 700;
     font-size: 16px;
     color: #737373;
@@ -65,9 +65,9 @@ body {
     border-bottom: 3px solid #E1E1E1;
 }
 
-.stamp_correction_request-table td {
+.table-td {
     padding: 12px;
-    text-align: center;
+    text-align: left;
     font-weight: 700;
     font-size: 16px;
     color: #737373;
@@ -75,18 +75,26 @@ body {
     border-bottom: 2px solid #E1E1E1;
 }
 
-.stamp_correction_request-table th:nth-child(4),
-.stamp_correction_request-table td:nth-child(4) {
+.table-th:nth-child(1),
+.table-td:nth-child(1) {
     text-align: left;
     padding-left: 30px;
 }
 
-.stamp_correction_request-table th:nth-child(4) {
-    padding-left: 40px;
+.table-th:nth-child(2),
+.table-td:nth-child(2) {
+    text-align: left;
+    padding-left: 20px;
 }
 
-.stamp_correction_request-table td:nth-child(3),
-.stamp_correction_request-table td:nth-child(5) {
+.table-th:nth-child(4),
+.table-td:nth-child(4) {
+    text-align: left;
+    padding-left: 20px;
+}
+
+.table-td:nth-child(3),
+.table-td:nth-child(5) {
     letter-spacing: 0;
 }
 
@@ -100,7 +108,7 @@ body {
     opacity: 0.6;
 }
 
-.empty-message {
+td.empty-message {
     text-align: center;
     padding: 20px;
     color: #666;
@@ -111,7 +119,7 @@ body {
 
 /* PCサイズ（1400〜1540px） */
 @media screen and (min-width: 1400px) and (max-width: 1540px) {
-    .stamp_correction_request-list-container {
+    .stamp-correction-request-list-container {
         max-width: 1200px;
         padding: 120px 20px;
     }
@@ -119,7 +127,7 @@ body {
 
 /* タブレットサイズ（768〜850px） */
 @media screen and (min-width: 768px) and (max-width: 850px) {
-    .stamp_correction_request-list-container {
+    .stamp-correction-request-list-container {
         max-width: 900px;
         padding: 60px 30px;
     }
@@ -138,16 +146,16 @@ body {
         font-size: 18px;
     }
 
-    .stamp_correction_request-list-container {
+    .stamp-correction-request-list-container {
         overflow-x: auto;
     }
 
-    .stamp_correction_request-table {
+    .stamp-correction-request-table {
         min-width: 700px;
     }
 
-    .stamp_correction_request-table th,
-    .stamp_correction_request-table td {
+    .table-th,
+    .table-td {
         padding: 12px 8px;
         font-size: 14px;
     }

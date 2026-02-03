@@ -13,6 +13,16 @@ class StampCorrectionRequest extends Model
     const STATUS_PENDING = 0;
     const STATUS_APPROVED = 1;
 
+    public function getStatusLabelAttribute()
+    {
+        return $this->status === self::STATUS_PENDING ? '承認待ち' : '承認済み';
+    }
+
+    public function getIsPendingAttribute()
+    {
+        return $this->status === self::STATUS_PENDING;
+    }
+
     protected $fillable = [
         'user_id',
         'attendance_id',

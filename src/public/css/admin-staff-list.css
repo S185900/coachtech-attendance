@@ -27,7 +27,7 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-.staff-table th {
+.staff-table-th {
     padding: 10px;
     text-align: center;
     font-weight: 700;
@@ -37,7 +37,7 @@ body {
     border-bottom: 3px solid #E1E1E1;
 }
 
-.staff-table td {
+.staff-table-td {
     padding: 10px;
     text-align: center;
     font-weight: 700;
@@ -60,7 +60,7 @@ body {
 
 /* PCサイズ（1400〜1540px） */
 @media screen and (min-width: 1400px) and (max-width: 1540px) {
-    .attendance-list-container {
+    .staff-list-container {
         max-width: 1200px;
         padding: 120px 20px;
     }
@@ -68,7 +68,7 @@ body {
 
 /* タブレットサイズ（768〜850px） */
 @media screen and (min-width: 768px) and (max-width: 850px) {
-    .attendance-list-container {
+    .staff-list-container {
         max-width: 900px;
         padding: 60px 30px;
     }
@@ -79,24 +79,8 @@ body {
         padding-left: 15px;
     }
 
-    .date-nav {
-        padding: 12px 20px;
-    }
-
-    .current-date-display {
-        font-size: 18px;
-    }
-
-    .attendance-list-container {
-        overflow-x: auto;
-    }
-
-    .attendance-table {
-        min-width: 700px;
-    }
-
-    .attendance-table th,
-    .attendance-table td {
+    .staff-table-th,
+    .staff-table-td {
         padding: 12px 8px;
         font-size: 14px;
     }

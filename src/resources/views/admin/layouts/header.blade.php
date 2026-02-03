@@ -12,6 +12,7 @@
         @yield('css')
     </head>
 
+    {{-- ログイン前共通ヘッダー(管理者) --}}
     <body>
         <div class="admin-layout">
             <header class="header" role="banner">

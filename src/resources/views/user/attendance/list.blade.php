@@ -31,18 +31,18 @@
 
         <table class="attendance-table">
 
-            <thead>
-                <tr>
-                    <th>日付</th>
-                    <th>出勤</th>
-                    <th>退勤</th>
-                    <th>休憩</th>
-                    <th>合計</th>
-                    <th>詳細</th>
+            <thead class="attendance-table-head">
+                <tr class="attendance-table-row">
+                    <th class="attendance-table-th">日付</th>
+                    <th class="attendance-table-th">出勤</th>
+                    <th class="attendance-table-th">退勤</th>
+                    <th class="attendance-table-th">休憩</th>
+                    <th class="attendance-table-th">合計</th>
+                    <th class="attendance-table-th">詳細</th>
                 </tr>
             </thead>
 
-            <tbody>
+            <tbody class="attendance-table-body">
 
                 @foreach($period as $date)
                     @php
@@ -50,23 +50,23 @@
                         $attendance = $attendances->get($dateStr);
                     @endphp
 
-                    <tr>
-                        <td>
+                    <tr class="attendance-table-row">
+                        <td class="attendance-table-td">
                             {{ $date->format('m/d') }}({{ $date->isoFormat('ddd') }})
                         </td>
-                        <td>
+                        <td class="attendance-table-td">
                             {{ $attendance && $attendance->start_time ? $attendance->start_time->format('H:i') : '' }}
                         </td>
-                        <td>
+                        <td class="attendance-table-td">
                             {{ $attendance && $attendance->end_time ? $attendance->end_time->format('H:i') : '' }}
                         </td>
-                        <td>
+                        <td class="attendance-table-td">
                             {{ $attendance ? $attendance->total_rest_time : '' }}
                         </td>
-                        <td>
+                        <td class="attendance-table-td">
                             {{ $attendance ? $attendance->work_time : '' }}
                         </td>
-                        <td>
+                        <td class="attendance-table-td">
                             @if($attendance)
                                 <a href="{{ route('attendance.detail', ['id' => $attendance->id]) }}" class="detail-link">詳細</a>
                             @endif

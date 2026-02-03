@@ -16,26 +16,26 @@
 
     <section class="verify-email">
 
-        <nav class="verify-email__nav">
-            <a class="verify-email__link" href="#"
+        <nav class="verify-email-nav">
+            <a class="verify-email-link" href="#"
                 @if (App::environment(['local', 'testing']))
-                    onclick="window.open('http://localhost:8025', '_blank'); return false;"
+                    onclick="window.open('{{ config('mail.local_url') }}', '_blank'); return false;"
                 @endif>
                 認証はこちらから
             </a>
         </nav>
 
-        <form class="resend-verification__form" method="POST" action="{{ route('verification.send') }}" novalidate>
+        <form class="resend-verification-form" method="POST" action="{{ route('verification.send') }}" novalidate>
             @csrf
-            <button class="resend-verification__link" type="submit">認証メールを再送する</button>
+            <button class="resend-verification-link" type="submit">認証メールを再送する</button>
         </form>
 
         @if (session('message'))
-            <p id="js-flash-message" class="send-message">認証メールを再送しました</p>
+            <p class="send-message js-flash-message">認証メールを再送しました</p>
 
             <script>
                 setTimeout(() => {
-                    const msg = document.getElementById('js-flash-message');
+                    const msg = document.querySelector('.js-flash-message');
                     if (msg) {
                         msg.style.transition = 'opacity 1s';
                         msg.style.opacity = '0';

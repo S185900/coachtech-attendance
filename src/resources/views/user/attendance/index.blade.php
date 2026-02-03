@@ -26,7 +26,7 @@
                 {{ \Carbon\Carbon::now()->isoFormat('YYYY年M月D日(ddd)') }}
             </p>
 
-            <h1 class="attendance-time" id="realtime">
+            <h1 class="attendance-time js-realtime-clock">
                 {{ date('H:i') }}
             </h1>
 
@@ -79,7 +79,7 @@
             const now = new Date();
             const hours = String(now.getHours()).padStart(2, '0');
             const minutes = String(now.getMinutes()).padStart(2, '0');
-            const target = document.getElementById('realtime');
+            const target = document.querySelector('.js-realtime-clock');
             if (target) {
                 target.textContent = `${hours}:${minutes}`;
             }

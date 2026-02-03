@@ -31,35 +31,35 @@
 
         <table class="attendance-table">
             <thead>
-                <tr>
-                    <th>日付</th>
-                    <th>出勤</th>
-                    <th>退勤</th>
-                    <th>休憩</th>
-                    <th>合計</th>
-                    <th>詳細</th>
+                <tr class="attendance-table-row">
+                    <th class="attendance-table-th">日付</th>
+                    <th class="attendance-table-th">出勤</th>
+                    <th class="attendance-table-th">退勤</th>
+                    <th class="attendance-table-th">休憩</th>
+                    <th class="attendance-table-th">合計</th>
+                    <th class="attendance-table-th">詳細</th>
                 </tr>
             </thead>
 
             <tbody>
                 @foreach($attendances as $attendance)
-                    <tr>
-                        <td>
+                    <tr class="attendance-table-row">
+                        <td class="attendance-table-td">
                             {{ $attendance->date->isoFormat('MM/DD(ddd)') }}
                         </td>
-                        <td>
+                        <td class="attendance-table-td">
                             {{ $attendance->start_time->format('H:i') }}
                         </td>
-                        <td>
+                        <td class="attendance-table-td">
                             {{ $attendance->end_time ? $attendance->end_time->format('H:i') : '' }}
                         </td>
-                        <td>
+                        <td class="attendance-table-td">
                             {{ $attendance->total_rest_time !== '00:00' ? $attendance->total_rest_time : '' }}
                         </td>
-                        <td>
+                        <td class="attendance-table-td">
                             {{ $attendance->work_time !== '00:00' ? $attendance->work_time : '' }}
                         </td>
-                        <td>
+                        <td class="attendance-table-td">
                             <a href="{{ route('admin.attendance.detail', ['id' => $attendance->id]) }}" class="detail-link">詳細</a>
                         </td>
                     </tr>

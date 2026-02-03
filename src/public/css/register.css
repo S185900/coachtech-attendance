@@ -21,7 +21,7 @@
     text-align: center;
 }
 
-.register-section form {
+.register-form {
     display: flex;
     flex-direction: column;
 }

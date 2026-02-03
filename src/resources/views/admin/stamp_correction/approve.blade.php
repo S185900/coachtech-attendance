@@ -14,16 +14,16 @@
 
             <table class="detail-table">
 
-                <tr>
-                    <th>名前</th>
-                    <td>
+                <tr class="detail-table-row">
+                    <th class="detail-table-th">名前</th>
+                    <td class="detail-table-td">
                         <span class="user-name">{{ $request->user->name }}</span>
                     </td>
                 </tr>
 
-                <tr>
-                    <th>日付</th>
-                    <td class="date-inputs-container">
+                <tr class="detail-table-row">
+                    <th class="detail-table-th">日付</th>
+                    <td class="detail-table-td-container">
                         <div class="date-year-wrapper">
                             <span class="year-unit">{{ $request->attendance->date->format('Y') }}年</span>
                         </div>
@@ -35,9 +35,9 @@
                 </tr>
 
                 {{-- 出勤・退勤 --}}
-                <tr>
-                    <th>出勤・退勤</th>
-                    <td>
+                <tr class="detail-table-row">
+                    <th class="detail-table-th">出勤・退勤</th>
+                    <td class="detail-table-td">
                         <div class="time-inputs">
                             <span class="time-text">{{ $request->corrected_start_time->format('H:i') }}</span>
                             <span class="range-separator">〜</span>
@@ -55,9 +55,9 @@
                         @continue
                     @endif
 
-                    <tr>
-                        <th>休憩{{ $index > 0 ? $index + 1 : '' }}</th>
-                        <td>
+                    <tr class="detail-table-row">
+                        <th class="detail-table-th">休憩{{ $index > 0 ? $index + 1 : '' }}</th>
+                        <td class="detail-table-td">
                             <div class="time-inputs">
                                 <span class="time-text">{{ \Carbon\Carbon::parse($rest['start'])->format('H:i') }}</span>
                                 <span class="range-separator">〜</span>
@@ -68,9 +68,9 @@
                 @endforeach
 
                 @if($request->status !== \App\Models\StampCorrectionRequest::STATUS_PENDING)
-                    <tr>
-                        <th>休憩{{ count($displayRestTimes) > 0 ? count($displayRestTimes) + 1 : '' }}</th>
-                        <td>
+                    <tr class="detail-table-row">
+                        <th class="detail-table-th">休憩{{ count($displayRestTimes) > 0 ? count($displayRestTimes) + 1 : '' }}</th>
+                        <td class="detail-table-td">
                             <div class="time-inputs">
                                 <span class="time-text"></span>
                                 <span class="time-text"></span>
@@ -80,9 +80,9 @@
                 @endif
 
                 {{-- 備考欄 --}}
-                <tr>
-                    <th>備考</th>
-                    <td>
+                <tr class="detail-table-row">
+                    <th class="detail-table-th">備考</th>
+                    <td class="detail-table-td">
                         <p class="note-text">{{ $request->reason }}</p>
                     </td>
                 </tr>

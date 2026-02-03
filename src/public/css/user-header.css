@@ -68,8 +68,7 @@ body {
 /* PCサイズ（1400〜1540px） */
 @media screen and (min-width: 1400px) and (max-width: 1540px) {
     .header {
-        position: relative;
-            justify-content: space-between;
+        height: 90px;
     }
 
     .header-logo-img {
@@ -92,7 +91,7 @@ body {
             cursor: pointer;
         }
 
-        .hamburger span {
+        .hamburger-line {
             display: block;
             width: 100%;
             height: 4px;
@@ -102,27 +101,27 @@ body {
             border-radius: 2px;
         }
 
-        .hamburger span:nth-child(1) {
+        .hamburger-line:nth-child(1) {
             top: 0;
         }
 
-        .hamburger span:nth-child(2) {
+        .hamburger-line:nth-child(2) {
             top: 10px;
         }
 
-        .hamburger span:nth-child(3) {
+        .hamburger-line:nth-child(3) {
             top: 20px;
         }
 
-        .menu-checkbox:checked+.hamburger span:nth-child(1) {
+        .menu-checkbox:checked+.hamburger .hamburger-line:nth-child(1) {
             transform: translateY(10px) rotate(45deg);
         }
 
-        .menu-checkbox:checked+.hamburger span:nth-child(2) {
+        .menu-checkbox:checked+.hamburger .hamburger-line:nth-child(2) {
             opacity: 0;
         }
 
-        .menu-checkbox:checked+.hamburger span:nth-child(3) {
+        .menu-checkbox:checked+.hamburger .hamburger-line:nth-child(3) {
             transform: translateY(-10px) rotate(-45deg);
         }
 

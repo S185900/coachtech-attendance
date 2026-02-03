@@ -9,7 +9,7 @@
     <h1 class="section-title">ログイン</h1>
 
     <section class="login-section">
-        <form action="{{ route('login') }}" method="POST" novalidate>
+        <form class="login-form" action="{{ route('login') }}" method="POST" novalidate>
             @csrf
 
             <div class="login-item">
