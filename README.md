@@ -76,6 +76,7 @@ MAIL_PASSWORD=null
 MAIL_ENCRYPTION=null
 MAIL_FROM_ADDRESS=no-reply@example.test # Mailhog用の仮アドレス
 MAIL_FROM_NAME="${APP_NAME}"
+MAIL_LOCAL_URL=http://localhost:8025
 ```
 > *Mailhog（メール送信確認）について：Mailhogは、ローカル環境でメール送信を確認するためのツールです。 アカウント登録などは不要で、Docker起動時に自動で立ち上がります。ブラウザで http://localhost:8025 にアクセスします。Laravelから送信されたメール（認証・パスワードリセットなど）が一覧表示されます。*
 

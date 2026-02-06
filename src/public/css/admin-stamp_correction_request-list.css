@@ -110,9 +110,11 @@ body {
 
 td.empty-message {
     text-align: center;
-    padding: 20px;
+    padding: 20px 10px;
     color: #666;
-    font-size: 14px;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0.2em;
 }
 
 /* --- レスポンシブ対応 --- */
