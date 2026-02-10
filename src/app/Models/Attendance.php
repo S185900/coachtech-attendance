@@ -49,9 +49,6 @@ class Attendance extends Model
         return $this->hasMany(StampCorrectionRequest::class);
     }
 
-    /**
-     * 合計休憩時間の取得
-     */
     public function getTotalRestTimeAttribute()
     {
         $totalMinutes = 0;
@@ -66,9 +63,6 @@ class Attendance extends Model
         return sprintf('%02d:%02d', floor($totalMinutes / 60), $totalMinutes % 60);
     }
 
-    /**
-     * 実労働時間の取得
-     */
     public function getWorkTimeAttribute()
     {
         if (!$this->start_time || !$this->end_time) {

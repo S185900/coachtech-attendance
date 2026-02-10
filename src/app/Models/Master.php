@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\StampCorrectionRequest;
 
 class Master extends Authenticatable
 {
@@ -27,7 +28,7 @@ class Master extends Authenticatable
         return $this->hasMany(StampCorrectionRequest::class, 'master_id');
     }
 
-    public function fullName()
+    public function getFullName()
     {
         return $this->name;
     }
