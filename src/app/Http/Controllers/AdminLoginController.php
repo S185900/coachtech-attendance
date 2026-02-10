@@ -36,6 +36,9 @@ class AdminLoginController extends Controller
         return redirect()->intended('/admin/attendance/list');
     }
 
+    /**
+     * 管理者ログアウト処理
+     */
     public function destroy(Request $request)
     {
         Auth::guard('admin')->logout();

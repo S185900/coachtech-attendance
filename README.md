@@ -1,29 +1,29 @@
 # 勤怠管理アプリ
 
 ## プロジェクトの概要
-    coachtechフリマは、ある企業が開発した独自の勤怠管理アプリです。社会人全般を主なターゲットに、ユーザーの勤怠と管理を目的としています。初年度ユーザー数1,000人の達成を目標に、設計・コーディング・テストまでを一貫して担当します。
+    「coachtech 勤怠管理アプリ」は、ある企業が開発した独自の勤怠管理アプリです。社会人全般を主なターゲットに、ユーザーの勤怠と管理を目的としています。
 
     (本プロジェクトは、Laravelを用いたWebアプリケーション開発の模擬案件として取り組んでおり、一人で設計から実装、テストまでを行い、実務に近い開発プロセスの体験を目的としています。)
 
 ## 環境構築手順
 
 **Dockerビルド**
-1. GitHubからプロジェクトをクローン ※SSH接続でクローンする場合は、事前にGitHubにSSH鍵を登録しておいてください。
+1. GitHubからプロジェクトをクローン
 ```bash
-    git clone git@github.com:S185900/coachtech-attendance.git
+git clone git@github.com:S185900/coachtech-attendance.git
 ```
 2. プロジェクトディレクトリに移動
 ```bash
-    cd coachtech-attendance
+cd coachtech-attendance
 ```
 3. (初回のみ)MySQL用の空ディレクトリを作成 ※Dockerビルドの際のエラー回避のため
 ```bash
-    mkdir -p docker/mysql/data
+mkdir -p docker/mysql/data
 ```
 4. DockerDesktopアプリを立ち上げる
 5. Dockerコンテナをビルド＆起動
 ```bash
-    docker-compose up -d --build
+docker-compose up -d --build
 ```
 > *MacのM1・M2チップのPCの場合、`no matching manifest for linux/arm64/v8 in the manifest list entries`のメッセージが表示されビルドができないことがあります。エラーが発生する場合は、docker-compose.ymlファイルの「mysql」内に「platform」の項目を追加で記載してください*
 
@@ -37,12 +37,12 @@ mysql:
 **Laravel環境構築**
 1. PHPコンテナに入る
 ```bash
-    docker-compose exec php bash
+docker-compose exec php bash
 ```
 
 2. Laravelパッケージをインストール
 ```bash
-    composer install
+composer install
 ```
 
 > *composer install 実行時に表示されるパッケージに関する注意について：　このプロジェクトでは、fruitcake/laravel-cors および swiftmailer/swiftmailer のパッケージを使用しています。composer install 実行時に、これらが非推奨（abandoned）である旨のメッセージが表示されますが、現時点では動作に問題はありません。今後のLaravelのバージョンアップやセキュリティ対応を見据えて、必要に応じて代替手段への移行を検討することも可能です。*
