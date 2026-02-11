@@ -95,6 +95,13 @@
                                 @endif
 
                             </div>
+
+                            @if (!$isPending && ($errors->has("rests.{$rest['rest_id']}.start") || $errors->has("rests.{$rest['rest_id']}.end")))
+                                <p class="status-message">
+                                    {{ $errors->first("rests.{$rest['rest_id']}.start") ?: $errors->first("rests.{$rest['rest_id']}.end") }}
+                                </p>
+                            @endif
+
                         </td>
                     </tr>
                 @endforeach

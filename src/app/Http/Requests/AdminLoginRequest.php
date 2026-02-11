@@ -23,7 +23,7 @@ class AdminLoginRequest extends FormRequest
     {
         return [
             'email.required' => 'メールアドレスを入力してください',
-            'email.email' => 'メールアドレスの形式で入力してください',
+            'email.email' => 'emailは、有効なメールアドレス形式で指定してください',
             'password.required' => 'パスワードを入力してください',
         ];
     }

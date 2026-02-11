@@ -33,11 +33,13 @@ class AttendanceCorrectionRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'start_time.required' => '出勤時間を入力してください',
-            'end_time.required' => '退勤時間を入力してください',
+            'start_time.required' => '出勤時間もしくは退勤時間が不適切な値です',
+            'end_time.required' => '出勤時間もしくは退勤時間が不適切な値です',
             'end_time.after' => '出勤時間もしくは退勤時間が不適切な値です',
             'reason.required' => '備考を記入してください',
             'reason.max' => '備考は255文字以内で入力してください',
+            'rests.*.start.required_with' => '休憩時間が不適切な値です',
+            'rests.*.end.required_with'   => '休憩時間が不適切な値です',
         ];
     }
 

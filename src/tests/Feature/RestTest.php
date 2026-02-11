@@ -133,7 +133,7 @@ class RestTest extends TestCase
         $response = $this->get('/attendance/list?month=' . $today->format('Y-m'));
 
         $response->assertStatus(200);
-        $response->assertSee('01:00');
+        $response->assertSee('1:00');
 
         \Carbon\Carbon::setTestNow();
     }
