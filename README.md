@@ -82,6 +82,7 @@ MAIL_LOCAL_URL=http://localhost:8025
 
 5. アプリケーションキーの作成
 ``` bash
+docker-compose exec php bash
 php artisan key:generate
 ```
 
@@ -114,6 +115,7 @@ php artisan db:seed --class=DatabaseSeeder
 |------------------|--------------------------|----------------|
 | 一般ユーザー(テスト スタッフ) | user@gmail.com | password123    |
 | 管理者ユーザー(管理者　太郎) | admin@gmail.com | password123    |
+（※管理者ユーザーの名前はDB登録用として定義しています）
 
 > *ダミーデータの状態: 上記アカウントには、過去5日分の出勤・退勤・休憩データが自動生成されています。ご自身で新規登録したユーザーは、登録時に入力したパスワードでログインしてください。*
 
