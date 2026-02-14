@@ -145,6 +145,11 @@ body {
     transition: opacity 0.2s;
 }
 
+.submit-button.approved {
+    background-color: #696969;
+    cursor: not-allowed;
+}
+
 .status-message {
     color: #ff0000;
     font-size: 15px;
@@ -159,11 +164,6 @@ body {
     font-weight: 800;
     letter-spacing: 0.15em;
     padding-bottom: 15px;
-}
-
-.submit-button.approved {
-    background-color: #696969;
-    cursor: not-allowed;
 }
 
 .time-text,

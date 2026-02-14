@@ -12,11 +12,11 @@
 
         {{-- タブメニュー部分 --}}
         <div class="tabs">
-            <a href="{{ route('stamp_correction_request.list', ['tab' => 'pending']) }}" 
+            <a href="{{ route('stamp_correction_request.list', ['tab' => 'pending']) }}"
             class="tab-item {{ $tab === 'pending' ? 'active' : '' }}">
                 承認待ち
             </a>
-            <a href="{{ route('stamp_correction_request.list', ['tab' => 'approved']) }}" 
+            <a href="{{ route('stamp_correction_request.list', ['tab' => 'approved']) }}"
             class="tab-item {{ $tab === 'approved' ? 'active' : '' }}">
                 承認済み
             </a>

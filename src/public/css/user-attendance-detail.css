@@ -183,6 +183,11 @@ body {
     transition: opacity 0.2s;
 }
 
+.submit-button.approved {
+    background-color: #696969;
+    cursor: not-allowed;
+}
+
 .status-message {
     color: #ff0000;
     font-size: 15px;
