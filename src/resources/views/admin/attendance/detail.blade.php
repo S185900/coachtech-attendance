@@ -152,7 +152,6 @@
             <div class="form-actions">
                 @if($isPending)
                     <p class="info-message">*承認待ちのため修正はできません。</p>
-                    <button type="submit" class="submit-button approve">承認</button>
                 @else
                     <button type="submit" class="submit-button update">修正</button>
                 @endif

@@ -83,7 +83,6 @@
 
             <div class="form-actions">
                 @if($request->status === \App\Models\StampCorrectionRequest::STATUS_PENDING)
-                    <p class="info-message">*承認待ちのため修正はできません。</p>
                     <button type="submit" class="submit-button">承認</button>
                 @else
                     <button type="button" class="submit-button approved" disabled>承認済み</button>
