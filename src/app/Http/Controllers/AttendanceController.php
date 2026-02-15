@@ -185,7 +185,7 @@ class AttendanceController extends Controller
                     'end'   => $restTime->end_time ? $restTime->end_time->format('H:i') : ''
                 ];
             }
-            $displayReason = $attendance->reason;
+            $displayReason = '';
         }
 
         return view('user.attendance.detail', compact(

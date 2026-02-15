@@ -133,9 +133,9 @@
                     <th class="detail-table-th">備考</th>
                     <td class="detail-table-td">
                         @if($isPending)
-                            <p class="note-text">{{ old('reason', $pendingRequest->reason) }}</p>
+                            <p class="note-text">{{ $pendingRequest->reason }}</p>
                         @else
-                            <textarea name="reason" class="input-textarea">{{ old('reason', $attendance->reason) }}</textarea>
+                            <textarea name="reason" class="input-textarea" autocomplete="off">{{ $displayReason }}</textarea>
 
                             @error('reason')
                                 <p class="status-message">{{ $message }}</p>

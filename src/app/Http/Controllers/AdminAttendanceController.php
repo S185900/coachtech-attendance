@@ -62,7 +62,11 @@ class AdminAttendanceController extends Controller
             }
         }
 
-        $displayReason = $isPending ? $pendingRequest->reason : $attendance->reason;
+        if ($isPending) {
+            $displayReason = $pendingRequest->reason;
+        } else {
+            $displayReason = '';
+        }
 
         return view('admin.attendance.detail', compact(
             'attendance',

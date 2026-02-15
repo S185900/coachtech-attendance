@@ -137,7 +137,7 @@
                         @if($isPending)
                             <p class="note-text">{{ $displayReason }}</p>
                         @else
-                            <textarea name="reason" class="input-textarea">{{ old('reason', $displayReason) }}</textarea>
+                            <textarea name="reason" class="input-textarea" autocomplete="off">{{ old('reason', $displayReason) }}</textarea>
 
                             @error('reason')
                                 <p class="status-message">{{ $message }}</p>
