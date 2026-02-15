@@ -42,7 +42,6 @@ class AttendanceCorrectionTest extends TestCase
         $response->assertSessionHasErrors();
         $this->assertTrue(
             collect(session('errors')->all())->contains('出勤時間もしくは退勤時間が不適切な値です'),
-            '「出勤時間もしくは退勤時間が不適切な値です」というバリデーションメッセージが表示されること'
         );
     }
 
@@ -64,7 +63,6 @@ class AttendanceCorrectionTest extends TestCase
         $response->assertSessionHasErrors();
         $this->assertTrue(
             collect(session('errors')->all())->contains('休憩時間が不適切な値です'),
-            '「休憩時間が不適切な値です」というバリデーションメッセージが表示されること'
         );
     }
 
@@ -86,7 +84,6 @@ class AttendanceCorrectionTest extends TestCase
         $response->assertSessionHasErrors();
         $this->assertTrue(
             collect(session('errors')->all())->contains('休憩時間もしくは退勤時間が不適切な値です'),
-            '「休憩時間もしくは退勤時間が不適切な値です」というバリデーションメッセージが表示されること'
         );
     }
 
@@ -107,7 +104,6 @@ class AttendanceCorrectionTest extends TestCase
         $response->assertSessionHasErrors();
         $this->assertTrue(
             collect(session('errors')->all())->contains('備考を記入してください'),
-            '「備考を記入してください」というバリデーションメッセージが表示されること'
         );
     }
 
