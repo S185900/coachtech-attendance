@@ -139,7 +139,13 @@ https://docs.google.com/spreadsheets/d/1vpKz6K7swjZcZIrj2miOFVXzOABBeqwKwvqgHdIG
 ## 補足
 
 ** PHPUnitによるテストについて **
-- テスト実行コード一覧
+
+- 全テストの一括実行
+``` bash
+php artisan test
+```
+
+- 各テスト実行コード一覧
 ``` bash
 #1 認証機能（一般ユーザー）
 php artisan test tests/Feature/UserRegistrationTest.php
