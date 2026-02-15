@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ asset('css/user-attendance-detail.css')}}">
 @endsection
 
-{{-- 勤怠詳細画面（一般ユーザー） http://localhost/attendance/detail/{id} --}}
+{{-- 勤怠詳細画面（一般ユーザー） --}}
 @section('content')
     <div class="attendance-detail-container">
         <h1 class="page-title">勤怠詳細</h1>
@@ -34,7 +34,6 @@
                     </td>
                 </tr>
 
-                {{-- 出勤・退勤部分 --}}
                 <tr class="detail-table-row">
                     <th class="detail-table-th">出勤・退勤</th>
                     <td class="detail-table-td">
@@ -63,7 +62,6 @@
                     </td>
                 </tr>
 
-                {{-- 休憩時間の表示 --}}
                 @foreach($displayRestTimes as $index => $rest)
                     <tr class="detail-table-row">
                         <th class="detail-table-th">休憩{{ $index > 0 ? $index + 1 : '' }}</th>
@@ -133,7 +131,6 @@
                     </tr>
                 @endif
 
-                {{-- 備考欄部分 --}}
                 <tr class="detail-table-row">
                     <th class="detail-table-th">備考</th>
                     <td class="detail-table-td">

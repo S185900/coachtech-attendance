@@ -11,9 +11,6 @@ use Carbon\Carbon;
 
 class AdminAttendanceController extends Controller
 {
-    /**
-     * 勤怠一覧画面（管理者）の表示
-     */
     public function index(Request $request)
     {
         $dateString = $request->query('date', Carbon::today()->toDateString());
@@ -34,9 +31,6 @@ class AdminAttendanceController extends Controller
         return view('admin.attendance.list', compact('attendances', 'currentDate', 'prevDate', 'nextDate'));
     }
 
-    /**
-     * 勤怠詳細画面（管理者）の表示
-     */
     public function showAttendanceDetail($id)
     {
         $attendance = Attendance::with(['user', 'restTimes'])->findOrFail($id);
@@ -79,9 +73,6 @@ class AdminAttendanceController extends Controller
         ));
     }
 
-    /**
-     * 勤怠修正承認処理（管理者）
-     */
     public function approve(AdminApproveRequest $request, $id)
     {
         $attendance = Attendance::findOrFail($id);

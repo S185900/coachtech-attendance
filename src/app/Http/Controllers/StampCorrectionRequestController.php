@@ -9,9 +9,6 @@ use Illuminate\Support\Facades\DB;
 
 class StampCorrectionRequestController extends Controller
 {
-    /**
-     * 申請一覧画面
-     */
     public function index(Request $request)
     {
         $user = Auth::user();
@@ -49,9 +46,6 @@ class StampCorrectionRequestController extends Controller
         ]);
     }
 
-    /**
-     * 申請一覧画面（管理者）
-     */
     public function adminIndex(Request $request)
     {
         $status = $request->query('tab') === 'approved'
@@ -69,9 +63,6 @@ class StampCorrectionRequestController extends Controller
         ]);
     }
 
-    /**
-     * 修正申請承認画面（管理者）
-     */
     public function showApprove($attendanceCorrectRequestId)
     {
         $request = StampCorrectionRequest::with(['attendance', 'user'])
@@ -90,9 +81,6 @@ class StampCorrectionRequestController extends Controller
         return view('admin.stamp_correction.approve', compact('request', 'isPending'));
     }
 
-    /**
-     * 修正申請承認処理（管理者）
-     */
     public function approve(Request $request, $attendanceCorrectRequestId)
     {
         $correctionRequest = StampCorrectionRequest::findOrFail($attendanceCorrectRequestId);

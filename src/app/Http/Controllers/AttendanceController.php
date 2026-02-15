@@ -13,9 +13,6 @@ use App\Http\Requests\AttendanceCorrectionRequest;
 
 class AttendanceController extends Controller
 {
-    /**
-     * 打刻画面（メイン画面）の表示
-     */
     public function index()
     {
         $user = Auth::user();
@@ -28,9 +25,6 @@ class AttendanceController extends Controller
         return view('user.attendance.index', compact('attendance'));
     }
 
-    /**
-     * 出勤処理
-     */
     public function store(Request $request)
     {
         $user = Auth::user();
@@ -52,9 +46,6 @@ class AttendanceController extends Controller
         return redirect()->back();
     }
 
-    /**
-     * 退勤処理
-     */
     public function update(Request $request)
     {
         $user = Auth::user();
@@ -75,9 +66,6 @@ class AttendanceController extends Controller
         return redirect()->back();
     }
 
-    /**
-     * 休憩開始処理
-     */
     public function restStart(Request $request)
     {
         $user = Auth::user();
@@ -100,9 +88,6 @@ class AttendanceController extends Controller
         return redirect()->back();
     }
 
-    /**
-     * 休憩終了処理
-     */
     public function restEnd(Request $request)
     {
         $user = Auth::user();
@@ -129,9 +114,6 @@ class AttendanceController extends Controller
         return redirect()->back();
     }
 
-    /**
-     * 勤怠一覧画面
-     */
     public function list(Request $request)
     {
         $month = $request->query('month', Carbon::now()->format('Y-m'));
@@ -166,9 +148,6 @@ class AttendanceController extends Controller
         ]);
     }
 
-    /**
-     * 勤怠詳細画面
-     */
     public function show($id)
     {
         $attendance = Attendance::with('restTimes')->findOrFail($id);
@@ -218,9 +197,6 @@ class AttendanceController extends Controller
         ));
     }
 
-    /**
-     * 勤怠修正申請処理
-     */
     public function correctionRequest(AttendanceCorrectionRequest $request, $id)
     {
         $attendance = Attendance::findOrFail($id);

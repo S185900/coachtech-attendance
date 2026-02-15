@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ asset('css/admin-stamp_correction_request-list.css')}}">
 @endsection
 
-{{-- 申請一覧画面（管理者） http://localhost/stamp_correction_request/list --}}
+{{-- 申請一覧画面（管理者） --}}
 @section('content')
     <div class="stamp-correction-request-list-container">
         <h1 class="page-title">申請一覧</h1>

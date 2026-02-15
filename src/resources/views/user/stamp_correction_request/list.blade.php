@@ -4,13 +4,12 @@
     <link rel="stylesheet" href="{{ asset('css/user-stamp_correction_request-list.css')}}">
 @endsection
 
-{{-- 申請一覧画面（一般ユーザー） http://localhost/stamp_correction_request/list --}}
+{{-- 申請一覧画面（一般ユーザー） --}}
 @section('content')
     <div class="stamp-correction-request-list-container">
 
         <h1 class="page-title">申請一覧</h1>
 
-        {{-- タブメニュー部分 --}}
         <div class="tabs">
             <a href="{{ route('stamp_correction_request.list', ['tab' => 'pending']) }}"
             class="tab-item {{ $tab === 'pending' ? 'active' : '' }}">

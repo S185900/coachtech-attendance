@@ -37,9 +37,6 @@ class AttendanceFactory extends Factory
         ];
     }
 
-    /**
-     * 状態指定：勤務中のデータを作成したい場合
-     */
     public function working()
     {
         return $this->state(function (array $attributes) {

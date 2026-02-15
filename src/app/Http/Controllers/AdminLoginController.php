@@ -9,17 +9,11 @@ use Illuminate\Validation\ValidationException;
 
 class AdminLoginController extends Controller
 {
-    /**
-     * 管理者ログイン画面の表示
-     */
     public function create()
     {
         return view('admin.auth.login');
     }
 
-    /**
-     * 管理者ログイン処理
-     */
     public function store(AdminLoginRequest $request)
     {
         $credentials = $request->only('email', 'password');
@@ -36,9 +30,6 @@ class AdminLoginController extends Controller
         return redirect()->intended('/admin/attendance/list');
     }
 
-    /**
-     * 管理者ログアウト処理
-     */
     public function destroy(Request $request)
     {
         Auth::guard('admin')->logout();

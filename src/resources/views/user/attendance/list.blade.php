@@ -4,12 +4,11 @@
     <link rel="stylesheet" href="{{ asset('css/user-attendance-list.css')}}">
 @endsection
 
-{{-- 勤怠一覧画面（一般ユーザー） http://localhost/attendance/list --}}
+{{-- 勤怠一覧画面（一般ユーザー） --}}
 @section('content')
     <div class="attendance-list-container">
         <h1 class="page-title">勤怠一覧</h1>
 
-        {{-- 月毎ナビゲーション部分 --}}
         <nav class="date-nav">
 
             <a href="{{ route('attendance.list', ['month' => $prevMonth]) }}" class="date-nav-link">

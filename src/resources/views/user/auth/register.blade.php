@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ asset('css/register.css')}}">
 @endsection
 
-{{-- 一般ユーザー会員登録画面 http://localhost/register --}}
+{{-- 一般ユーザー会員登録画面 --}}
 @section('content')
     <h1 class="section-title">会員登録</h1>
 

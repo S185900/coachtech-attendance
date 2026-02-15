@@ -4,12 +4,11 @@
     <link rel="stylesheet" href="{{ asset('css/admin-attendance-list.css')}}">
 @endsection
 
-{{-- 勤怠一覧画面（管理者） http://localhost/admin/attendance/list --}}
+{{-- 勤怠一覧画面（管理者） --}}
 @section('content')
     <div class="attendance-list-container">
         <h1 class="page-title">{{ $currentDate->format('Y年n月j日') }}の勤怠</h1>
 
-        {{-- 日付ナビゲーション --}}
         <nav class="date-nav">
 
             <a href="{{ route('admin.attendance.list', ['date' => $prevDate]) }}" class="date-nav-link">

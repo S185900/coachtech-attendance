@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ asset('css/login.css')}}">
 @endsection
 
-{{-- 管理者ログイン画面 http://localhost/admin/login --}}
+{{-- 管理者ログイン画面 --}}
 @section('content')
     <h1 class="section-title">管理者ログイン</h1>
 

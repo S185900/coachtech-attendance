@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ asset('css/admin-stamp_correction_request-approve.css')}}">
 @endsection
 
-{{-- 修正申請承認画面（管理者） http://localhost/stamp_correction_request/approve/{attendance_correct_request_id} --}}
+{{-- 修正申請承認画面（管理者） --}}
 @section('content')
     <div class="attendance-detail-container">
         <h1 class="page-title">勤怠詳細</h1>
@@ -34,7 +34,6 @@
                     </td>
                 </tr>
 
-                {{-- 出勤・退勤 --}}
                 <tr class="detail-table-row">
                     <th class="detail-table-th">出勤・退勤</th>
                     <td class="detail-table-td">
@@ -46,7 +45,6 @@
                     </td>
                 </tr>
 
-                {{-- 休憩時間 --}}
                 @foreach($request->active_rest_times as $index => $rest)
                     <tr class="detail-table-row">
                         <th class="detail-table-th">休憩{{ $index > 0 ? $index + 1 : '' }}</th>
@@ -71,7 +69,6 @@
                     </td>
                 </tr>
 
-                {{-- 備考欄 --}}
                 <tr class="detail-table-row">
                     <th class="detail-table-th">備考</th>
                     <td class="detail-table-td">

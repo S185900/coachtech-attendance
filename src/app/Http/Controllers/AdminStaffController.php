@@ -10,9 +10,6 @@ use Carbon\Carbon;
 
 class AdminStaffController extends Controller
 {
-    /**
-     * スタッフ一覧画面（管理者）の表示
-     */
     public function index()
     {
         $users = User::all();
@@ -20,9 +17,6 @@ class AdminStaffController extends Controller
         return view('admin.staff.list', compact('users'));
     }
 
-    /**
-     * スタッフ別勤怠一覧画面（管理者）の表示
-     */
     public function staffAttendance(Request $request, $id)
     {
         $user = User::findOrFail($id);
@@ -53,9 +47,6 @@ class AdminStaffController extends Controller
         ));
     }
 
-    /**
-     * スタッフ別勤怠一覧CSVダウンロード処理（管理者）
-     */
     public function downloadCsv(Request $request, $id)
     {
         $user = User::findOrFail($id);

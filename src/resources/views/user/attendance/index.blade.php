@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ asset('css/user-index.css')}}">
 @endsection
 
-{{-- 出勤登録画面（一般ユーザー） http://localhost/attendance --}}
+{{-- 出勤登録画面（一般ユーザー） --}}
 @section('content')
     <div class="attendance-container">
 
@@ -34,7 +34,6 @@
 
                 @if(!$attendance)
 
-                    {{-- 未出勤（勤務外） --}}
                     <form action="{{ route('attendance.start') }}" method="POST">
                         @csrf
                         <button type="submit" class="attendance-button">出勤</button>
@@ -42,7 +41,6 @@
 
                 @elseif($attendance->status == \App\Models\Attendance::STATUS_WORKING)
 
-                    {{-- 出勤中 --}}
                     <div class="button-group">
                         <form action="{{ route('attendance.end') }}" method="POST">
                             @csrf
@@ -56,7 +54,6 @@
 
                 @elseif($attendance->status == \App\Models\Attendance::STATUS_RESTING)
 
-                    {{-- 休憩中 --}}
                     <form action="{{ route('attendance.rest-end') }}" method="POST">
                         @csrf
                         <button type="submit" class="attendance-button btn-white">休憩戻</button>
@@ -64,7 +61,6 @@
 
                 @elseif($attendance->status == \App\Models\Attendance::STATUS_FINISHED)
 
-                    {{-- 退勤済 --}}
                     <p class="thanks-message">お疲れ様でした。</p>
 
                 @endif
@@ -73,7 +69,6 @@
         </div>
     </div>
 
-    {{-- リアルタイム時計用 --}}
     <script>
         function updateTime() {
             const now = new Date();
