@@ -25,6 +25,7 @@ class Attendance extends Model
         'end_time',
         'status',
         'is_corrected',
+        'reason',
     ];
 
     protected $casts = [

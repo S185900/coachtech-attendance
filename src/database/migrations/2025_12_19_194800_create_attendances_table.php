@@ -21,6 +21,7 @@ class CreateAttendancesTable extends Migration
             $table->dateTime('end_time')->nullable();
             $table->tinyInteger('status')->default(0);
             $table->boolean('is_corrected')->default(false);
+            $table->text('reason')->nullable()->comment('備考欄');
             $table->timestamps();
         });
     }
